@@ -19,7 +19,8 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.mbaukwu.myprojectapp"
     },
     "web": {
       "output": "static",
@@ -38,11 +39,39 @@
             "backgroundColor": "#000000"
           }
         }
+      ],
+      [
+  "expo-font",
+      {
+         "fonts": ["./assets/fonts/Roboto/PlaywriteCUGuides-Regular.ttf"],
+          "android": {
+            "fonts": [
+              {
+                "fontFamily": "Playwrite CU Guides",
+                "fontDefinitions": [
+                  {
+                    "path": "./assets/fonts/Roboto/PlaywriteCUGuides-Regular.ttf",
+                    "weight": 500
+                  }
+                ]
+              }
+            ]
+          }
+        }
       ]
+    
     ],
+  
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "6d02e1d8-2659-4dd8-9d62-1ac6d87b3d8f"
+      }
+    },
+    "owner": "mbaukwu"
   }
 }
