@@ -1,13 +1,9 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import MenuScreenComponent from "@/components/screens/menu-screen/MenuScreenComponent";
+import { Text, View } from "react-native";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
-const menu = () => {
+export default function MenuScreen() {
   return (
-    
-    <View>
-      <Text>menu</Text>
-    </View>
-  )
+    <MenuScreenComponent/>
+  );
 }
-
-export default menu

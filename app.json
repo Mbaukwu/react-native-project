@@ -43,20 +43,7 @@
       [
   "expo-font",
       {
-         "fonts": ["./assets/fonts/Roboto/PlaywriteCUGuides-Regular.ttf"],
-          "android": {
-            "fonts": [
-              {
-                "fontFamily": "Playwrite CU Guides",
-                "fontDefinitions": [
-                  {
-                    "path": "./assets/fonts/Roboto/PlaywriteCUGuides-Regular.ttf",
-                    "weight": 500
-                  }
-                ]
-              }
-            ]
-          }
+         "fonts": ["./assets/fonts/Roboto/PlaywriteCUGuides-Regular.ttf","./assets/fonts/Roboto/Roboto-Regular.ttf" ]
         }
       ]
     
