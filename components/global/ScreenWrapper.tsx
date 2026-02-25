@@ -16,11 +16,10 @@ export default function ScreenWrapper({
 ) {
    
     return (
-         <SafeAreaView className={`flex-1 `}>
-        <View className={` ${className}`}
-            >
+      <SafeAreaView className={`flex-1  `} edges={['top'] }>
+        
             {children}
-            </View>
+          
             </SafeAreaView>
     );
 }

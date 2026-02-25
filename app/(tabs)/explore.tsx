@@ -1,4 +1,4 @@
-import ExploreScreenComponent from "@/components/screens/explore-screen/ExploreScreenComponent";
+import ExploreScreenComponent from "@/components/screens/explore-screen/ProductScreen";
 
 export default function ExploreScreen() {
   return (

@@ -20,9 +20,16 @@ export default function RootLayout() {
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="modal" options={{ presentation: "modal", title: "Modal" }} />
             <Stack.Screen name="index" options={{ headerShown: false, animation: "fade" }} />
+            <Stack.Screen
+              name="products/[id]"
+              options={{
+                title: "Product Details",
+                headerShown: true,
+              }}
+            />
           </Stack>
-          <StatusBar style="auto" />
         </SafeAreaProvider>
+        <StatusBar style="auto" />
       </GestureHandlerRootView>
     </QueryClientProvider>
   );

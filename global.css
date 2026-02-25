@@ -1,8 +1,10 @@
-@import 'tailwindcss';
-@import 'uniwind';
-
+@import "tailwindcss";
+@import "uniwind";
 
 @theme {
-  --font-playwrite: 'PlaywriteCUGuides-Regular';
-  --font-roboto: 'Roboto-Regular'
+  --font-roboto: "Roboto-Regular";
+  --font-roboto-bold: "Roboto-Bold";
+  --font-roboto-semibold: "Roboto-SemiBold";
+  --font-roboto_condensed-regular: "Roboto_Condensed-Regular";
+  --font-roboto_condensed-medium: "Roboto_Condensed-Medium";
 }

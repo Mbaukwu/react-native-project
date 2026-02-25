@@ -31,14 +31,15 @@ export const SignInForm = ({ onSubmit,className }: SignInFormProps) => {
   });
 
   return (
-    <View className={`w-full max-w-sm ${className}`}>
+    <View className={`w-full max-w-sm font-roboto ${className}`}>
      
       <Controller
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg mb-2"
+            className="w-full px-4 py-3 border border-gray-600 rounded-lg mb-2 font-semibold"
             placeholder="Name"
+            placeholderTextColor="#000" 
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -53,8 +54,9 @@ export const SignInForm = ({ onSubmit,className }: SignInFormProps) => {
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg mb-2"
+            className="w-full px-4 py-3 border border-gray-600 rounded-lg mb-2 font-semibold"
             placeholder="Email"
+             placeholderTextColor="#000" 
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -70,12 +72,13 @@ export const SignInForm = ({ onSubmit,className }: SignInFormProps) => {
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg mb-2"
+            className="w-full px-4 py-3 border border-gray-600 rounded-lg mb-2 font-semibold"
             placeholder="Password"
+             placeholderTextColor="#000" 
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            secureTextEntry
+            
           />
         )}
         name="password"

@@ -43,7 +43,7 @@
       [
   "expo-font",
       {
-         "fonts": ["./assets/fonts/Roboto/PlaywriteCUGuides-Regular.ttf","./assets/fonts/Roboto/Roboto-Regular.ttf" ]
+         "fonts": ["./assets/fonts/Roboto/Roboto-Regular.ttf" ,"./assets/fonts/Roboto/Roboto-Bold.ttf","./assets/fonts/Roboto/Roboto-SemiBold.ttf","./assets/fonts/Roboto/Roboto_Condensed-Regular.ttf","./assets/fonts/Roboto/Roboto_Condensed_Medium.ttf" ]
         }
       ]
     
