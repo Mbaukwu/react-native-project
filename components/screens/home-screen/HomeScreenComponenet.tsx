@@ -4,8 +4,8 @@ import {  SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreenComponent() {
   return (
-     <ScreenWrapper>
-      <View className="h-full justify-center items-center bg-pink-900">
+     <ScreenWrapper className="bg-pink-900">
+      <View className="flex-1 justify-center items-center ">
         <Text className="text-5xl text-center text-slate-300 uppercase mb-4 font-roboto-bold font-bold w-full">
           Welcome Home!
         </Text>
