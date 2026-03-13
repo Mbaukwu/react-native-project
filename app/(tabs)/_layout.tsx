@@ -1,18 +1,19 @@
 import { IconSymbol } from "@/components/ui/icon-symbol";
+import { Colors } from "@/constants/colorTheme/colors";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { Tabs } from "expo-router";
 import React from "react";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme() ?? 'light'
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "#831843",
-        tabBarInactiveTintColor: "#888888",
+        tabBarActiveTintColor: Colors[colorScheme].tabIconSelected,
+        tabBarInactiveTintColor: Colors[colorScheme].tabIconDefault,
         tabBarStyle: {
-          backgroundColor: "#1E1E1E",
+          backgroundColor: Colors[colorScheme].background,
           borderTopWidth: 0,
           height: 70,
         },
@@ -23,28 +24,28 @@ export default function TabLayout() {
         name="home"
         options={{
           title: "Home",
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarIcon: ({ color}) => <IconSymbol size={28} name="house.fill" color={color} />,
         }}
       />
       <Tabs.Screen
         name="explore"
         options={{
           title: "Explore",
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="magnifyingglass" color={color} />,
         }}
       />{" "}
       <Tabs.Screen
-        name="menu"
+        name="bookings"
         options={{
-          title: "Menu",
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="envelope" color={color} />,
+          title: "My Bookings",
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="bookmark.fill" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="settings"
+        name="profile"
         options={{
-          title: "Settings",
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="gearshape.fill" color={color} />,
+          title: "Profile",
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
         }}
       />
     </Tabs>

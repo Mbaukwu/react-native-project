@@ -2,9 +2,10 @@
 @import "uniwind";
 
 @theme {
-  --font-roboto: "Roboto-Regular";
-  --font-roboto-bold: "Roboto-Bold";
-  --font-roboto-semibold: "Roboto-SemiBold";
-  --font-roboto_condensed-regular: "Roboto_Condensed-Regular";
-  --font-roboto_condensed-medium: "Roboto_Condensed-Medium";
+  --font-DMSans: "DMSans-Regular";
+  --font-DMSerif: "DMSerifDisplay-Regular";
+  --font-DMSans-bold: "DMSans-Bold";
+  --font-DMSans-semibold: "DMSans-SemiBold";
+  --font-DMSans-Medium: "Roboto_Condensed-Regular";
+
 }
