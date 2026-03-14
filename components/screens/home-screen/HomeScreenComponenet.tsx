@@ -6,10 +6,10 @@ export default function HomeScreenComponent() {
   return (
      <ScreenWrapper className="bg-pink-900">
       <View className="flex-1 justify-center items-center ">
-        <Text className="text-5xl text-center text-slate-300 uppercase mb-4 font-roboto-bold font-bold w-full">
+        <Text className="text-5xl text-center text-slate-300 uppercase mb-4 font-DMSerif  w-full">
           Welcome Home!
         </Text>
-        <Text className="text-center text-xl text-white px-6">
+        <Text className="text-center text-xl font-DMSans text-white px-6">
           Explore the latest products, find new trends, and enjoy your personalized recommendations.
         </Text>
       </View>

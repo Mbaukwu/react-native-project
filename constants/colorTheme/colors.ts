@@ -52,7 +52,8 @@ export const Colors = {
     // Text
     text: palette.creamText,                // cream text on dark background
     textSecondary: palette.mutedCream,      // muted cream for subtitles
-    textDisabled: palette.fadedCream,       // faded for disabled/placeholder
+    textDisabled: palette.fadedCream,
+    white: palette.white,// faded for disabled/placeholder
 
     // Accents
     accent: palette.goldSoft,               // gold works beautifully on chocolate

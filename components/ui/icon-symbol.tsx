@@ -19,7 +19,7 @@ const MAPPING = {
   'chevron.left.forwardslash.chevron.right': 'code',
   'chevron.right': 'chevron-right',
   'person.fill': 'person',
-  'bookmark.fill': 'bookmark',
+  'bed.double.fill': 'hotel',
   'sparkles': 'whatshot',
   'chevron.left': 'chevron-left'
   

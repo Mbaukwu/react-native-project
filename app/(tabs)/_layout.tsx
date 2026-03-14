@@ -38,7 +38,7 @@ export default function TabLayout() {
         name="bookings"
         options={{
           title: "My Bookings",
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="bookmark.fill" color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="bed.double.fill" color={color} />,
         }}
       />
       <Tabs.Screen

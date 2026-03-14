@@ -1,20 +1,4 @@
-// import { View } from "react-native";
-// import React, { ReactNode } from "react";
-// import { SafeAreaView } from "react-native-safe-area-context";
 
-// type ScreenWrapperProps = {
-//   children: ReactNode;
-//   className?: string;
-// };
-
-// export default function ScreenWrapper({ children, className = "" }: ScreenWrapperProps) {
-//   return (
-//     <View className={`flex-1 ${className}`}>
-  
-//       {children}
-//     </View>
-//   );
-// }
 import { View, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import React, { ReactNode } from 'react';
 
@@ -61,11 +45,12 @@ export default function ScreenWrapper({
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         className="flex-1"
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}  // ✅ Important!
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}  
       >
         {scrollable ? (
           <ScrollView 
             className="flex-1"
+  style={{ flex: 1 }}
             contentContainerClassName={className}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled"
