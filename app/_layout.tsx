@@ -10,12 +10,24 @@ import { SheetProvider } from "react-native-actions-sheet";
 import "@/components/ui/sheets/register-sheets";
 import { MagicModalPortal } from "react-native-magic-modal";
 import { ToastMessage } from "@/components/ui/toasts-message/ToastMessage";
+import { Uniwind, useUniwind } from 'uniwind';               
+     
+import { useEffect } from 'react';
+
+
 export const unstable_settings = {
   anchor: "(tabs)",
 };
 
 export default function RootLayout() {
   const queryClient = new QueryClient();
+ // Hook to read current theme (for StatusBar sync)
+  const { theme } = useUniwind();
+
+  useEffect(() => {
+    // Set to 'system' once — app follows device dark/light mode forever
+    Uniwind.setTheme('system');
+  }, []);  // Runs only on mount
   return (
     <QueryClientProvider client={queryClient}>
       <GestureHandlerRootView style={{ flex: 1 }}>
@@ -23,7 +35,6 @@ export default function RootLayout() {
           <SheetProvider>
             <Stack>
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-              <Stack.Screen name="modal" options={{ presentation: "modal", title: "Modal" }} />
               <Stack.Screen name="index" options={{ headerShown: false, animation: "fade" }} />
               <Stack.Screen name="(hotel)/[id]" options={{ headerShown: false, title:"Hotel Listings" }}  />
               <Stack.Screen name="(auth)" options={{ headerShown: false }}/>
@@ -32,7 +43,11 @@ export default function RootLayout() {
             </Stack>
           </SheetProvider>
         </SafeAreaProvider>
-        <StatusBar style="auto" />
+        {/* StatusBar auto-syncs with current theme */}
+       <StatusBar 
+          style={theme === 'dark' ? 'light' : 'dark'} 
+        
+        />
         <MagicModalPortal />
         <ToastMessage />
       </GestureHandlerRootView>

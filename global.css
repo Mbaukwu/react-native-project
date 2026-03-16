@@ -2,10 +2,71 @@
 @import "uniwind";
 
 @theme {
-  --font-DMSans: "DMSans-Regular";
-  --font-DMSerif: "DMSerifDisplay-Regular";
-  --font-DMSans-bold: "DMSans-Bold";
-  --font-DMSans-semibold: "DMSans-SemiBold";
-  --font-DMSans-Medium: "Roboto_Condensed-Regular";
+ --font-dm-sans: "DMSans-Regular";    
+  --font-dm-serif: "DMSerifDisplay-Regular";
+  --font-dm-sans-bold: "DMSans-Bold";
+  --font-dm-sans-semibold: "DMSans-SemiBold";
+  --font-DMSans-Medium: "DMSans-Medium";
 
+
+}@layer theme {
+  :root {
+    /* Light mode — using your current light values */
+    @variant light {
+      --color-primary:          #E2704A;         /* terracotta */
+      --color-primary-pressed:  #B5541E;
+      --color-primary-soft:     #F0956D;
+
+      --color-background:       #2C1810;         /* chocolate – your light bg */
+      --color-card:             #3D2419;         /* warmDark */
+      --color-input:            #1A1008;         /* espresso */
+      --color-border:           #4A2E1E;         /* borderDark */
+
+      --color-text:             #FAF0E6;         /* creamText */
+      --color-text-secondary:   #C4A882;         /* mutedCream */
+      --color-text-disabled:    #8A7060;         /* fadedCream */
+
+      --color-accent:           #E8B86D;         /* goldSoft */
+      --color-gold:             #CD853F;         /* gold */
+
+      --color-icon:             #C4A882;
+      --color-tab-default:      #C4A882;
+      --color-tab-selected:     #E2704A;
+
+      --color-success:          #4CAF50;
+      --color-error:            #E53935;
+      --color-warning:          #FF9800;
+
+      --color-overlay:          rgba(0,0,0,0.5);
+    }
+
+    /* Dark mode — using your current dark values */
+    @variant dark {
+      --color-primary:          #E2704A;
+      --color-primary-pressed:  #F0956D;         /* you used terracottaSoft here */
+      --color-primary-soft:     rgba(226,112,74,0.15);
+
+      --color-background:       #1A1008;         /* espresso – your dark bg */
+      --color-card:             #2C1810;         /* chocolate */
+      --color-input:            #3D2419;         /* warmDark */
+      --color-border:           #4A2E1E;
+
+      --color-text:             #FAF0E6;
+      --color-text-secondary:   #C4A882;
+      --color-text-disabled:    #8A7060;
+
+      --color-accent:           #E8B86D;
+      --color-gold:             #E8B86D;         /* you used goldSoft here */
+
+      --color-icon:             #C4A882;
+      --color-tab-default:      #C4A882;
+      --color-tab-selected:     #E2704A;
+
+      --color-success:          #4CAF50;
+      --color-error:            #E53935;
+      --color-warning:          #FF9800;
+
+      --color-overlay:          rgba(0,0,0,0.7);
+    }
+  }
 }

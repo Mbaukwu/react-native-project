@@ -1,6 +1,6 @@
 import { IconSymbol } from "@/components/ui/icon-symbol";
 import { Colors } from "@/constants/colorTheme/colors";
-import { useColorScheme } from "@/hooks/use-color-scheme";
+import { useColorScheme } from "@/components/hooks/use-color-scheme";
 import { Tabs } from "expo-router";
 import React from "react";
 
