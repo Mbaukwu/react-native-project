@@ -8,17 +8,17 @@ import { useWindowDimensions } from "react-native";
 
 const onBoardingData: IonBoardingData[] = [
   {
-    image: require("@/assets/images/onboarding-images/slide1.png"),
-    title: "Nigeria's Finest Hotels, One Tap Away",
+    image: require("@/assets/images/onboarding-images/hotel.jpg"),
+    title: "Nigeria's Finest Hotels, One Tap Away!",
     description: "From luxury suites in Lagos to serene getaways in Abuja",
   },
   {
-    image: require("@/assets/images/onboarding-images/slide2.png"),
+    image: require("@/assets/images/onboarding-images/slide2.jpg"),
     title: "Explore Hundreds of Hotels",
     description: "Browse real photos, amenities and prices before you decide anything",
   },
   {
-    image: require("@/assets/images/onboarding-images/slide3.png"),
+    image: require("@/assets/images/onboarding-images/slide4.jpg"),
     title: "Your Stay, Your Way!",
     description: "Book your perfect room in seconds and get instant confirmation",
   },

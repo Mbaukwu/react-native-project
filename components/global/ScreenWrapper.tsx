@@ -1,6 +1,5 @@
-
-import { View, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
-import React, { ReactNode } from 'react';
+import { View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
+import React, { ReactNode } from "react";
 
 type ScreenWrapperProps = {
   children: ReactNode;
@@ -9,32 +8,17 @@ type ScreenWrapperProps = {
   keyboardAvoiding?: boolean;
 };
 
-export default function ScreenWrapper({
-  children,
-  className = '',
-  scrollable = false,
-  keyboardAvoiding = false,
-}: ScreenWrapperProps) {
-  
+export default function ScreenWrapper({ children, className = "bg-background", scrollable = false, keyboardAvoiding = false }: ScreenWrapperProps) {
   // Regular content
   if (!scrollable && !keyboardAvoiding) {
-    return (
-      <View className={`flex-1 ${className}`}>
-        {children}
-      </View>
-    );
+    return <View className={`flex-1 ${className}`}>{children}</View>;
   }
 
   // Scrollable only
   if (scrollable && !keyboardAvoiding) {
     return (
-      <ScrollView 
-        className="flex-1"
-        contentContainerClassName={className}
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
-      >
-        {children}
+      <ScrollView className="flex-1" contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+        <View className={className}>{children}</View>
       </ScrollView>
     );
   }
@@ -43,33 +27,26 @@ export default function ScreenWrapper({
   if (keyboardAvoiding) {
     return (
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
         className="flex-1"
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}  
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
       >
         {scrollable ? (
-          <ScrollView 
+          <ScrollView
             className="flex-1"
-  style={{ flex: 1 }}
-            contentContainerClassName={className}
+            contentContainerStyle={{ flexGrow: 1 }}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled"
           >
-            {children}
+            <View className={className}>{children}</View>
           </ScrollView>
         ) : (
-          <View className={`flex-1 ${className}`}>
-            {children}
-          </View>
+          <View className={`flex-1 ${className}`}>{children}</View>
         )}
       </KeyboardAvoidingView>
     );
   }
 
   // Fallback
-  return (
-    <View className={`flex-1 ${className}`}>
-      {children}
-    </View>
-  );
+  return <View className={`flex-1 ${className}`}>{children}</View>;
 }
