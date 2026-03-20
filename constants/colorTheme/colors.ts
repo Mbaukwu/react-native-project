@@ -1,35 +1,36 @@
 const palette = {
-  // Brand
-  terracotta: '#E2704A',
-  terracottaDeep: '#B5541E',
-  terracottaSoft: '#F0956D',
-  gold: '#CD853F',
-  goldSoft: '#E8B86D',
+  // Brand – Blue primary + orange accent mix
+  bluePrimary: '#006CFF',         // Vibrant trust blue (light mode CTA)
+  bluePrimaryDeep: '#0055CC',     // Darker press/hover
+  bluePrimaryLight: '#60A5FA',    // Brighter for dark mode visibility
+  accentOrange: '#FF9500',        // Energetic orange for deals/prices
+  accentGold: '#FBBF24',          // Warm yellow-orange fallback
 
-  // Light surfaces
-  creamWhite: '#FAF0E6',
-  linenSoft: '#EDE0D4',
-  sandLight: '#F2C49B',
-  borderLight: '#E8D5C4',
+  // Light surfaces – Clean & airy
+  whitePure: '#FFFFFF',
+  offWhiteSoft: '#F8FAFC',        // Very light gray-blue tint for cards
+  inputLight: '#F1F5F9',
+  borderLight: '#E2E8F0',
 
-  // Dark/Chocolate surfaces
-  chocolate: '#2C1810',        // new primary background
-  espresso: '#1A1008',         // deeper than chocolate
-  warmDark: '#3D2419',         // sits above chocolate
-  borderDark: '#4A2E1E',
+  // Dark surfaces – Moody slate
+  slateDark: '#0F172A',           // Rich background
+  slateCard: '#1E293B',           // Cards layer
+  slateInput: '#334155',
+  borderDark: '#475569',
 
   // Text
-  inkDark: '#1C0F0A',
-  mutedBrown: '#7A5C4E',
-  softBrown: '#B09080',
-  creamText: '#FAF0E6',
-  mutedCream: '#C4A882',
-  fadedCream: '#8A7060',
+  textDark: '#0F172A',            // Deep slate on light bg
+  textSecondaryDark: '#475569',
+  textDisabledDark: '#94A3B8',
+
+  textLight: '#F1F5F9',           // Near-white on dark bg
+  textSecondaryLight: '#CBD5E1',
+  textDisabledLight: '#94A3B8',
 
   // Status
-  success: '#4CAF50',
-  error: '#E53935',
-  warning: '#FF9800',
+  success: '#10B981',
+  error: '#EF4444',
+  warning: '#F59E0B',
 
   // Base
   white: '#FFFFFF',
@@ -39,33 +40,33 @@ const palette = {
 export const Colors = {
   light: {
     // Brand
-    primary: palette.terracotta,
-    primaryPressed: palette.terracottaDeep,
-    primarySoft: palette.terracottaSoft,
+    primary: palette.bluePrimary,
+    primaryPressed: palette.bluePrimaryDeep,
+    primarySoft: 'rgba(0, 108, 255, 0.12)',  // Subtle blue tint
 
     // Surfaces
-    background: palette.chocolate,           // rich chocolate brown background
-    card: palette.warmDark,                  // cards sit above background
-    inputBackground: palette.espresso,       // inputs sit deeper
-    border: palette.borderDark,             // warm dark borders
+    background: palette.whitePure,           // Clean white base
+    card: palette.offWhiteSoft,              // Subtle card elevation
+    inputBackground: palette.inputLight,
+    border: palette.borderLight,
 
     // Text
-    text: palette.creamText,                // cream text on dark background
-    textSecondary: palette.mutedCream,      // muted cream for subtitles
-    textDisabled: palette.fadedCream,
-    white: palette.white,// faded for disabled/placeholder
+    text: palette.textDark,
+    textSecondary: palette.textSecondaryDark,
+    textDisabled: palette.textDisabledDark,
+    white: palette.white,                    // For text on primary buttons
 
     // Accents
-    accent: palette.goldSoft,               // gold works beautifully on chocolate
-    gold: palette.gold,                     // star ratings, premium badges
+    accent: palette.accentOrange,            // Pops for prices, "Book now"
+    gold: palette.accentGold,                // Stars, badges
 
     // Icons & Tabs
-    icon: palette.mutedCream,
-    tabIconDefault: palette.mutedCream,
-    tabIconSelected: palette.terracotta,
+    icon: palette.textSecondaryDark,
+    tabIconDefault: palette.textSecondaryDark,
+    tabIconSelected: palette.bluePrimary,
 
     // Misc
-    overlay: 'rgba(0,0,0,0.5)',
+    overlay: 'rgba(15, 23, 42, 0.5)',
     success: palette.success,
     error: palette.error,
     warning: palette.warning,
@@ -73,32 +74,32 @@ export const Colors = {
 
   dark: {
     // Brand
-    primary: palette.terracotta,
-    primaryPressed: palette.terracottaSoft,
-    primarySoft: 'rgba(226,112,74,0.15)',
+    primary: palette.bluePrimaryLight,       // Lighter blue pops on dark
+    primaryPressed: palette.bluePrimaryDeep, // Consistent darker press
+    primarySoft: 'rgba(96, 165, 250, 0.20)', // Softer blue overlay
 
     // Surfaces
-    background: palette.espresso,           // deepest — darker than light mode
-    card: palette.chocolate,               // cards sit above espresso
-    inputBackground: palette.warmDark,     // inputs sit above cards
-    border: palette.borderDark,           // subtle dark borders
+    background: palette.slateDark,           // Deep slate bg
+    card: palette.slateCard,
+    inputBackground: palette.slateInput,
+    border: palette.borderDark,
 
     // Text
-    text: palette.creamText,
-    textSecondary: palette.mutedCream,
-    textDisabled: palette.fadedCream,
+    text: palette.textLight,
+    textSecondary: palette.textSecondaryLight,
+    textDisabled: palette.textDisabledLight,
 
     // Accents
-    accent: palette.goldSoft,
-    gold: palette.goldSoft,
+    accent: palette.accentGold,              // Bright yellow-orange stands out
+    gold: palette.accentGold,
 
     // Icons & Tabs
-    icon: palette.mutedCream,
-    tabIconDefault: palette.mutedCream,
-    tabIconSelected: palette.terracotta,
+    icon: palette.textSecondaryLight,
+    tabIconDefault: palette.textSecondaryLight,
+    tabIconSelected: palette.bluePrimaryLight,
 
     // Misc
-    overlay: 'rgba(0,0,0,0.7)',
+    overlay: 'rgba(0, 0, 0, 0.7)',
     success: palette.success,
     error: palette.error,
     warning: palette.warning,

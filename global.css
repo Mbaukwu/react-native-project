@@ -2,71 +2,70 @@
 @import "uniwind";
 
 @theme {
- --font-dm-sans: "DMSans-Regular";    
+  --font-dm-sans: "DMSans-Regular";
   --font-dm-serif: "DMSerifDisplay-Regular";
   --font-dm-sans-bold: "DMSans-Bold";
   --font-dm-sans-semibold: "DMSans-SemiBold";
   --font-dm-sans-medium: "DMSans-Medium";
-
-
-}@layer theme {
+}
+@layer theme {
   :root {
-    /* Light mode — using your current light values */
+    /* Light mode — clean, bright, professional (like modern Booking.com/Expedia vibes) */
     @variant light {
-      --color-primary:          #E2704A;         /* terracotta */
-      --color-primary-pressed:  #B5541E;
-      --color-primary-soft:     #F0956D;
+      --color-primary: #006CFF;          /* Vibrant trust blue – energetic CTA */
+      --color-primary-pressed: #0055CC;  /* Darker on press for feedback */
+      --color-primary-soft: rgba(0, 108, 255, 0.12);  /* Subtle bg for cards/hovers */
 
-      --color-background:       #2C1810;         /* chocolate – your light bg */
-      --color-card:             #3D2419;         /* warmDark */
-      --color-input:            #1A1008;         /* espresso */
-      --color-border:           #4A2E1E;         /* borderDark */
+      --color-background: #FFFFFF;       /* Pure white – max readability */
+      --color-card: #F8FAFC;             /* Very light cool gray – subtle separation */
+      --color-input: #F1F5F9;            /* Soft for forms/search */
+      --color-border: #E2E8F0;           /* Clean borders */
 
-      --color-text:             #FAF0E6;         /* creamText */
-      --color-text-secondary:   #C4A882;         /* mutedCream */
-      --color-text-disabled:    #8A7060;         /* fadedCream */
+      --color-text: #0F172A;             /* Deep slate – high contrast */
+      --color-text-secondary: #475569;   /* Muted gray for descriptions */
+      --color-text-disabled: #94A3B8;    /* Safe disabled */
 
-      --color-accent:           #E8B86D;         /* goldSoft */
-      --color-gold:             #CD853F;         /* gold */
+      --color-accent: #FF9500;           /* Bright orange – for prices, deals, urgency */
+      --color-gold: #F59E0B;             /* Warm yellow fallback for stars/ratings */
 
-      --color-icon:             #C4A882;
-      --color-tab-default:      #C4A882;
-      --color-tab-selected:     #E2704A;
+      --color-icon: #64748B;
+      --color-tab-default: #64748B;
+      --color-tab-selected: #006CFF;
 
-      --color-success:          #4CAF50;
-      --color-error:            #E53935;
-      --color-warning:          #FF9800;
+      --color-success: #10B981;
+      --color-error: #EF4444;
+      --color-warning: #F59E0B;
 
-      --color-overlay:          rgba(0,0,0,0.5);
+      --color-overlay: rgba(15, 23, 42, 0.5);  /* Dark overlay for modals */
     }
 
-    /* Dark mode — using your current dark values */
+    /* Dark mode — moody yet legible, blue stays prominent */
     @variant dark {
-      --color-primary:          #E2704A;
-      --color-primary-pressed:  #F0956D;         /* you used terracottaSoft here */
-      --color-primary-soft:     rgba(226,112,74,0.15);
+      --color-primary: #60A5FA;          /* Lighter blue – pops on dark bg */
+      --color-primary-pressed: #3B82F6;  /* Deeper press state */
+      --color-primary-soft: rgba(96, 165, 250, 0.20);
 
-      --color-background:       #1A1008;         /* espresso – your dark bg */
-      --color-card:             #2C1810;         /* chocolate */
-      --color-input:            #3D2419;         /* warmDark */
-      --color-border:           #4A2E1E;
+      --color-background: #0F172A;       /* Rich dark slate */
+      --color-card: #1E293B;             /* Slightly lighter for cards */
+      --color-input: #334155;
+      --color-border: #475569;
 
-      --color-text:             #FAF0E6;
-      --color-text-secondary:   #C4A882;
-      --color-text-disabled:    #8A7060;
+      --color-text: #F1F5F9;             /* Near-white text */
+      --color-text-secondary: #CBD5E1;
+      --color-text-disabled: #94A3B8;
 
-      --color-accent:           #E8B86D;
-      --color-gold:             #E8B86D;         /* you used goldSoft here */
+      --color-accent: #FBBF24;           /* Bright yellow-orange – stands out */
+      --color-gold: #F59E0B;
 
-      --color-icon:             #C4A882;
-      --color-tab-default:      #C4A882;
-      --color-tab-selected:     #E2704A;
+      --color-icon: #CBD5E1;
+      --color-tab-default: #CBD5E1;
+      --color-tab-selected: #60A5FA;
 
-      --color-success:          #4CAF50;
-      --color-error:            #E53935;
-      --color-warning:          #FF9800;
+      --color-success: #34D399;
+      --color-error: #F87171;
+      --color-warning: #FBBF24;
 
-      --color-overlay:          rgba(0,0,0,0.7);
+      --color-overlay: rgba(0, 0, 0, 0.75);
     }
   }
 }

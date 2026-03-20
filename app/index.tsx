@@ -3,10 +3,16 @@ import React from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useOnboarding } from "@/components/hooks/onboarding-hooks/useOnboarding";
 import AppText from "@/components/ui/typography/AppText";
+import { useColorScheme } from "@/components/hooks/use-color-scheme";
+import { Colors } from "@/constants/colorTheme/colors";
+
+
+
 
 const OnboardScreen = () => {
   const { isNewUser, goToHome, handleNext, setSlide, onBoardingData, width, slide,scrollRef } = useOnboarding();
-
+const colorScheme = useColorScheme(); // 'light' | 'dark' | null
+const theme = Colors[colorScheme ?? 'light']; // fallback to light
   storage.remove(IS_NEW_USER_KEY);
 
   return (
@@ -42,18 +48,25 @@ const OnboardScreen = () => {
 
           {/* Progress Dots */}
           <View className="flex-row justify-center items-center gap-2 mb-6">
-            {onBoardingData.map((_, index) => (
-              <View
-                key={index}
-                style={{
-    width: index === slide ? 24 : 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: index === slide ? '#E2704A' : '#8A7060',
-  }}
-              />
-            ))}
-          </View>
+            {onBoardingData.map((_, index) => {
+              const isActive = index === slide;
+              return (
+                <View
+                  key={index}
+                  style={{
+                    width: isActive ? 28 : 10,                // slightly wider active for emphasis
+                    height: 8,
+                    borderRadius: isActive ? 5 : 5,           // pill shape, consistent radius
+                    backgroundColor: isActive
+                      ? theme.primary                         // vibrant blue
+                      : theme.textSecondary,                  // muted gray (e.g. #475569 light / #CBD5E1 dark)
+                    opacity: isActive ? 1 : 0.6,              // subtle 
+                  }}
+                />
+              );
+              })}
+              </View>
+  
           {/* Next / Get Started Button */}
           <TouchableOpacity
             onPress={handleNext}

@@ -21,7 +21,8 @@ const MAPPING = {
   'person.fill': 'person',
   'bed.double.fill': 'hotel',
   'sparkles': 'whatshot',
-  'chevron.left': 'chevron-left'
+  'chevron.left': 'chevron-left',
+  "x.circle":"cancel"
   
   
     
