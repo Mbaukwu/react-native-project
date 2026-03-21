@@ -18,10 +18,10 @@ const theme = Colors[colorScheme ?? 'light']; // fallback to light
   return (
     <>
       {!isNewUser ? (
-        <View className="flex-1 bg-background">
+        <View className="flex-1 bg-onboarding-bg">
           {/* Skip Button */}
           <TouchableOpacity onPress={goToHome} className="absolute top-13 right-6 z-10">
-            <AppText className="text-text-secondary text-sm ">Skip</AppText>
+            <AppText className="text-onboarding-text-secondary text-sm ">Skip</AppText>
           </TouchableOpacity>
 
           {/* Slides */}
@@ -39,9 +39,9 @@ const theme = Colors[colorScheme ?? 'light']; // fallback to light
           >
             {onBoardingData.map((item, index) => (
               <View key={index} style={{ width }}  className=" flex-1 items-center justify-center px-6 font-bold">
-                <Image source={item.image}  style={{ width: width * 0.9, height: width * 0.7 }} resizeMode="cover" className="rounded-2xl"/>
-                <AppText className="text-3xl text-text  text-center mt-3" variant="serif">{item.title}</AppText>
-                <AppText className="text-base text-text-secondary mt-3 text-center leading-6">{item.description}</AppText>
+                <Image source={item.image}  style={{ width: width * 0.8, height: width * 0.7 }} resizeMode="cover" className="rounded-2xl"/>
+                <AppText className="text-3xl text-onboarding-text  text-center mt-3" variant="serif">{item.title}</AppText>
+                <AppText className="text-base text-onboarding-text-secondary  mt-3 text-center leading-6">{item.description}</AppText>
               </View>
             ))}
           </ScrollView>
@@ -58,8 +58,8 @@ const theme = Colors[colorScheme ?? 'light']; // fallback to light
                     height: 8,
                     borderRadius: isActive ? 5 : 5,           // pill shape, consistent radius
                     backgroundColor: isActive
-                      ? theme.primary                         // vibrant blue
-                      : theme.textSecondary,                  // muted gray (e.g. #475569 light / #CBD5E1 dark)
+                      ? theme.onboardingDotActive                         // vibrant blue
+                      : theme.onboardingDotInactive,                  // muted gray (e.g. #475569 light / #CBD5E1 dark)
                     opacity: isActive ? 1 : 0.6,              // subtle 
                   }}
                 />
@@ -71,11 +71,11 @@ const theme = Colors[colorScheme ?? 'light']; // fallback to light
           <TouchableOpacity
             onPress={handleNext}
             className={`
-    bg-primary mx-6 mb-12 py-4 rounded-xl items-center
+    bg-onboarding-button mx-6 mb-12 py-4 rounded-xl items-center
     active:bg-primary-pressed  
   `}
           >
-            <AppText className="text-white text-base font-dm-sans-bold text-center">{slide === onBoardingData.length - 1 ? "Get Started" : "Next"}</AppText>
+            <AppText className="text-onboarding-button-text text-base font-dm-sans-bold text-center">{slide === onBoardingData.length - 1 ? "Get Started" : "Next"}</AppText>
           </TouchableOpacity>
         </View>
       ) : (

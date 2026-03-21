@@ -11,14 +11,14 @@ type ScreenWrapperProps = {
 export default function ScreenWrapper({ children, className = "", scrollable = false, keyboardAvoiding = false }: ScreenWrapperProps) {
   // Regular content
   if (!scrollable && !keyboardAvoiding) {
-    return <View className={`flex-1 bg-background${className}`}>{children}</View>;
+    return <View className={`flex-1 bg-background ${className}`}>{children}</View>;
   }
 
   // Scrollable only
   if (scrollable && !keyboardAvoiding) {
     return (
       <ScrollView className="flex-1" contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
-       <View className={`flex-1 bg-background${className}`}>{children}</View>
+       <View className={`flex-1 bg-background ${className}`}>{children}</View>
       </ScrollView>
     );
   }
@@ -38,15 +38,15 @@ export default function ScreenWrapper({ children, className = "", scrollable = f
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled"
           >
-        <View className={`flex-1 bg-background${className}`}>{children}</View>
+        <View className={`flex-1 bg-background ${className}`}>{children}</View>
           </ScrollView>
         ) : (
-         <View className={`flex-1 bg-background${className}`}>{children}</View>
+         <View className={`flex-1 bg-background ${className}`}>{children}</View>
         )}
       </KeyboardAvoidingView>
     );
   }
 
   // Fallback
-  return <View className={`flex-1 bg-background${className}`}>{children}</View>;
+  return <View className={`flex-1 bg-background ${className}`}>{children}</View>;
 }

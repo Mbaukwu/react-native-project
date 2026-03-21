@@ -1,31 +1,36 @@
 const palette = {
   // Brand – Blue primary + orange accent mix
-  bluePrimary: '#006CFF',         // Vibrant trust blue (light mode CTA)
-  bluePrimaryDeep: '#0055CC',     // Darker press/hover
-  bluePrimaryLight: '#60A5FA',    // Brighter for dark mode visibility
-  accentOrange: '#FF9500',        // Energetic orange for deals/prices
-  accentGold: '#FBBF24',          // Warm yellow-orange fallback
+  bluePrimary: '#006CFF',
+  bluePrimaryDeep: '#0055CC',
+  bluePrimaryLight: '#60A5FA',
+  accentOrange: '#FF9500',
+  accentGold: '#FBBF24',
 
-  // Light surfaces – Clean & airy
+  // Light surfaces
   whitePure: '#FFFFFF',
-  offWhiteSoft: '#F8FAFC',        // Very light gray-blue tint for cards
+  offWhiteSoft: '#F8FAFC',
   inputLight: '#F1F5F9',
   borderLight: '#E2E8F0',
 
-  // Dark surfaces – Moody slate
-  slateDark: '#0F172A',           // Rich background
-  slateCard: '#1E293B',           // Cards layer
+  // Dark surfaces
+  slateDark: '#0F172A',
+  slateCard: '#1E293B',
   slateInput: '#334155',
   borderDark: '#475569',
 
   // Text
-  textDark: '#0F172A',            // Deep slate on light bg
+  textDark: '#0F172A',
   textSecondaryDark: '#475569',
   textDisabledDark: '#94A3B8',
-
-  textLight: '#F1F5F9',           // Near-white on dark bg
+  textLight: '#F1F5F9',
   textSecondaryLight: '#CBD5E1',
   textDisabledLight: '#94A3B8',
+
+  // Onboarding
+  onboardingLight: '#1A44C2',
+  onboardingDark: '#0F2D6B',
+  onboardingTextSecondary: '#BFDBFE',
+  onboardingButton: '#FBBF24',
 
   // Status
   success: '#10B981',
@@ -42,11 +47,11 @@ export const Colors = {
     // Brand
     primary: palette.bluePrimary,
     primaryPressed: palette.bluePrimaryDeep,
-    primarySoft: 'rgba(0, 108, 255, 0.12)',  // Subtle blue tint
+    primarySoft: 'rgba(0, 108, 255, 0.12)',
 
     // Surfaces
-    background: palette.whitePure,           // Clean white base
-    card: palette.offWhiteSoft,              // Subtle card elevation
+    background: palette.whitePure,
+    card: palette.offWhiteSoft,
     inputBackground: palette.inputLight,
     border: palette.borderLight,
 
@@ -54,16 +59,26 @@ export const Colors = {
     text: palette.textDark,
     textSecondary: palette.textSecondaryDark,
     textDisabled: palette.textDisabledDark,
-    white: palette.white,                    // For text on primary buttons
+    white: palette.white,
 
     // Accents
-    accent: palette.accentOrange,            // Pops for prices, "Book now"
-    gold: palette.accentGold,                // Stars, badges
+    accent: palette.accentOrange,
+    gold: palette.accentGold,
 
     // Icons & Tabs
     icon: palette.textSecondaryDark,
     tabIconDefault: palette.textSecondaryDark,
     tabIconSelected: palette.bluePrimary,
+
+    // Onboarding
+    onboardingBg: palette.onboardingLight,
+    onboardingText: palette.white,
+    onboardingTextSecondary: palette.onboardingTextSecondary,
+    onboardingButton: palette.onboardingButton,
+    onboardingButtonText: palette.onboardingLight,
+    onboardingDotActive: palette.onboardingButton,
+    onboardingDotInactive: 'rgba(255,255,255,0.3)',
+    onboardingSkip: palette.onboardingTextSecondary,
 
     // Misc
     overlay: 'rgba(15, 23, 42, 0.5)',
@@ -74,12 +89,12 @@ export const Colors = {
 
   dark: {
     // Brand
-    primary: palette.bluePrimaryLight,       // Lighter blue pops on dark
-    primaryPressed: palette.bluePrimaryDeep, // Consistent darker press
-    primarySoft: 'rgba(96, 165, 250, 0.20)', // Softer blue overlay
+    primary: palette.bluePrimaryLight,
+    primaryPressed: palette.bluePrimaryDeep,
+    primarySoft: 'rgba(96, 165, 250, 0.20)',
 
     // Surfaces
-    background: palette.slateDark,           // Deep slate bg
+    background: palette.slateDark,
     card: palette.slateCard,
     inputBackground: palette.slateInput,
     border: palette.borderDark,
@@ -90,13 +105,23 @@ export const Colors = {
     textDisabled: palette.textDisabledLight,
 
     // Accents
-    accent: palette.accentGold,              // Bright yellow-orange stands out
+    accent: palette.accentGold,
     gold: palette.accentGold,
 
     // Icons & Tabs
     icon: palette.textSecondaryLight,
     tabIconDefault: palette.textSecondaryLight,
     tabIconSelected: palette.bluePrimaryLight,
+
+    // Onboarding
+    onboardingBg: palette.onboardingDark,
+    onboardingText: palette.white,
+    onboardingTextSecondary: palette.onboardingTextSecondary,
+    onboardingButton: palette.onboardingButton,
+    onboardingButtonText: palette.onboardingDark,
+    onboardingDotActive: palette.onboardingButton,
+    onboardingDotInactive: 'rgba(255,255,255,0.3)',
+    onboardingSkip: palette.onboardingTextSecondary,
 
     // Misc
     overlay: 'rgba(0, 0, 0, 0.7)',

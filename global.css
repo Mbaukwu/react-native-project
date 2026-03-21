@@ -8,64 +8,79 @@
   --font-dm-sans-semibold: "DMSans-SemiBold";
   --font-dm-sans-medium: "DMSans-Medium";
 }
+
 @layer theme {
   :root {
-    /* Light mode — clean, bright, professional (like modern Booking.com/Expedia vibes) */
     @variant light {
-      --color-primary: #006CFF;          /* Vibrant trust blue – energetic CTA */
-      --color-primary-pressed: #0055CC;  /* Darker on press for feedback */
-      --color-primary-soft: rgba(0, 108, 255, 0.12);  /* Subtle bg for cards/hovers */
+      --color-primary: #006CFF;
+      --color-primary-pressed: #0055CC;
+      --color-primary-soft: rgba(0, 108, 255, 0.12);
 
-      --color-background: #FFFFFF;       /* Pure white – max readability */
-      --color-card: #F8FAFC;             /* Very light cool gray – subtle separation */
-      --color-input: #F1F5F9;            /* Soft for forms/search */
-      --color-border: #E2E8F0;           /* Clean borders */
+      --color-background: #E0ECFF;
+      --color-card: #FFFFFF;
+      --color-input: #EEF4FF;
+      --color-border: #C4DCFA;
 
-      --color-text: #0F172A;             /* Deep slate – high contrast */
-      --color-text-secondary: #475569;   /* Muted gray for descriptions */
-      --color-text-disabled: #94A3B8;    /* Safe disabled */
+      --color-text: #0F172A;
+      --color-text-secondary: #334155;
+      --color-text-disabled: #94A3B8;
 
-      --color-accent: #FF9500;           /* Bright orange – for prices, deals, urgency */
-      --color-gold: #F59E0B;             /* Warm yellow fallback for stars/ratings */
+      --color-accent: #FF9500;
+      --color-gold: #FBBF24;
 
-      --color-icon: #64748B;
-      --color-tab-default: #64748B;
+      --color-icon: #475569;
+      --color-tab-default: #94A3B8;
       --color-tab-selected: #006CFF;
 
       --color-success: #10B981;
       --color-error: #EF4444;
       --color-warning: #F59E0B;
 
-      --color-overlay: rgba(15, 23, 42, 0.5);  /* Dark overlay for modals */
+      --color-overlay: rgba(15, 23, 42, 0.5);
+      
+      --color-onboarding-bg: #1A44C2;
+  --color-onboarding-text: #FFFFFF;
+  --color-onboarding-text-secondary: #BFDBFE;
+  --color-onboarding-button: #FBBF24;
+  --color-onboarding-button-text: #1A44C2;
+  --color-onboarding-dot-active: #FBBF24;
+  --color-onboarding-dot-inactive: rgba(255,255,255,0.3);
     }
 
-    /* Dark mode — moody yet legible, blue stays prominent */
     @variant dark {
-      --color-primary: #60A5FA;          /* Lighter blue – pops on dark bg */
-      --color-primary-pressed: #3B82F6;  /* Deeper press state */
+      --color-primary: #60A5FA;
+      --color-primary-pressed: #3B82F6;
       --color-primary-soft: rgba(96, 165, 250, 0.20);
 
-      --color-background: #0F172A;       /* Rich dark slate */
-      --color-card: #1E293B;             /* Slightly lighter for cards */
+      --color-background: #0F172A;
+      --color-card: #1E293B;
       --color-input: #334155;
       --color-border: #475569;
 
-      --color-text: #F1F5F9;             /* Near-white text */
+      --color-text: #F1F5F9;
       --color-text-secondary: #CBD5E1;
-      --color-text-disabled: #94A3B8;
+      --color-text-disabled: #64748B;
 
-      --color-accent: #FBBF24;           /* Bright yellow-orange – stands out */
-      --color-gold: #F59E0B;
+      --color-accent: #FBBF24;
+      --color-gold: #FBBF24;
 
-      --color-icon: #CBD5E1;
-      --color-tab-default: #CBD5E1;
+      --color-icon: #94A3B8;
+      --color-tab-default: #64748B;
       --color-tab-selected: #60A5FA;
 
       --color-success: #34D399;
       --color-error: #F87171;
       --color-warning: #FBBF24;
 
-      --color-overlay: rgba(0, 0, 0, 0.75);
+      --color-overlay: rgba(0, 0, 0, 0.7);
+      
+       --color-onboarding-bg:#0F172A;
+  --color-onboarding-text: #FFFFFF;
+  --color-onboarding-text-secondary: #BFDBFE;
+  --color-onboarding-button: #FBBF24;
+  --color-onboarding-button-text: #0F2D6B;
+  --color-onboarding-dot-active: #FBBF24;
+  --color-onboarding-dot-inactive: rgba(255,255,255,0.3);
     }
   }
 }
