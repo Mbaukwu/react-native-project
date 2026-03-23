@@ -12,10 +12,10 @@ export default function SearchBar() {
     setsearchQuery(text)
   }
   return (
-    <View className=' pt-5 mx-4'>
-      <View className='flex-row items-center bg-input rounded-3xl px-4 my-2.5 h-13'>
+    <View className=' pt-3 mx-4'>
+      <View className='flex-row items-center bg-input rounded-2xl px-5 my-2 h-13'>
         <IconSymbol name='magnifyingglass' size={20} color={colors.icon} />
-        <TextInput className='flex-1 text-text '
+        <TextInput className='flex-1 text-text font-dm-sans'
           placeholder='Start your Journey'
           placeholderTextColor={colors.textDisabled}
           value={searchQuery}

@@ -12,75 +12,76 @@
 @layer theme {
   :root {
     @variant light {
-      --color-primary: #006CFF;
-      --color-primary-pressed: #0055CC;
+      --color-primary: #006cff;
+      --color-primary-pressed: #0055cc;
       --color-primary-soft: rgba(0, 108, 255, 0.12);
 
-      --color-background: #E0ECFF;
-      --color-card: #FFFFFF;
-      --color-input: #EEF4FF;
-      --color-border: #C4DCFA;
+      --color-background: #e0ecff;
+      --color-card: #ffffff;
+      --color-input: #f7faff;
+      --color-border: #c4dcfa;
 
-      --color-text: #0F172A;
+      --color-text: #0f172a;
       --color-text-secondary: #334155;
-      --color-text-disabled: #94A3B8;
+      --color-text-disabled: 
+#828d9e;
 
-      --color-accent: #FF9500;
-      --color-gold: #FBBF24;
+      --color-accent: #ff9500;
+      --color-gold: #fbbf24;
 
       --color-icon: #475569;
-      --color-tab-default: #94A3B8;
-      --color-tab-selected: #006CFF;
+      --color-tab-default: #94a3b8;
+      --color-tab-selected: #006cff;
 
-      --color-success: #10B981;
-      --color-error: #EF4444;
-      --color-warning: #F59E0B;
+      --color-success: #10b981;
+      --color-error: #ef4444;
+      --color-warning: #f59e0b;
 
       --color-overlay: rgba(15, 23, 42, 0.5);
-      
-      --color-onboarding-bg: #1A44C2;
-  --color-onboarding-text: #FFFFFF;
-  --color-onboarding-text-secondary: #BFDBFE;
-  --color-onboarding-button: #FBBF24;
-  --color-onboarding-button-text: #1A44C2;
-  --color-onboarding-dot-active: #FBBF24;
-  --color-onboarding-dot-inactive: rgba(255,255,255,0.3);
+
+      --color-onboarding-bg: #1a44c2;
+      --color-onboarding-text: #ffffff;
+      --color-onboarding-text-secondary: #bfdbfe;
+      --color-onboarding-button: #fbbf24;
+      --color-onboarding-button-text: #1a44c2;
+      --color-onboarding-dot-active: #fbbf24;
+      --color-onboarding-dot-inactive: rgba(255, 255, 255, 0.3);
     }
 
     @variant dark {
-      --color-primary: #60A5FA;
-      --color-primary-pressed: #3B82F6;
-      --color-primary-soft: rgba(96, 165, 250, 0.20);
+      --color-primary: #60a5fa;
+      --color-primary-pressed: #3b82f6;
+      --color-primary-soft: rgba(96, 165, 250, 0.2);
 
-      --color-background: #0F172A;
-      --color-card: #1E293B;
+      --color-background: #0f172a;
+      --color-card: #1e293b;
       --color-input: #334155;
       --color-border: #475569;
 
-      --color-text: #F1F5F9;
-      --color-text-secondary: #CBD5E1;
-      --color-text-disabled: #64748B;
+      --color-text: #f1f5f9;
+      --color-text-secondary: #cbd5e1;
+      --color-text-disabled: #64748b;
 
-      --color-accent: #FBBF24;
-      --color-gold: #FBBF24;
+      --color-accent: #fbbf24;
+      --color-gold: #fbbf24;
 
-      --color-icon: #94A3B8;
-      --color-tab-default: #64748B;
-      --color-tab-selected: #60A5FA;
+      --color-icon: #94a3b8;
+      --color-tab-default: #64748b;
+      --color-tab-selected: #60a5fa;
 
-      --color-success: #34D399;
-      --color-error: #F87171;
-      --color-warning: #FBBF24;
+      --color-success: #34d399;
+      --color-error: #f87171;
+      --color-warning: #fbbf24;
 
       --color-overlay: rgba(0, 0, 0, 0.7);
-      
-       --color-onboarding-bg:#0F172A;
-  --color-onboarding-text: #FFFFFF;
-  --color-onboarding-text-secondary: #BFDBFE;
-  --color-onboarding-button: #FBBF24;
-  --color-onboarding-button-text: #0F2D6B;
-  --color-onboarding-dot-active: #FBBF24;
-  --color-onboarding-dot-inactive: rgba(255,255,255,0.3);
+
+      --color-onboarding-bg: #0f172a;
+      --color-onboarding-text: #ffffff;
+      --color-onboarding-text-secondary: #bfdbfe;
+      --color-onboarding-button: #b8860b; /* darker, premium gold for dark mode */
+      --color-onboarding-button-text: #0f172a; /* deep navy text on dark gold button */
+      --color-onboarding-dot-active: #b8860b;
+      --color-onboarding-dot-inactive: rgba(255, 255, 255, 0.3);
     }
   }
 }

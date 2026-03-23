@@ -1,8 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 import { storage } from '@/constants/stores/mmkvStore';
 
-const supabaseUrl = 'https://fljujvlgffkvkmwvitla.supabase.co';
-const supabaseAnonKey ='sb_publishable_W3R2VGrUaCCfPI9RoBydUQ_bAfhKixd';
+const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL!;
+const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY!;
 
 const mmkvStorageAdapter = {
   getItem: (key: string) => storage.getString(key) ?? null,

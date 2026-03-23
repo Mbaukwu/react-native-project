@@ -5,6 +5,7 @@ const palette = {
   bluePrimaryLight: '#60A5FA',
   accentOrange: '#FF9500',
   accentGold: '#FBBF24',
+  darkGold: '#B8860B',
 
   // Light surfaces
   whitePure: '#FFFFFF',
@@ -24,14 +25,13 @@ const palette = {
   textDisabledDark: '#94A3B8',
   textLight: '#F1F5F9',
   textSecondaryLight: '#CBD5E1',
-  textDisabledLight: '#94A3B8',
+  textDisabledLight: '#828d9e',
 
   // Onboarding
   onboardingLight: '#1A44C2',
   onboardingDark: '#0F2D6B',
   onboardingTextSecondary: '#BFDBFE',
-  onboardingButton: '#FBBF24',
-
+  
   // Status
   success: '#10B981',
   error: '#EF4444',
@@ -70,13 +70,13 @@ export const Colors = {
     tabIconDefault: palette.textSecondaryDark,
     tabIconSelected: palette.bluePrimary,
 
-    // Onboarding
+// Onboarding (light mode)
     onboardingBg: palette.onboardingLight,
     onboardingText: palette.white,
     onboardingTextSecondary: palette.onboardingTextSecondary,
-    onboardingButton: palette.onboardingButton,
+    onboardingButton: palette.accentGold,               // bright gold
     onboardingButtonText: palette.onboardingLight,
-    onboardingDotActive: palette.onboardingButton,
+    onboardingDotActive: palette.accentGold,
     onboardingDotInactive: 'rgba(255,255,255,0.3)',
     onboardingSkip: palette.onboardingTextSecondary,
 
@@ -112,14 +112,13 @@ export const Colors = {
     icon: palette.textSecondaryLight,
     tabIconDefault: palette.textSecondaryLight,
     tabIconSelected: palette.bluePrimaryLight,
-
-    // Onboarding
+// Onboarding (dark mode)
     onboardingBg: palette.onboardingDark,
     onboardingText: palette.white,
     onboardingTextSecondary: palette.onboardingTextSecondary,
-    onboardingButton: palette.onboardingButton,
-    onboardingButtonText: palette.onboardingDark,
-    onboardingDotActive: palette.onboardingButton,
+    onboardingButton: palette.darkGold,                 // darker, richer gold for dark mode
+    onboardingButtonText: palette.slateDark,            // deep navy text on dark gold button
+    onboardingDotActive: palette.darkGold,
     onboardingDotInactive: 'rgba(255,255,255,0.3)',
     onboardingSkip: palette.onboardingTextSecondary,
 

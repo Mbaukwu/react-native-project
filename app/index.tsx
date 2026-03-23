@@ -40,8 +40,8 @@ const theme = Colors[colorScheme ?? 'light']; // fallback to light
             {onBoardingData.map((item, index) => (
               <View key={index} style={{ width }}  className=" flex-1 items-center justify-center px-6 font-bold">
                 <Image source={item.image}  style={{ width: width * 0.8, height: width * 0.7 }} resizeMode="cover" className="rounded-2xl"/>
-                <AppText className="text-3xl text-onboarding-text  text-center mt-3" variant="serif">{item.title}</AppText>
-                <AppText className="text-base text-onboarding-text-secondary  mt-3 text-center leading-6">{item.description}</AppText>
+                <AppText className="text-2xl text-onboarding-text  text-center mt-3" variant="serif">{item.title}</AppText>
+                <AppText className="text-base text-onboarding-text-secondary  mt-1.5 text-center leading-6">{item.description}</AppText>
               </View>
             ))}
           </ScrollView>
