@@ -22,7 +22,8 @@ const MAPPING = {
   'bed.double.fill': 'hotel',
   'sparkles': 'whatshot',
   'chevron.left': 'chevron-left',
-  "x.circle":"cancel"
+  "x.circle": "cancel",
+  "heart.fill": 'favorite'
   
   
     

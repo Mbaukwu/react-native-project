@@ -28,7 +28,7 @@ export default function HotelCard({ hotel }: HotelProps) {
         {/* Deal Badge */}
         {hotel.is_deal && (
           <View className="absolute top-2 left-2 bg-accent px-2 py-1 rounded-full">
-            <AppText variant="bold" className="text-xs text-white ">
+            <AppText variant="bold" className="text-xs text-white px-1.5">
               Deal
             </AppText>
           </View>
@@ -51,17 +51,18 @@ export default function HotelCard({ hotel }: HotelProps) {
               {hotel.rating?.toFixed(1)}
             </AppText>
           </View>
-          <AppText className="text-text-secondary text-xs"> {hotel.review_score_word}</AppText>
+          <AppText className="text-text-secondary text-xs pr-1.5"> {hotel.review_score_word}</AppText>
         </View>
 
         {/* Price */}
-        <AppText className="text-primary text-sm mt-1.5" variant="bold">
-          {" "}
-          ₦{hotel.price_per_night.toLocaleString()}
-        </AppText>
-        <AppText className="text-text-disabled text-xs" variant="bold">
-          /night
-        </AppText>
+        <View className="flex-row items-baseline mt-1.5 ">
+          <AppText className="text-primary text-sm pr-0.5" variant="bold">
+            ₦{hotel.price_per_night.toLocaleString()}
+          </AppText>
+          <AppText className="text-text-disabled text-xs" variant="bold">
+            /night
+          </AppText>
+        </View>
       </View>
     </TouchableOpacity>
   );

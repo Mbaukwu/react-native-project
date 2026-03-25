@@ -38,7 +38,7 @@ export function useOnboarding() {
   // ─── Navigation Actions ───────────────────────────
   const goToHome = () => {
     storage.set(IS_NEW_USER_KEY, "returning");
-    replace("/(tabs)/home");
+    replace("/(tabs)/exploreHome");
   }; 
   
   const handleNext = () => {
@@ -61,7 +61,7 @@ export function useOnboarding() {
   useEffect(() => {
     if (!isNewUser) return;
 
-    const timer = setTimeout(() => replace("/(tabs)/home"), 500);
+    const timer = setTimeout(() => replace("/(tabs)/exploreHome"), 500);
 
     return () => clearTimeout(timer);
   }, [isNewUser, replace]);
