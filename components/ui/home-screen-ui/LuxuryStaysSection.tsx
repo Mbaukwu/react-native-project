@@ -6,7 +6,7 @@ import { useLuxuryStays } from "@/components/hooks/hotel-hooks/useLuxuryStays";
 import { Colors } from "@/constants/colorTheme/colors";
 import { useColorScheme } from "@/components/hooks/use-color-scheme";
 
-export default function LuxuryStays() {
+export default function LuxuryStaysSection() {
     const { push } = useRouter();
     const colorScheme = useColorScheme() ?? "light";
     const colors = Colors[colorScheme];

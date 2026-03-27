@@ -36,4 +36,13 @@ export type RoomType = {
   'id' | 'name' | 'city' | 'location' | 'price_per_night' | 
   'rating' | 'review_count' | 'review_score_word' | 'star_class' | 
   'image_urls' | 'is_deal' | 'is_featured'
->;
+   >;
+
+  //  hotel service types
+   export const CARD_COLUMNS = 'id, name, city, location, price_per_night, rating, review_count, review_score_word, star_class, image_urls, is_deal, is_featured';
+
+export type PaginatedResult<T> = {
+  data: T[];
+  hasMore: boolean;
+  totalCount?: number;
+};

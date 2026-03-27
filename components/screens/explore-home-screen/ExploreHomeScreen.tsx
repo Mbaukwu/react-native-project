@@ -6,7 +6,11 @@ import FeaturedHotels from "../../ui/home-screen-ui/FeaturedHotelsSection";
 import SpecialDealsSection from "../../ui/home-screen-ui/SpecialDealsSection";
 import PopularDestinations from "@/components/ui/home-screen-ui/PopularDestinationSection";
 import TopRatedHotels from "@/components/ui/home-screen-ui/TopRatedHotelsSection";
-import LuxuryStays from "@/components/ui/home-screen-ui/LuxuryStays";
+import LuxuryStays from "@/components/ui/home-screen-ui/LuxuryStaysSection";
+import BudgetFriendlySection from '@/components/ui/home-screen-ui/BudgetFriendlySection';
+import AmenitiesSection from "@/components/ui/home-screen-ui/AmenitiesSection";
+import Footer from "@/components/ui/home-screen-ui/Footer";
+
 
 export default function ExploreScreenComponent() {
   return (
@@ -16,7 +20,10 @@ export default function ExploreScreenComponent() {
       <SpecialDealsSection />
       <FeaturedHotels />
       <TopRatedHotels />
+       <AmenitiesSection />
       <LuxuryStays />
+      <BudgetFriendlySection />
+     <Footer/>
     </ScreenWrapper>
   );
 }

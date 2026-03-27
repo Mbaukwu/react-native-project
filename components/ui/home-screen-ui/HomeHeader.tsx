@@ -1,8 +1,9 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import React from 'react'
 import useGreeting from "@/components/hooks/home-sceen-hooks/useGreetings"
-import SearchBar from './SearchBar'
+import SearchBarSection from './SearchSection'
 import AppText from '../typography/AppText'
+
 
 export default function HomeHeader() {
   const greeting = useGreeting(null)
@@ -13,7 +14,7 @@ export default function HomeHeader() {
       <AppText className="text-sm text-text-secondary mb-2">
   Where would you like to stay?
 </AppText>
-      <SearchBar/>
+      <SearchBarSection/>
     </View>
   )
 }

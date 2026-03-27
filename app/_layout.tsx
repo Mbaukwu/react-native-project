@@ -40,6 +40,7 @@ export default function RootLayout() {
               <Stack.Screen name="(auth)" options={{ headerShown: false }}/>
                 <Stack.Screen name="(booking)" options={{ headerShown: false }}
               />
+                <Stack.Screen name="searchScreen" options={{ headerShown: false }} />
             </Stack>
           </SheetProvider>
         </SafeAreaProvider>

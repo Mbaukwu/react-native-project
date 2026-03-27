@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getFeaturedHotels } from "@/constants/supabase/services/hotelServiceUtils";
+import { getFeaturedHotels } from "@/constants/supabase/services/index";
 import { HotelCard } from "@/constants/types/hotelTypes";
 
 

@@ -12,13 +12,13 @@ export default function SearchBar() {
 
  
   const handleSearchSubmit = () => {
-    if (searchQuery.trim()) {
-      push({
-        pathname: "/exploreHome", 
-        params: { query: searchQuery.trim() },
-      });
-    }
-  };
+  if (searchQuery.trim()) {
+    push({
+      pathname: "/searchScreen",
+      params: { query: searchQuery.trim() },
+    });
+  }
+};
 
   const clearSearch = () => {
     setSearchQuery("");
