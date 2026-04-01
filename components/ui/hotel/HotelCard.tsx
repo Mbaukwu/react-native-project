@@ -1,10 +1,14 @@
 import { View, Image, TouchableOpacity } from "react-native";
-import React from "react";
 import { useRouter } from "expo-router";
+import { magicModal } from "react-native-magic-modal";
 import AppText from "@/components/ui/typography/AppText";
-import { HotelCard as HotelCardType } from "@/constants/types/hotelTypes";
+import { IconSymbol } from "@/components/ui/icon-symbol";
+import { Colors } from "@/constants/colorTheme/colors";
 import { useColorScheme } from "@/components/hooks/use-color-scheme";
-// import { Colors } from "@/constants/colorTheme/colors";
+import { useWishlistStore } from "@/constants/stores/wishlistStore";
+import { SheetManager } from "react-native-actions-sheet";
+
+import { HotelCardType } from "@/constants/types-interface/hotelTypes";
 
 type HotelProps = {
   hotel: HotelCardType;
@@ -13,19 +17,40 @@ type HotelProps = {
 export default function HotelCard({ hotel }: HotelProps) {
   const { push } = useRouter();
   const colorScheme = useColorScheme() ?? "light";
-  // const colors = Colors[colorScheme];
+  const colors = Colors[colorScheme];
+  const { toggleWishlist, wishlistIds, userId } = useWishlistStore();
+
+  const isFav = wishlistIds.includes(hotel.id);
+
+  const handleWishlistPress = () => {
+    if (!userId && !isFav) {
+      SheetManager.show("auth-prompt", {
+        payload: {
+          onLocalSave: () => toggleWishlist(hotel.id),
+        },
+      });
+    } else {
+      toggleWishlist(hotel.id);
+    }
+  };
 
   const handlePress = () => {
-    push(`/(hotel)/${hotel.id}`);
+    push(`/hotel/${hotel.id}`);
   };
 
   return (
     <TouchableOpacity onPress={handlePress} className="w-56 mr-4 bg-card rounded-2xl overflow-hidden shadow-md" activeOpacity={0.85}>
-      {/* Image */}
       <View className="w-full h-36">
-        <Image source={{ uri: hotel.image_urls[0] || "https://via.placeholder.com/300x180" }} className="w-full h-full" resizeMode="cover" />
+        <Image
+          source={hotel.image_urls[0] ? { uri: hotel.image_urls[0] } : require("@/assets/images/hotel-placeholder.jpeg")}
+          className="w-full h-full"
+          resizeMode="cover"
+        />
 
-        {/* Deal Badge */}
+        <TouchableOpacity onPress={handleWishlistPress} className="absolute right-1 p-1.5" style={{ zIndex: 10 }}>
+          <IconSymbol name={isFav ? "heart.fill" : "heart"} size={20} color={isFav ? colors.favorite : "white"} />
+        </TouchableOpacity>
+
         {hotel.is_deal && (
           <View className="absolute top-2 left-2 bg-accent px-2 py-1 rounded-full">
             <AppText variant="bold" className="text-xs text-white px-1.5">
@@ -35,34 +60,34 @@ export default function HotelCard({ hotel }: HotelProps) {
         )}
       </View>
 
-      {/* Details */}
       <View className="p-3">
         <AppText className="text-text text-sm" variant="bold" numberOfLines={1}>
           {hotel.name}
         </AppText>
-        <AppText className="text-text-secondary text-xs mt-0.5" numberOfLines={1}>
+        <AppText className="text-text-secondary text-xs mt-0.5">
           {hotel.city} • {hotel.location || "Central"}
         </AppText>
 
-        {/* Rating */}
         <View className="flex-row items-center mt-1.5 gap-1">
           <View className="bg-primary px-1.5 py-0.5 rounded">
-            <AppText className="text-white text-xs " variant="bold">
-              {hotel.rating?.toFixed(1)}
-            </AppText>
+            <AppText className="text-white text-xs">{hotel.rating?.toFixed(1)}</AppText>
           </View>
-          <AppText className="text-text-secondary text-xs pr-1.5"> {hotel.review_score_word}</AppText>
+          <AppText className="text-text-secondary text-xs">{hotel.review_score_word}</AppText>
         </View>
 
-        {/* Price */}
-        <View className="flex-row items-baseline mt-1.5 ">
-          <AppText className="text-primary text-sm pr-0.5" variant="bold">
-            ₦{hotel.price_per_night.toLocaleString()}
-          </AppText>
-          <AppText className="text-text-disabled text-xs" variant="bold">
-            /night
-          </AppText>
-        </View>
+        {hotel.is_deal ? (
+          <View className="flex-row items-baseline mt-1.5">
+            <AppText className="text-text-disabled text-[10px] line-through mr-1">₦{Math.round(hotel.price_per_stay * 1.3).toLocaleString()}
+            </AppText>
+            <AppText className="text-primary text-sm" variant="bold">₦{hotel.price_per_stay.toLocaleString()}</AppText>
+            <AppText className="text-text-disabled text-[10px] ml-0.5">/24hrs</AppText>
+          </View>
+        ) : (
+          <View className="flex-row items-baseline mt-1.5">
+            <AppText className="text-primary text-sm" variant="bold">₦{hotel.price_per_stay.toLocaleString()}</AppText>
+            <AppText className="text-text-disabled text-xs ml-0.5">/24hrs</AppText>
+          </View>
+        )}
       </View>
     </TouchableOpacity>
   );

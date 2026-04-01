@@ -17,7 +17,7 @@ export default function PopularDestinations() {
 
   const handleCityPress = (city: string) => {
     push({
-      pathname: '/exploreHome',
+      pathname: "/searchScreen",
       params: { city },
     });
   };

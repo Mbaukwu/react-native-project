@@ -1,11 +1,10 @@
+import { getTopRatedHotels } from "@/constants/supabase/services/serviceEntryFile";
+import { HotelCard } from "@/constants/types-interface/hotelTypes";
 import { useQuery } from "@tanstack/react-query";
-import { getTopRatedHotels } from "@/constants/supabase/services/index";
-import { HotelCard } from "@/constants/types/hotelTypes";
-
 
 export const useTopRatedHotels = () => {
   return useQuery<HotelCard[], Error>({
-   queryKey: ['top-rated-hotels'],
+    queryKey: ["top-rated-hotels"],
     queryFn: () => getTopRatedHotels(10),
     staleTime: 5 * 60 * 1000,
     retry: 2,

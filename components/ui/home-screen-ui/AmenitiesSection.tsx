@@ -12,7 +12,10 @@ export default function AmenitiesSection() {
   const { data: amenities, isLoading, isError } = useAmenities();
 
   const handleAmenityPress = (amenity: string) => {
-    push(`/search?amenity=${encodeURIComponent(amenity)}`);
+     push({
+    pathname: "/searchScreen",
+    params: { amenity }
+  });
   };
 
   if (isLoading) {

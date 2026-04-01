@@ -2,11 +2,11 @@ import ScreenWrapper from "@/components/global/ScreenWrapper";
 import AppText from "@/components/ui/typography/AppText";
 import React from "react";
 
-export default function SignUpScreen() {
+export default function SignInScreen() {
   return (
     <ScreenWrapper className="bg-background">
       <AppText variant="bold">
-        Signup
+        Sign In
       </AppText>
     </ScreenWrapper>
   );

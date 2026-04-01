@@ -7,13 +7,14 @@ type PopularCity = {
    image?: string; 
 };
 const cityImages: Record<string, string> = {
-  "Lagos": "https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  "Abuja": "https://images.unsplash.com/photo-1580130718646-9f694209b207?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  "Port Harcourt": "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  "Calabar": "https://images.unsplash.com/photo-1551884831-bbf0e3b4a4d4?w=800",
-  "Enugu": "https://images.unsplash.com/photo-1589391886645-9d1f1e6c4d6a?w=800",
+  "Lagos": "https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=800", // Eko Hotel style
+  "Abuja": "https://images.pexels.com/photos/189296/pexels-photo-189296.jpeg?auto=compress&cs=tinysrgb&w=800", // Transcorp Hilton style
+  "Port Harcourt": "https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=800", // Hotel Presidential style
+  "Calabar": "https://images.pexels.com/photos/258152/pexels-photo-258152.jpeg?auto=compress&cs=tinysrgb&w=800", // Resort style
+  "Enugu": "https://images.pexels.com/photos/1617468/pexels-photo-1617468.jpeg?auto=compress&cs=tinysrgb&w=800", // Four Points style
+  "Ibadan": "https://images.pexels.com/photos/338504/pexels-photo-338504.jpeg?auto=compress&cs=tinysrgb&w=800", // Premier Hotel style
+  "Owerri": "https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=800", // Rockview style
 };
-
 export const usePopularDestinations = () => {
   return useQuery<PopularCity[], Error>({
     queryKey: ['popular-destinations'],          

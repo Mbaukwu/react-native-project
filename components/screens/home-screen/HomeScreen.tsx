@@ -12,7 +12,7 @@ import AmenitiesSection from "@/components/ui/home-screen-ui/AmenitiesSection";
 import Footer from "@/components/ui/home-screen-ui/Footer";
 
 
-export default function ExploreScreenComponent() {
+export default function HomeScreenComponent() {
   return (
     <ScreenWrapper className="" scrollable>
       <HomeHeader />

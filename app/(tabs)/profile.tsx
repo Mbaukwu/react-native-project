@@ -1,9 +1,9 @@
 
-import SettingsScreenComponent from "@/components/screens/settings-screen/SettingScreenComponent";
+import ProfileScreenComponent from "@/components/screens/profile-screen/ProfileScreenComponent.tsx";
 
 export default function SettingsScreen() {
   return (
-   <SettingsScreenComponent/>
+   <ProfileScreenComponent/>
   );
 }
 

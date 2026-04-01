@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { LegendList } from "@legendapp/list";
 import { useSearchHotels } from "@/components/hooks/hotel-hooks/useSearchHotels";
 import { IconSymbol } from "@/components/ui/icon-symbol";
-import SearchHotelCard from "@/components/ui/hotel/SearchHotelcard";
+import SearchHotelCard from "@/components/ui/hotel/SearchHotelCard";
 import AppText from "@/components/ui/typography/AppText";
 import { Colors } from "@/constants/colorTheme/colors";
 import { useColorScheme } from "@/components/hooks/use-color-scheme";

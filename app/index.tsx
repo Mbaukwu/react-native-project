@@ -13,7 +13,7 @@ const OnboardScreen = () => {
   const { isNewUser, goToHome, handleNext, setSlide, onBoardingData, width, slide,scrollRef } = useOnboarding();
 const colorScheme = useColorScheme(); // 'light' | 'dark' | null
 const theme = Colors[colorScheme ?? 'light']; // fallback to light
-  storage.remove(IS_NEW_USER_KEY);
+  // storage.remove(IS_NEW_USER_KEY);
 
   return (
     <>

@@ -13,7 +13,7 @@ export default function TopRatedHotels() {
   const { data, isLoading, isError, error } = useTopRatedHotels();
 
   const handleSeeAll = () => {
-    push("/search?filter=top-rated");
+    push("/searchScreen?filter=top-rated");
   };
   if (isLoading) {
     return (

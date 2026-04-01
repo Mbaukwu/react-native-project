@@ -13,7 +13,7 @@ export default function LuxuryStaysSection() {
     const { data, isLoading, isError, error } = useLuxuryStays();
 
     const handleSeeAll = () => {
-        push("/search?filter=luxury");
+      push("/searchScreen?filter=luxury")
     };
 
       if (isLoading) {

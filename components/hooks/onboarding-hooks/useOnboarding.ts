@@ -1,10 +1,8 @@
-import { BackHandler } from "react-native";
-import { useEffect, useRef, useState } from "react";
 import { IS_NEW_USER_KEY, storage } from "@/constants/stores/mmkvStore";
+import { IonBoardingData } from "@/constants/types-interface/onBoardScreenTypes";
 import { useRouter } from "expo-router";
-import { ScrollView } from "react-native";
-import { IonBoardingData } from "@/constants/types/onBoardScreenTypes";
-import { useWindowDimensions } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { BackHandler, ScrollView, useWindowDimensions } from "react-native";
 
 const onBoardingData: IonBoardingData[] = [
   {
@@ -38,9 +36,9 @@ export function useOnboarding() {
   // ─── Navigation Actions ───────────────────────────
   const goToHome = () => {
     storage.set(IS_NEW_USER_KEY, "returning");
-    replace("/(tabs)/exploreHome");
-  }; 
-  
+    replace("/(tabs)/home");
+  };
+
   const handleNext = () => {
     if (slide === onBoardingData.length - 1) {
       goToHome();
@@ -61,7 +59,7 @@ export function useOnboarding() {
   useEffect(() => {
     if (!isNewUser) return;
 
-    const timer = setTimeout(() => replace("/(tabs)/exploreHome"), 500);
+    const timer = setTimeout(() => replace("/(tabs)/home"), 500);
 
     return () => clearTimeout(timer);
   }, [isNewUser, replace]);

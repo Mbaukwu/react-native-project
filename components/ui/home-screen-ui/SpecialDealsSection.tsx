@@ -16,7 +16,7 @@ export default function SpecialDealsSection() {
 
     const handleSeeAll = () => {
     // Navigate to full deals/search screen
-    push('/search?filter=deals');
+    push('/searchScreen?filter=deals');
     };
     
     if (isLoading) {

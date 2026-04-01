@@ -1,7 +1,7 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
-// import { useColorScheme } from '@/hooks/use-color-scheme';
+
 import "../global.css";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -25,7 +25,7 @@ export default function RootLayout() {
   const { theme } = useUniwind();
 
   useEffect(() => {
-    // Set to 'system' once — app follows device dark/light mode forever
+    
     Uniwind.setTheme('system');
   }, []);  // Runs only on mount
   return (
@@ -33,14 +33,15 @@ export default function RootLayout() {
       <GestureHandlerRootView style={{ flex: 1 }}>
         <SafeAreaProvider>
           <SheetProvider>
-            <Stack>
+            <Stack >
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
               <Stack.Screen name="index" options={{ headerShown: false, animation: "fade" }} />
-              <Stack.Screen name="(hotel)/[id]" options={{ headerShown: false, title:"Hotel Listings" }}  />
+              
               <Stack.Screen name="(auth)" options={{ headerShown: false }}/>
                 <Stack.Screen name="(booking)" options={{ headerShown: false }}
               />
-                <Stack.Screen name="searchScreen" options={{ headerShown: false }} />
+              <Stack.Screen name="searchScreen" options={{ headerShown: false }} />
+              <Stack.Screen name="hotel" options={{ headerShown: false }} />
             </Stack>
           </SheetProvider>
         </SafeAreaProvider>

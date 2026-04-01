@@ -6,6 +6,9 @@ const palette = {
   accentOrange: '#FF9500',
   accentGold: '#FBBF24',
   darkGold: '#B8860B',
+  
+  // Favorite color
+  favorite: '#E84393',  
 
   // Light surfaces
   whitePure: '#FFFFFF',
@@ -64,17 +67,20 @@ export const Colors = {
     // Accents
     accent: palette.accentOrange,
     gold: palette.accentGold,
+    
+    // Favorite
+    favorite: palette.favorite,
 
     // Icons & Tabs
     icon: palette.textSecondaryDark,
     tabIconDefault: palette.textSecondaryDark,
     tabIconSelected: palette.bluePrimary,
 
-// Onboarding (light mode)
+    // Onboarding (light mode)
     onboardingBg: palette.onboardingLight,
     onboardingText: palette.white,
     onboardingTextSecondary: palette.onboardingTextSecondary,
-    onboardingButton: palette.accentGold,               // bright gold
+    onboardingButton: palette.accentGold,
     onboardingButtonText: palette.onboardingLight,
     onboardingDotActive: palette.accentGold,
     onboardingDotInactive: 'rgba(255,255,255,0.3)',
@@ -107,17 +113,21 @@ export const Colors = {
     // Accents
     accent: palette.accentGold,
     gold: palette.accentGold,
+    
+    // Favorite
+    favorite: palette.favorite,
 
     // Icons & Tabs
     icon: palette.textSecondaryLight,
     tabIconDefault: palette.textSecondaryLight,
     tabIconSelected: palette.bluePrimaryLight,
-// Onboarding (dark mode)
+
+    // Onboarding (dark mode)
     onboardingBg: palette.onboardingDark,
     onboardingText: palette.white,
     onboardingTextSecondary: palette.onboardingTextSecondary,
-    onboardingButton: palette.darkGold,                 // darker, richer gold for dark mode
-    onboardingButtonText: palette.slateDark,            // deep navy text on dark gold button
+    onboardingButton: palette.darkGold,
+    onboardingButtonText: palette.slateDark,
     onboardingDotActive: palette.darkGold,
     onboardingDotInactive: 'rgba(255,255,255,0.3)',
     onboardingSkip: palette.onboardingTextSecondary,

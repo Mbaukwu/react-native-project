@@ -4,11 +4,13 @@ import { Colors } from '@/constants/colorTheme/colors';
 import { useColorScheme } from '@/components/hooks/use-color-scheme';
 import { useFeaturedHotels } from '@/components/hooks/hotel-hooks/useFeaturedHotels';
 import AppText from '../typography/AppText';
+import { useGuestWishlist } from '@/components/hooks/wishlist-hook/useWishlists';
 
 export default function FeaturedHotelsSection() {
     const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const { data, isLoading, isError, error } = useFeaturedHotels();
+   const { toggle, isWishlisted } = useGuestWishlist(); 
 
   if (isLoading) {
     return (
@@ -38,7 +40,11 @@ if (!data?.length) {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ paddingHorizontal: 16 }}>
         {data.map((hotel) => (
-          <HotelCard key={hotel.id} hotel={hotel}/>
+      <HotelCard 
+        key={hotel.id} 
+        hotel={hotel}
+      
+      />
         ))}
       </ScrollView>
     </View>

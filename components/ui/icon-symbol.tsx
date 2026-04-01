@@ -23,10 +23,11 @@ const MAPPING = {
   'sparkles': 'whatshot',
   'chevron.left': 'chevron-left',
   "x.circle": "cancel",
-  "heart.fill": 'favorite'
-  
-  
-    
+  'heart': 'favorite-border',
+  'heart.fill': 'favorite',
+'location.fill': 'location-on',
+'phone.fill': 'phone',
+'envelope.fill': 'email',
 } as IconMapping;
 
 /**
