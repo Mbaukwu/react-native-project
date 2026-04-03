@@ -1,13 +1,5 @@
-import ScreenWrapper from "@/components/global/ScreenWrapper";
-import AppText from "@/components/ui/typography/AppText";
-import React from "react";
+import SignUpFormComponent from "@/components/forms/form-component/SignUpFormComponent";
 
 export default function SignUpScreen() {
-  return (
-    <ScreenWrapper className="bg-background">
-      <AppText variant="bold">
-        Signup
-      </AppText>
-    </ScreenWrapper>
-  );
+  return <SignUpFormComponent />;
 }

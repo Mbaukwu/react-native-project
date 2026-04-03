@@ -8,59 +8,65 @@ import AppText from "@/components/ui/typography/AppText";
 import { IconSymbol } from "@/components/ui/icon-symbol";
 import { Colors } from "@/constants/colorTheme/colors";
 import { useColorScheme } from "@/components/hooks/use-color-scheme";
-import { signInSchema, SignInFormData } from "@/components/forms/form-validator/authValidator";
+import { signUpSchema, SignUpFormData } from "@/components/forms/form-validator/authValidator";
 import { useState } from "react";
 
-export default function SignInFormComponent() {
+export default function SignUpFormComponent() {
   const { push, back } = useRouter();
   const colorScheme = useColorScheme() ?? "light";
   const colors = Colors[colorScheme];
 
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
 
   const {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<SignInFormData>({
-    resolver: yupResolver(signInSchema),
+  } = useForm<SignUpFormData>({
+    resolver: yupResolver(signUpSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
-  const onSubmit = async (data: SignInFormData) => {
+  const onSubmit = async (data: SignUpFormData) => {
     setServerError(null);
 
     try {
-      const { error: signInError } = await supabase.auth.signInWithPassword({
+      const { error: signUpError } = await supabase.auth.signUp({
         email: data.email.trim(),
         password: data.password,
+        options: {
+          data: { name: data.name.trim() },
+        },
       });
 
-      if (signInError) throw signInError;
+      if (signUpError) throw signUpError;
       push("/(tabs)/home");
     } catch (error: any) {
-      setServerError(error.message ?? "Sign in failed. Please try again.");
+      setServerError(error.message ?? "Sign up failed. Please try again.");
     }
   };
 
   return (
-    <ScreenWrapper keyboardAvoiding>
-      <View className="flex-1 px-6 pt-14 pb-8">
+    <ScreenWrapper keyboardAvoiding scrollable>
+      <View className="flex-1 px-6 pt-10 pb-8">
         {/* Back */}
-        <TouchableOpacity onPress={() => back()} className="mb-8">
+        <TouchableOpacity onPress={() => back()} className="mb-6">
           <IconSymbol name="chevron.left" size={28} color={colors.text} />
         </TouchableOpacity>
 
         {/* Header */}
         <AppText className="text-text text-3xl" variant="bold">
-          Welcome Back
+          Create Account
         </AppText>
         <AppText className="text-text-secondary mt-2">
-          Sign in to access your favourites and bookings
+          Join StayEasy to save favourites and book hotels
         </AppText>
 
         {/* Server Error */}
@@ -72,6 +78,32 @@ export default function SignInFormComponent() {
 
         {/* Form Fields */}
         <View className="gap-4 mt-8">
+          {/* Name */}
+          <View>
+            <AppText className="text-text-secondary text-sm mb-1.5" variant="bold">
+              Name
+            </AppText>
+            <View className={`flex-row items-center bg-input rounded-2xl px-4 h-14 border ${errors.name ? "border-error" : "border-border"}`}>
+              <IconSymbol name="person.fill" size={18} color={colors.icon} />
+              <Controller
+                control={control}
+                name="name"
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    className="flex-1 text-text ml-3 font-dm-sans"
+                    placeholder="Your name"
+                    placeholderTextColor={colors.textDisabled}
+                    value={value}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    autoCapitalize="words"
+                  />
+                )}
+              />
+            </View>
+            {errors.name && <AppText className="text-error text-xs mt-1">{errors.name.message}</AppText>}
+          </View>
+
           {/* Email */}
           <View>
             <AppText className="text-text-secondary text-sm mb-1.5" variant="bold">
@@ -102,14 +134,9 @@ export default function SignInFormComponent() {
 
           {/* Password */}
           <View>
-            <View className="flex-row justify-between mb-1.5">
-              <AppText className="text-text-secondary text-sm" variant="bold">
-                Password
-              </AppText>
-              <TouchableOpacity>
-                <AppText className="text-primary text-sm">Forgot password?</AppText>
-              </TouchableOpacity>
-            </View>
+            <AppText className="text-text-secondary text-sm mb-1.5" variant="bold">
+              Password
+            </AppText>
             <View className={`flex-row items-center bg-input rounded-2xl px-4 h-14 border ${errors.password ? "border-error" : "border-border"}`}>
               <IconSymbol name="lock.fill" size={18} color={colors.icon} />
               <Controller
@@ -118,7 +145,7 @@ export default function SignInFormComponent() {
                 render={({ field: { onChange, onBlur, value } }) => (
                   <TextInput
                     className="flex-1 text-text ml-3 font-dm-sans"
-                    placeholder="Your password"
+                    placeholder="At least 8 characters"
                     placeholderTextColor={colors.textDisabled}
                     value={value}
                     onChangeText={onChange}
@@ -134,9 +161,39 @@ export default function SignInFormComponent() {
             </View>
             {errors.password && <AppText className="text-error text-xs mt-1">{errors.password.message}</AppText>}
           </View>
+
+          {/* Confirm Password */}
+          <View>
+            <AppText className="text-text-secondary text-sm mb-1.5" variant="bold">
+              Confirm Password
+            </AppText>
+            <View className={`flex-row items-center bg-input rounded-2xl px-4 h-14 border ${errors.confirmPassword ? "border-error" : "border-border"}`}>
+              <IconSymbol name="lock.fill" size={18} color={colors.icon} />
+              <Controller
+                control={control}
+                name="confirmPassword"
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    className="flex-1 text-text ml-3 font-dm-sans"
+                    placeholder="Repeat your password"
+                    placeholderTextColor={colors.textDisabled}
+                    value={value}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    secureTextEntry={!showConfirmPassword}
+                    autoCapitalize="none"
+                  />
+                )}
+              />
+              <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
+                <IconSymbol name={showConfirmPassword ? "eye.slash.fill" : "eye.fill"} size={18} color={colors.icon} />
+              </TouchableOpacity>
+            </View>
+            {errors.confirmPassword && <AppText className="text-error text-xs mt-1">{errors.confirmPassword.message}</AppText>}
+          </View>
         </View>
 
-        {/* Sign In Button */}
+        {/* Sign Up Button */}
         <TouchableOpacity
           onPress={handleSubmit(onSubmit)}
           disabled={isSubmitting}
@@ -146,15 +203,15 @@ export default function SignInFormComponent() {
           {isSubmitting ? (
             <ActivityIndicator color="white" />
           ) : (
-            <AppText className="text-white text-base" variant="bold">Sign In</AppText>
+            <AppText className="text-white text-base" variant="bold">Create Account</AppText>
           )}
         </TouchableOpacity>
 
-        {/* Sign Up Link */}
+        {/* Sign In Link */}
         <View className="flex-row justify-center mt-6">
-          <AppText className="text-text-secondary">Don't have an account? </AppText>
-          <TouchableOpacity onPress={() => push("/(auth)/signUp")}>
-            <AppText className="text-primary" variant="bold">Create Account</AppText>
+          <AppText className="text-text-secondary">Already have an account? </AppText>
+          <TouchableOpacity onPress={() => push("/(auth)/signIn")}>
+            <AppText className="text-primary" variant="bold">Sign In</AppText>
           </TouchableOpacity>
         </View>
       </View>

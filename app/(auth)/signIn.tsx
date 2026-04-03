@@ -1,13 +1,9 @@
-import ScreenWrapper from "@/components/global/ScreenWrapper";
-import AppText from "@/components/ui/typography/AppText";
+import SignInFormComponent from "@/components/forms/form-component/SignInFormComponent";
+
 import React from "react";
 
 export default function SignInScreen() {
   return (
-    <ScreenWrapper className="bg-background">
-      <AppText variant="bold">
-        Sign In
-      </AppText>
-    </ScreenWrapper>
+    <SignInFormComponent/>
   );
 }

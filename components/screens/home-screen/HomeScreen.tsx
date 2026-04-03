@@ -10,12 +10,14 @@ import LuxuryStays from "@/components/ui/home-screen-ui/LuxuryStaysSection";
 import BudgetFriendlySection from '@/components/ui/home-screen-ui/BudgetFriendlySection';
 import AmenitiesSection from "@/components/ui/home-screen-ui/AmenitiesSection";
 import Footer from "@/components/ui/home-screen-ui/Footer";
+import { ScrollView } from "react-native-actions-sheet";
 
 
 export default function HomeScreenComponent() {
   return (
-    <ScreenWrapper className="" scrollable>
+    <ScreenWrapper className="" scrollable={false}>
       <HomeHeader />
+      <ScrollView className="flex-1 ">
       <PopularDestinations />
       <SpecialDealsSection />
       <FeaturedHotels />
@@ -23,7 +25,8 @@ export default function HomeScreenComponent() {
        <AmenitiesSection />
       <LuxuryStays />
       <BudgetFriendlySection />
-     <Footer/>
+       
+        </ScrollView>
     </ScreenWrapper>
   );
 }
