@@ -1,14 +1,14 @@
-import { View, TextInput, TouchableOpacity, ActivityIndicator } from "react-native";
-import { useRouter, useLocalSearchParams } from "expo-router";
-import { useState, useEffect } from "react";
-import { LegendList } from "@legendapp/list";
+import ScreenWrapper from "@/components/global/ScreenWrapper";
 import { useSearchHotels } from "@/components/hooks/hotel-hooks/useSearchHotels";
+import { useColorScheme } from "@/components/hooks/use-color-scheme";
+import SearchHotelCard from "@/components/ui/hotelCards/SearchHotelCard";
 import { IconSymbol } from "@/components/ui/icon-symbol";
-import SearchHotelCard from "@/components/ui/hotel/SearchHotelCard";
 import AppText from "@/components/ui/typography/AppText";
 import { Colors } from "@/constants/colorTheme/colors";
-import { useColorScheme } from "@/components/hooks/use-color-scheme";
-import ScreenWrapper from "@/components/global/ScreenWrapper";
+import { LegendList } from "@legendapp/list";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { useEffect, useState } from "react";
+import { ActivityIndicator, TextInput, TouchableOpacity, View } from "react-native";
 
 type LocalSearchParamsType = {
   query?: string;
@@ -138,9 +138,7 @@ export default function SearchScreenComponent() {
         {!shouldShowResults ? (
           <View className="flex-1 items-center justify-center px-4">
             <IconSymbol name="magnifyingglass" size={48} color={colors.textDisabled} />
-            <AppText className="text-text-secondary text-center mt-4">
-              Search for hotels by name, city, or location
-            </AppText>
+            <AppText className="text-text-secondary text-center mt-4">Search for hotels by name, city, or location</AppText>
           </View>
         ) : isLoading && hotels.length === 0 ? (
           <View className="flex-1 items-center justify-center">

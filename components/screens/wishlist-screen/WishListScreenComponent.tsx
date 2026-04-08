@@ -1,20 +1,20 @@
-import { View, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { useRouter } from 'expo-router';
-import { useEffect, useState, useCallback } from 'react';
-import { LegendList } from '@legendapp/list';
-import ScreenWrapper from '@/components/global/ScreenWrapper';
-import AppText from '@/components/ui/typography/AppText';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { useWishlistStore } from '@/constants/stores/wishlistStore';
-import { getWishlistHotels } from '@/constants/supabase/services/serviceEntryFile';
-import SearchHotelCard from '@/components/ui/hotel/SearchHotelCard';
-import { Colors } from '@/constants/colorTheme/colors';
-import { useColorScheme } from '@/components/hooks/use-color-scheme';
-import { HotelCardType } from '@/constants/types-interface/hotelTypes';
+import ScreenWrapper from "@/components/global/ScreenWrapper";
+import { useColorScheme } from "@/components/hooks/use-color-scheme";
+import SearchHotelCard from "@/components/ui/hotelCards/SearchHotelCard";
+import { IconSymbol } from "@/components/ui/icon-symbol";
+import AppText from "@/components/ui/typography/AppText";
+import { Colors } from "@/constants/colorTheme/colors";
+import { useWishlistStore } from "@/constants/stores/wishlistStore";
+import { getWishlistHotels } from "@/constants/supabase/services/serviceEntryFile";
+import { HotelCardType } from "@/constants/types-interface/hotelTypes";
+import { LegendList } from "@legendapp/list";
+import { useRouter } from "expo-router";
+import { useCallback, useEffect, useState } from "react";
+import { ActivityIndicator, TouchableOpacity, View } from "react-native";
 
 export default function WishlistScreen() {
   const { back } = useRouter();
-  const colorScheme = useColorScheme() ?? 'light';
+  const colorScheme = useColorScheme() ?? "light";
   const colors = Colors[colorScheme];
   const { wishlistIds, isLoading: wishlistLoading } = useWishlistStore();
   const [hotels, setHotels] = useState<HotelCardType[]>([]);
@@ -30,13 +30,13 @@ export default function WishlistScreen() {
         setHasLoaded(true);
         return;
       }
-      
+
       setLoading(true);
       try {
         const fetchedHotels = await getWishlistHotels(wishlistIds);
         setHotels(fetchedHotels);
       } catch (error) {
-        console.error('Failed to fetch wishlist hotels:', error);
+        console.error("Failed to fetch wishlist hotels:", error);
       } finally {
         setLoading(false);
         setHasLoaded(true);
@@ -48,7 +48,7 @@ export default function WishlistScreen() {
 
   // Handle removal - update local state instantly, no refetch
   const handleRemove = useCallback((hotelId: string) => {
-    setHotels(prev => prev.filter(hotel => hotel.id !== hotelId));
+    setHotels((prev) => prev.filter((hotel) => hotel.id !== hotelId));
   }, []);
 
   const isLoading = wishlistLoading || (!hasLoaded && loading);
@@ -85,9 +85,7 @@ export default function WishlistScreen() {
             <AppText className="text-text text-2xl text-center" variant="bold">
               No items in wishlist
             </AppText>
-            <AppText className="text-text-secondary text-center mt-2 leading-6">
-              Tap the heart on any hotel to add it here
-            </AppText>
+            <AppText className="text-text-secondary text-center mt-2 leading-6">Tap the heart on any hotel to add it here</AppText>
           </View>
         </View>
       </ScreenWrapper>
@@ -109,7 +107,7 @@ export default function WishlistScreen() {
           </View>
           <View className="bg-primary/15 px-3 py-1.5 rounded-full">
             <AppText className="text-primary text-sm" variant="bold">
-              {hotels.length} {hotels.length === 1 ? 'hotel' : 'hotels'}
+              {hotels.length} {hotels.length === 1 ? "hotel" : "hotels"}
             </AppText>
           </View>
         </View>
@@ -118,12 +116,7 @@ export default function WishlistScreen() {
         <LegendList
           data={hotels}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <SearchHotelCard 
-              hotel={item} 
-              onRemoveFromWishlist={handleRemove}
-            />
-          )}
+          renderItem={({ item }) => <SearchHotelCard hotel={item} onRemoveFromWishlist={handleRemove} />}
           showsVerticalScrollIndicator={false}
         />
       </View>

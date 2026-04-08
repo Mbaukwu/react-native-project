@@ -20,7 +20,7 @@ export default function HotelDetailsScreen() {
 
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
- const legendListRef = useRef<LegendListRef>(null);
+  const legendListRef = useRef<LegendListRef>(null);
   const [selectedRoom, setSelectedRoom] = useState<RoomType | null>(null);
   const [selectedPrice, setSelectedPrice] = useState<number>(0);
 
@@ -71,15 +71,15 @@ export default function HotelDetailsScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Image Gallery */}
         <View className="relative">
-         <LegendList
+          <LegendList
             ref={legendListRef}
             data={hotel.image_urls}
             horizontal
             pagingEnabled
             showsHorizontalScrollIndicator={false}
             keyExtractor={(item, index) => index.toString()}
-            snapToInterval={width} 
-            snapToAlignment="center" 
+            snapToInterval={width}
+            snapToAlignment="center"
             decelerationRate="fast"
             renderItem={({ item }) => <Image source={{ uri: item }} style={{ width: width, height: 320 }} resizeMode="cover" />}
             onMomentumScrollEnd={(event) => {
@@ -238,7 +238,12 @@ export default function HotelDetailsScreen() {
 
           {/* Book Now Button */}
           <TouchableOpacity
-            onPress={() => push(`/(booking)/booking-form?hotelId=${hotel.id}&price=${selectedPrice}&hotelName=${hotel.name}`)}
+            onPress={() => {
+              const roomTypeName = selectedRoom?.name || "Standard";
+              push(
+                `/(booking)/booking-form?hotelId=${hotel.id}&price=${selectedPrice}&hotelName=${encodeURIComponent(hotel.name)}&roomType=${encodeURIComponent(roomTypeName)}`,
+              );
+            }}
             className="bg-primary py-4 rounded-xl mt-6 mb-8"
           >
             <AppText className="text-white text-center text-lg" variant="bold">

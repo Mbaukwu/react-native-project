@@ -54,7 +54,7 @@ export default function SignUpFormComponent() {
   };
 
   return (
-    <ScreenWrapper keyboardAvoiding scrollable>
+    <ScreenWrapper keyboardAvoiding>
       <View className="flex-1 px-6 pt-10 pb-8">
         {/* Back */}
         <TouchableOpacity onPress={() => back()} className="mb-6">

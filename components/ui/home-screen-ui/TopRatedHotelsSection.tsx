@@ -1,10 +1,12 @@
-import { View, ScrollView, ActivityIndicator, TouchableOpacity } from "react-native";
-import { useRouter } from "expo-router";
-import HotelCard from "@/components/ui/hotel/HotelCard";
-import AppText from "@/components/ui/typography/AppText";
 import { useTopRatedHotels } from "@/components/hooks/hotel-hooks/useTopRatedHotels";
-import { Colors } from "@/constants/colorTheme/colors";
 import { useColorScheme } from "@/components/hooks/use-color-scheme";
+import HotelCard from "@/components/ui/hotelCards/HotelCard";
+import AppText from "@/components/ui/typography/AppText";
+import { Colors } from "@/constants/colorTheme/colors";
+import { useRouter } from "expo-router";
+import { ScrollView, TouchableOpacity, View } from "react-native";
+import HotelCardSkeleton from "../skeletons-ui/HotelCardSkeleton";
+import SectionHeaderSkeleton from "../skeletons-ui/SectionHeaderSkeleton";
 
 export default function TopRatedHotels() {
   const { push } = useRouter();
@@ -17,9 +19,9 @@ export default function TopRatedHotels() {
   };
   if (isLoading) {
     return (
-      <View className="py-8 items-center">
-        <ActivityIndicator size="large" color={colors.primary} />
-        <AppText className="mt-4 text-text-secondary">Loading Top Rated hotels...</AppText>
+      <View className="mt-6">
+        <SectionHeaderSkeleton />
+        <HotelCardSkeleton />
       </View>
     );
   }

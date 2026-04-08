@@ -1,9 +1,10 @@
-import BookingScreenComponent from "@/components/screens/booking-screen/BookingScreenComponent.tsx";
-import ProfileScreenComponent from "@/components/screens/profile-screen/ProfileScreenComponent.tsx";
+import BookingFormComponent from "@/components/forms/form-component/BookingFormComponent";
+import BookingFormScreen from "../(booking)/booking-form";
 import { Text, View } from "react-native";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import ScreenWrapper from "@/components/global/ScreenWrapper";
+import BookingScreenComponent from "@/components/screens/booking-screen/BookingScreenComponent.tsx";
 
-export default function MenuScreen() {
+export default function BookingFormTabScreen() {
   return (
     <BookingScreenComponent/>
   );

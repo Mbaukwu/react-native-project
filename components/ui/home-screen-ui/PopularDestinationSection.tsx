@@ -4,6 +4,8 @@ import AppText from '@/components/ui/typography/AppText';
 import { usePopularDestinations } from '@/components/hooks/hotel-hooks/usePopularDestination';
 import { Colors } from '@/constants/colorTheme/colors';
 import { useColorScheme } from '@/components/hooks/use-color-scheme';
+import SectionHeaderSkeleton from '../skeletons-ui/SectionHeaderSkeleton';
+import DestinationSkeleton from '../skeletons-ui/DestinationSkeleton';
 
 
 // Map cities to nice images (you can expand this)
@@ -24,8 +26,9 @@ export default function PopularDestinations() {
 
   if (isLoading) {
     return (
-      <View className="py-8 items-center">
-        <ActivityIndicator size="large" color={colors.primary} />
+      <View className="mt-8">
+        <SectionHeaderSkeleton />
+        <DestinationSkeleton />
       </View>
     );
   }

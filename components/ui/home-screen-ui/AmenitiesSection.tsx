@@ -4,6 +4,8 @@ import AppText from "@/components/ui/typography/AppText";
 import { useAmenities } from "@/components/hooks/hotel-hooks/useHotelAmenities";
 import { Colors } from "@/constants/colorTheme/colors";
 import { useColorScheme } from "@/components/hooks/use-color-scheme";
+import SectionHeaderSkeleton from "../skeletons-ui/SectionHeaderSkeleton";
+import DestinationSkeleton from "../skeletons-ui/DestinationSkeleton";
 
 export default function AmenitiesSection() {
   const { push } = useRouter();
@@ -20,9 +22,10 @@ export default function AmenitiesSection() {
 
   if (isLoading) {
     return (
-      <View className="py-8 items-center">
-        <ActivityIndicator size="large" color={colors.primary} />
-      </View>
+     <View className="mt-8">
+             <SectionHeaderSkeleton />
+             <DestinationSkeleton />
+           </View>
     );
   }
 

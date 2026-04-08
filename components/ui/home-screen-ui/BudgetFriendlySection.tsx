@@ -1,10 +1,12 @@
-import { View, ScrollView, ActivityIndicator, TouchableOpacity } from "react-native";
-import { useRouter } from "expo-router";
-import HotelCard from "@/components/ui/hotel/HotelCard";
-import AppText from "@/components/ui/typography/AppText";
 import { useBudgetFriendly } from "@/components/hooks/hotel-hooks/useBudgetFriendlyHotels";
-import { Colors } from "@/constants/colorTheme/colors";
 import { useColorScheme } from "@/components/hooks/use-color-scheme";
+import HotelCard from "@/components/ui/hotelCards/HotelCard";
+import AppText from "@/components/ui/typography/AppText";
+import { Colors } from "@/constants/colorTheme/colors";
+import { useRouter } from "expo-router";
+import { ScrollView, TouchableOpacity, View } from "react-native";
+import HotelCardSkeleton from "../skeletons-ui/HotelCardSkeleton";
+import SectionHeaderSkeleton from "../skeletons-ui/SectionHeaderSkeleton";
 
 export default function BudgetFreindlySection() {
   const { push } = useRouter();
@@ -13,14 +15,14 @@ export default function BudgetFreindlySection() {
   const { data, isLoading, isError, error } = useBudgetFriendly();
 
   const handleSeeAll = () => {
-    push("/search?filter=budget");
+    push("/searchScreen?filter=budget");
   };
 
   if (isLoading) {
     return (
-      <View className="py-8 items-center">
-        <ActivityIndicator size={"large"} color={colors.primary} />
-        <AppText className="mt-4 text-text-secondary">Loading budget friendly stays...</AppText>
+      <View className="mt-6">
+        <SectionHeaderSkeleton />
+        <HotelCardSkeleton />
       </View>
     );
   }
@@ -32,8 +34,8 @@ export default function BudgetFreindlySection() {
       </View>
     );
   }
-    
-   return (
+
+  return (
     <View className="mt-8">
       <View className="flex-row items-center justify-between px-4 mb-4">
         <AppText className="text-xl text-text" variant="bold">
@@ -46,13 +48,9 @@ export default function BudgetFreindlySection() {
         </TouchableOpacity>
       </View>
 
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: 16 }}
-      >
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 16 }}>
         {data.map((hotel) => (
-          <HotelCard key={hotel.id} hotel={hotel}/>
+          <HotelCard key={hotel.id} hotel={hotel} />
         ))}
       </ScrollView>
     </View>
