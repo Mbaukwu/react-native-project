@@ -1,4 +1,4 @@
-import { SectionList } from "react-native";
+import { SectionList, View } from "react-native";
 import ScreenWrapper from "@/components/global/ScreenWrapper";
 import HomeHeader from "@/components/ui/home-screen-ui/HomeHeader";
 import PopularDestinations from "@/components/ui/home-screen-ui/PopularDestinationSection";
@@ -51,16 +51,22 @@ const renderSection = (id:string) => {
 export default function HomeScreenComponent() {
   return (
     <ScreenWrapper >
+       <View className="flex-1">
+        {/* Sticky Header */}
+        <View className="bg-background">
+          <HomeHeader />
+        </View>
+
       <SectionList
         sections={SECTIONS}
         keyExtractor={(item) => item.key}
-        ListHeaderComponent={<HomeHeader />}
         renderItem={({ section }) => renderSection(section.id)}
         renderSectionHeader={() => null}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 32 }}
         stickySectionHeadersEnabled={false}
-      />
+        />
+        </View>
     </ScreenWrapper>
   );
 }

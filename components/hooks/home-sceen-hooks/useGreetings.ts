@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react'
 
 export default function useGreeting(userName: string | null) {
@@ -11,7 +10,6 @@ export default function useGreeting(userName: string | null) {
                 case hour >= 5 && hour < 12:
                     timeGreeting = "Good Morning";
                     break;
-
                 case hour >= 12 && hour < 18:
                     timeGreeting = "Good Afternoon";
                     break;
@@ -21,26 +19,24 @@ export default function useGreeting(userName: string | null) {
                 default:
                     timeGreeting = "Good Night";
             }
-            return userName ? `${timeGreeting}, ${userName}, the Explorer!` : `${timeGreeting}, Explorer!`
+            return userName ? `${timeGreeting}, ${userName}` : `${timeGreeting}, Adventurer!`
         };
-         // Set initial greeting
+        
         setGreeting(updateGreeting());
-       
     
-    let lastHour = new Date().getHours();
+        let lastHour = new Date().getHours();
         const interval = setInterval(() => {
             const currentTime = new Date();
             const currentHour = currentTime.getHours();
 
             if (currentHour !== lastHour) {
-                lastHour = currentHour
-                setGreeting(updateGreeting())
+                lastHour = currentHour;
+                setGreeting(updateGreeting());
             }
-        },60000)
+        }, 60000);
+        
         return () => clearInterval(interval);
-    }, [userName])
-    
+    }, [userName]);
 
     return greeting;
- 
 }

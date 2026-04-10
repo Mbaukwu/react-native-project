@@ -31,3 +31,11 @@ export const cancelBooking = async (bookingId: string): Promise<void> => {
 
   if (error) throw new Error(`Failed to cancel booking: ${error.message}`);
 };
+
+export const deleteBooking = async (bookingId: string): Promise<void> => {
+  const { error } = await supabase
+    .from('bookings')
+    .delete()
+    .eq('id', bookingId);
+  if (error) throw new Error(error.message);
+};

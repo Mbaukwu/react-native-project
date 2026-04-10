@@ -13,10 +13,10 @@ import { useCallback, useEffect, useState } from "react";
 import { ActivityIndicator, TouchableOpacity, View } from "react-native";
 
 export default function WishlistScreen() {
-  const { back } = useRouter();
+  const { back, push } = useRouter();
   const colorScheme = useColorScheme() ?? "light";
   const colors = Colors[colorScheme];
-  const { wishlistIds, isLoading: wishlistLoading } = useWishlistStore();
+  const { wishlistIds, userId, isLoading: wishlistLoading } = useWishlistStore();
   const [hotels, setHotels] = useState<HotelCardType[]>([]);
   const [loading, setLoading] = useState(true);
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -44,7 +44,7 @@ export default function WishlistScreen() {
     };
 
     fetchHotels();
-  }, [wishlistIds]); // ← Add wishlistIds here
+  }, [wishlistIds]);
 
   // Handle removal - update local state instantly, no refetch
   const handleRemove = useCallback((hotelId: string) => {
@@ -63,6 +63,53 @@ export default function WishlistScreen() {
     );
   }
 
+  // Not signed in - show sign in prompt
+  if (!userId) {
+    return (
+      <ScreenWrapper>
+        <View className="flex-1 px-6 pt-10">
+          {/* Header with back button */}
+          <View className="flex-row items-center mb-8">
+            <TouchableOpacity onPress={() => back()} className="mr-1 p-1">
+              <IconSymbol name="chevron.left" size={24} color={colors.text} />
+            </TouchableOpacity>
+            <AppText className="text-text text-2xl" variant="bold">
+              Wishlist
+            </AppText>
+          </View>
+
+          {/* Sign in prompt */}
+          <View className="flex-1 items-center justify-center -mt-20">
+            <View className="bg-primary/15 p-6 rounded-full mb-6">
+              <IconSymbol name="heart.fill" size={56} color={colors.primary} />
+            </View>
+            <AppText className="text-text text-2xl text-center" variant="bold">
+              Save your favourites
+            </AppText>
+            <AppText className="text-text-secondary text-center mt-2 leading-6">
+              Sign in to save hotels and access them from any device
+            </AppText>
+            <TouchableOpacity
+              onPress={() => push("/(auth)/signIn")}
+              className="mt-6 bg-primary py-3.5 px-8 rounded-xl"
+            >
+              <AppText className="text-white text-base" variant="bold">
+                Sign In
+              </AppText>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => push("/(auth)/signUp")}
+              className="mt-3 py-2"
+            >
+              <AppText className="text-primary">Create Account</AppText>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScreenWrapper>
+    );
+  }
+
+  // Signed in but empty wishlist
   if (hotels.length === 0) {
     return (
       <ScreenWrapper>
@@ -85,7 +132,9 @@ export default function WishlistScreen() {
             <AppText className="text-text text-2xl text-center" variant="bold">
               No items in wishlist
             </AppText>
-            <AppText className="text-text-secondary text-center mt-2 leading-6">Tap the heart on any hotel to add it here</AppText>
+            <AppText className="text-text-secondary text-center mt-2 leading-6">
+              Tap the heart on any hotel to add it here
+            </AppText>
           </View>
         </View>
       </ScreenWrapper>
@@ -94,14 +143,14 @@ export default function WishlistScreen() {
 
   return (
     <ScreenWrapper>
-      <View className="flex-1 px-4 pt-10">
+      <View className="flex-1 px-4 pt-8">
         {/* Header */}
         <View className="flex-row items-center justify-between mb-6">
           <View className="flex-row items-center">
             <TouchableOpacity onPress={() => back()} className="mr-1 p-1">
               <IconSymbol name="chevron.left" size={24} color={colors.text} />
             </TouchableOpacity>
-            <AppText className="text-text text-2xl" variant="bold">
+            <AppText className="text-text text-[22px]" variant="bold">
               Wishlist
             </AppText>
           </View>
@@ -112,7 +161,7 @@ export default function WishlistScreen() {
           </View>
         </View>
 
-        {/* Hotel List - LegendList with no extra spacing */}
+        {/* Hotel List */}
         <LegendList
           data={hotels}
           keyExtractor={(item) => item.id}

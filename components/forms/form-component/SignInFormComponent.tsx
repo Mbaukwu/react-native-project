@@ -49,11 +49,12 @@ export default function SignInFormComponent() {
 
   return (
     <ScreenWrapper keyboardAvoiding>
-      <View className="flex-1 px-6 pt-14 pb-8">
+      <View className="flex-1 px-6 pt-10 pb-10">
         {/* Back */}
-        <TouchableOpacity onPress={() => back()} className="mb-8">
-          <IconSymbol name="chevron.left" size={28} color={colors.text} />
-        </TouchableOpacity>
+       <TouchableOpacity onPress={() => back()} className="flex-row items-center mb-8">
+  <IconSymbol name="chevron.left" size={24} color={colors.text} />
+  <AppText className="text-text text-[16px] ml-1 capitalize px-1" variant="bold">go back</AppText>
+</TouchableOpacity>
 
         {/* Header */}
         <AppText className="text-text text-3xl" variant="bold">

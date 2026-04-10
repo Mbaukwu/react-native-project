@@ -55,19 +55,20 @@ export default function SignUpFormComponent() {
 
   return (
     <ScreenWrapper keyboardAvoiding>
-      <View className="flex-1 px-6 pt-10 pb-8">
+      <View className="flex-1 px-6 pt-10 pb-10">
         {/* Back */}
-        <TouchableOpacity onPress={() => back()} className="mb-6">
-          <IconSymbol name="chevron.left" size={28} color={colors.text} />
+        <TouchableOpacity onPress={() => back()} className="flex-row items-center mb-8">
+          <IconSymbol name="chevron.left" size={24} color={colors.text} />
+          <AppText className="text-text text-[16px] ml-1 capitalize px-1" variant="bold">
+            go back
+          </AppText>
         </TouchableOpacity>
 
         {/* Header */}
         <AppText className="text-text text-3xl" variant="bold">
           Create Account
         </AppText>
-        <AppText className="text-text-secondary mt-2">
-          Join StayEasy to save favourites and book hotels
-        </AppText>
+        <AppText className="text-text-secondary mt-2">Join StayEasy to save favourites and book hotels</AppText>
 
         {/* Server Error */}
         {serverError && (
@@ -167,7 +168,9 @@ export default function SignUpFormComponent() {
             <AppText className="text-text-secondary text-sm mb-1.5" variant="bold">
               Confirm Password
             </AppText>
-            <View className={`flex-row items-center bg-input rounded-2xl px-4 h-14 border ${errors.confirmPassword ? "border-error" : "border-border"}`}>
+            <View
+              className={`flex-row items-center bg-input rounded-2xl px-4 h-14 border ${errors.confirmPassword ? "border-error" : "border-border"}`}
+            >
               <IconSymbol name="lock.fill" size={18} color={colors.icon} />
               <Controller
                 control={control}
@@ -203,7 +206,9 @@ export default function SignUpFormComponent() {
           {isSubmitting ? (
             <ActivityIndicator color="white" />
           ) : (
-            <AppText className="text-white text-base" variant="bold">Create Account</AppText>
+            <AppText className="text-white text-base" variant="bold">
+              Create Account
+            </AppText>
           )}
         </TouchableOpacity>
 
@@ -211,7 +216,9 @@ export default function SignUpFormComponent() {
         <View className="flex-row justify-center mt-6">
           <AppText className="text-text-secondary">Already have an account? </AppText>
           <TouchableOpacity onPress={() => push("/(auth)/signIn")}>
-            <AppText className="text-primary" variant="bold">Sign In</AppText>
+            <AppText className="text-primary" variant="bold">
+              Sign In
+            </AppText>
           </TouchableOpacity>
         </View>
       </View>

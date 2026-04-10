@@ -22,7 +22,7 @@ export default function AmenitiesSection() {
 
   if (isLoading) {
     return (
-     <View className="mt-8">
+     <View className="mt-2">
              <SectionHeaderSkeleton />
              <DestinationSkeleton />
            </View>

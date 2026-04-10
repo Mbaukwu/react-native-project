@@ -22,7 +22,7 @@ export default function SpecialDealsSection() {
 
   if (isLoading) {
     return (
-      <View className="mt-6">
+      <View className="mt-2">
         <SectionHeaderSkeleton />
         <HotelCardSkeleton />
       </View>

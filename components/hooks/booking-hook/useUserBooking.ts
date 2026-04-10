@@ -7,6 +7,8 @@ export const useUserBookings = (userId: string | null) => {
     queryKey: ['user-bookings', userId],
     queryFn: () => getUserBookings(userId!),
     enabled: !!userId,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 0,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
   });
 };

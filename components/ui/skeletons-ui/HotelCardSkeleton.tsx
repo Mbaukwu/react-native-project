@@ -1,30 +1,64 @@
-import SkeletonPlaceholder from "react-native-skeleton-placeholder";
+import Skeleton from "react-native-reanimated-skeleton";
 import { useColorScheme } from "@/components/hooks/use-color-scheme";
+import { View } from "react-native";
+import { Colors } from "@/constants/colorTheme/colors";
 
 export default function HotelCardSkeleton() {
   const colorScheme = useColorScheme() ?? "light";
+  const colors = Colors[colorScheme];
+  const isDark = colorScheme === "dark";
 
   return (
-    <SkeletonPlaceholder
-      backgroundColor={colorScheme === "dark" ? "#1E293B" : "#E2E8F0"}
-      highlightColor={colorScheme === "dark" ? "#334155" : "#F1F5F9"}
-    >
-      <SkeletonPlaceholder.Item flexDirection="row" paddingHorizontal={16} gap={12}>
+    <View>
+      <View className="flex-row px-4 gap-3">
         {[1, 2, 3].map((i) => (
-          <SkeletonPlaceholder.Item key={i} width={224} marginRight={12}>
+          <View key={i} className="w-56">
             {/* Image */}
-            <SkeletonPlaceholder.Item width={224} height={144} borderRadius={16} />
+            <Skeleton
+              isLoading={true}
+              containerStyle={{ width: 224, height: 200, borderRadius: 16, backgroundColor: colors.card }}
+              highlightColor={isDark ? "#334155" : "#F1F5F9"}
+            />
             {/* Title */}
-            <SkeletonPlaceholder.Item marginTop={12} width={160} height={16} borderRadius={6} />
+            <View className="mt-3">
+              <Skeleton
+                isLoading={true}
+                containerStyle={{ width: 160, height: 16, borderRadius: 6, backgroundColor: colors.card }}
+                highlightColor={isDark ? "#334155" : "#F1F5F9"}
+              />
+            </View>
             {/* Location */}
-            <SkeletonPlaceholder.Item marginTop={8} width={120} height={12} borderRadius={6} />
+            <View className="mt-2">
+              <Skeleton
+                isLoading={true}
+                containerStyle={{ width: 120, height: 12, borderRadius: 6,  }}
+                highlightColor={isDark ? "#334155" : "#F1F5F9"}
+              />
+            </View>
             {/* Rating */}
-            <SkeletonPlaceholder.Item marginTop={8} width={80} height={20} borderRadius={6} />
+            <View className="flex-row items-center gap-1 mt-2">
+              <Skeleton
+                isLoading={true}
+                containerStyle={{ width: 30, height: 16, borderRadius: 4,  }}
+                highlightColor={isDark ? "#334155" : "#F1F5F9"}
+              />
+              <Skeleton
+                isLoading={true}
+                containerStyle={{ width: 60, height: 12, borderRadius: 6, }}
+                highlightColor={isDark ? "#334155" : "#F1F5F9"}
+              />
+            </View>
             {/* Price */}
-            <SkeletonPlaceholder.Item marginTop={6} width={100} height={14} borderRadius={6} />
-          </SkeletonPlaceholder.Item>
+            <View className="mt-2">
+              <Skeleton
+                isLoading={true}
+                containerStyle={{ width: 100, height: 14, borderRadius: 6, }}
+                highlightColor={isDark ? "#334155" : "#F1F5F9"}
+              />
+            </View>
+          </View>
         ))}
-      </SkeletonPlaceholder.Item>
-    </SkeletonPlaceholder>
+      </View>
+    </View>
   );
 }
