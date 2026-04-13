@@ -7,6 +7,7 @@ import { ScrollView, View } from "react-native";
 import HotelCardSkeleton from "../skeletons-ui/HotelCardSkeleton";
 import SectionHeaderSkeleton from "../skeletons-ui/SectionHeaderSkeleton";
 import AppText from "../typography/AppText";
+import { IconSymbol } from "../icon-symbol";
 
 export default function FeaturedHotelsSection() {
   const colorScheme = useColorScheme() ?? "light";
@@ -34,9 +35,12 @@ export default function FeaturedHotelsSection() {
   }
   return (
     <View className="mt-6">
-      <AppText className="text-xl text-text px-4 mb-4" variant="bold">
-        Featured Hotels
-      </AppText>
+  <View className="flex-row items-center px-4 mb-4">
+    <IconSymbol name="star.fill" size={20} color={colors.gold} />
+    <AppText className="text-xl text-text ml-2" variant="bold">
+      Featured Hotels
+    </AppText>
+  </View>
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 16 }}>
         {data.map((hotel) => (

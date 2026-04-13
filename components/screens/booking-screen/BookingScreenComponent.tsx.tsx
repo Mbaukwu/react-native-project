@@ -3,6 +3,7 @@ import { useUserBookings } from "@/components/hooks/booking-hook/useUserBooking"
 import { useColorScheme } from "@/components/hooks/use-color-scheme";
 import BookingCard from "@/components/ui/hotelCards/BookingCard";
 import { IconSymbol } from "@/components/ui/icon-symbol";
+import BookingCardSkeleton from "@/components/ui/skeletons-ui/BookingCardSkeleton";
 import AppText from "@/components/ui/typography/AppText";
 import { Colors } from "@/constants/colorTheme/colors";
 import { useWishlistStore } from "@/constants/stores/wishlistStore";
@@ -77,11 +78,17 @@ export default function BookingScreenComponent() {
 
   if (isLoading) {
     return (
-      <ScreenWrapper>
-        <View className="flex-1 items-center justify-center">
-          <ActivityIndicator size="large" color={colors.primary} />
+       <ScreenWrapper>
+      <View className="flex-1 px-4 pt-4">
+        <View className="flex-row items-center justify-between mb-4">
+          <View className="h-8 w-32 rounded-md" style={{ backgroundColor: colors.border }} />
+          <View className="h-5 w-16 rounded-md" style={{ backgroundColor: colors.border }} />
         </View>
-      </ScreenWrapper>
+        {[1, 2, 3].map((i) => (
+          <BookingCardSkeleton key={i} />
+        ))}
+      </View>
+    </ScreenWrapper>
     );
   }
 

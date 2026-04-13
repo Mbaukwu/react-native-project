@@ -4,6 +4,7 @@ import { supabase } from '@/constants/supabase/supabase';
 import useGreeting from "@/components/hooks/home-sceen-hooks/useGreetings";
 import SearchBarSection from './SearchSection';
 import AppText from '../typography/AppText';
+import HomeHeaderSkeleton from '../skeletons-ui/HomeHeaderSkeleton';
 
 export default function HomeHeader() {
   const [userName, setUserName] = useState<string | null>(null);
@@ -38,11 +39,7 @@ export default function HomeHeader() {
 
   if (isLoading) {
     return (
-      <View className='px-4 pt-12 pb-4'>
-        <View className='h-8 w-48 bg-border rounded-lg mb-1' />
-        <View className='h-4 w-64 bg-border rounded-lg mb-2' />
-        <View className='h-12 w-full bg-border rounded-xl' />
-      </View>
+        <HomeHeaderSkeleton />
     );
   }
 

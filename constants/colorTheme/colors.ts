@@ -6,6 +6,8 @@ const palette = {
   accentOrange: '#FF9500',
   accentGold: '#FBBF24',
   darkGold: '#B8860B',
+  platinum: '#E5E4E2',
+  platinumDark: '#B8B8B8', 
   
   // Favorite color
   favorite: '#E84393',  
@@ -67,6 +69,8 @@ export const Colors = {
     // Accents
     accent: palette.accentOrange,
     gold: palette.accentGold,
+    platinum: palette.platinum,
+    platinumDark: palette.platinumDark,
     
     // Favorite
     favorite: palette.favorite,
@@ -113,6 +117,8 @@ export const Colors = {
     // Accents
     accent: palette.accentGold,
     gold: palette.accentGold,
+    platinum: palette.platinumDark,
+    platinumDark: palette.platinum,
     
     // Favorite
     favorite: palette.favorite,

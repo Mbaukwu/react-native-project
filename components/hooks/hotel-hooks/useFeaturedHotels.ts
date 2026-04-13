@@ -1,16 +1,23 @@
-import { getFeaturedHotels } from "@/constants/supabase/services/serviceEntryFile";
-import { HotelCard } from "@/constants/types-interface/hotelTypes";
 import { useQuery } from "@tanstack/react-query";
+import { getFeaturedHotels } from "@/constants/supabase/services/serviceEntryFile";
+import { HotelCardType } from "@/constants/types-interface/hotelTypes";
 
-export const useFeaturedHotels = () => {
-  return useQuery<HotelCard[], Error>({
-    queryKey: ["featured-hotels"],
-    queryFn: getFeaturedHotels,
-    //duration of keeping data before refreshing
+export const useFeaturedHotels = (limit = 10) => {
+  return useQuery<HotelCardType[], Error>({
+    queryKey: ['featured-hotels'],
+    queryFn: async () => {
+      const data = await getFeaturedHotels();
+      
+      // Randomize the order
+      const shuffled = [...data];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      
+      return shuffled.slice(0, limit);
+    },
     staleTime: 5 * 60 * 1000,
-    // Retry failed requests 2 times
     retry: 2,
-    // Return empty array if no data (prevents undefined crashes)
-    select: (data) => data ?? [],
   });
 };

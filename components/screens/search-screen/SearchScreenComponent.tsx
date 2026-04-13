@@ -3,6 +3,7 @@ import { useSearchHotels } from "@/components/hooks/hotel-hooks/useSearchHotels"
 import { useColorScheme } from "@/components/hooks/use-color-scheme";
 import SearchHotelCard from "@/components/ui/hotelCards/SearchHotelCard";
 import { IconSymbol } from "@/components/ui/icon-symbol";
+import SearchHotelCardSkeleton from "@/components/ui/skeletons-ui/SearchCardSkeleton";
 import AppText from "@/components/ui/typography/AppText";
 import { Colors } from "@/constants/colorTheme/colors";
 import { LegendList } from "@legendapp/list";
@@ -141,10 +142,7 @@ export default function SearchScreenComponent() {
             <AppText className="text-text-secondary text-center mt-4">Search for hotels by name, city, or location</AppText>
           </View>
         ) : isLoading && hotels.length === 0 ? (
-          <View className="flex-1 items-center justify-center">
-            <ActivityIndicator size="large" color={colors.primary} />
-            <AppText className="text-text-secondary mt-4">Searching...</AppText>
-          </View>
+          <SearchHotelCardSkeleton />
         ) : isError ? (
           <View className="flex-1 items-center justify-center px-4">
             <AppText className="text-error text-center">Failed to load results</AppText>
@@ -156,16 +154,18 @@ export default function SearchScreenComponent() {
         ) : (
           <>
             <View className="px-4 py-2">
-              <AppText className="text-text-secondary text-sm">
-                {hotels.length} {hotels.length === 1 ? "result" : "results"}
-              </AppText>
+              <View className="bg-primary/10 self-start px-3 py-1 rounded-full">
+                <AppText className="text-primary text-sm" variant="bold">
+                  {hotels.length} {hotels.length === 1 ? "result" : "results"}
+                </AppText>
+              </View>
             </View>
 
             <LegendList
               data={hotels}
               keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
-                <View className="px-4 mb-4">
+                <View className="px-3 mb-1">
                   <SearchHotelCard hotel={item} />
                 </View>
               )}
@@ -176,6 +176,10 @@ export default function SearchScreenComponent() {
                 isFetchingNextPage ? (
                   <View className="py-4 items-center">
                     <ActivityIndicator size="small" color={colors.primary} />
+                  </View>
+                ) : hotels.length > 0 && !hasNextPage ? (
+                  <View className="py-4 items-center">
+                    <AppText className="text-text-disabled text-xs">All {hotels.length} results loaded</AppText>
                   </View>
                 ) : null
               }

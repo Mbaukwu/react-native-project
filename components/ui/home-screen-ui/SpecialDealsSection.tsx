@@ -8,6 +8,7 @@ import AppText from "@/components/ui/typography/AppText";
 import { useRouter } from "expo-router";
 import HotelCardSkeleton from "../skeletons-ui/HotelCardSkeleton";
 import SectionHeaderSkeleton from "../skeletons-ui/SectionHeaderSkeleton";
+import { IconSymbol } from "../icon-symbol";
 
 export default function SpecialDealsSection() {
   const colorScheme = useColorScheme() ?? "light";
@@ -43,8 +44,9 @@ export default function SpecialDealsSection() {
   return (
     <View className="mt-8">
       <View className="flex-row items-center justify-between px-4 mb-4">
+        
         <AppText className="text-xl text-text" variant="bold">
-          Special Deals
+         🔥  Special Deals 
         </AppText>
         <TouchableOpacity onPress={handleSeeAll}>
           <AppText className="text-primary text-sm " variant="medium">

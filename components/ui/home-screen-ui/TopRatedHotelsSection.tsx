@@ -7,12 +7,13 @@ import { useRouter } from "expo-router";
 import { ScrollView, TouchableOpacity, View } from "react-native";
 import HotelCardSkeleton from "../skeletons-ui/HotelCardSkeleton";
 import SectionHeaderSkeleton from "../skeletons-ui/SectionHeaderSkeleton";
+import { IconSymbol } from "../icon-symbol";
 
 export default function TopRatedHotels() {
   const { push } = useRouter();
   const colorScheme = useColorScheme() ?? "light";
   const colors = Colors[colorScheme];
-  const { data, isLoading, isError, error } = useTopRatedHotels();
+  const { data, isLoading, isError, error } = useTopRatedHotels(8);
 
   const handleSeeAll = () => {
     push("/searchScreen?filter=top-rated");
@@ -34,10 +35,13 @@ export default function TopRatedHotels() {
   }
   return (
     <View className="mt-8">
-      <View className="flex-row items-center justify-between px-4 mb-4">
-        <AppText className="text-xl text-text" variant="bold">
-          Top Rated Hotels
-        </AppText>
+     <View className="flex-row items-center justify-between px-4 mb-4">
+        <View className="flex-row items-center gap-2">
+          <IconSymbol name="star.fill" size={20} color={colors.platinum } />
+          <AppText className="text-xl text-text" variant="bold">
+            Top Rated Hotels
+          </AppText>
+        </View>
         <TouchableOpacity onPress={handleSeeAll}>
           <AppText className="text-primary text-sm" variant="medium">
             See all →

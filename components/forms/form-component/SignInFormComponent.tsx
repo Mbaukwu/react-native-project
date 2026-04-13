@@ -107,7 +107,7 @@ export default function SignInFormComponent() {
               <AppText className="text-text-secondary text-sm" variant="bold">
                 Password
               </AppText>
-              <TouchableOpacity>
+             <TouchableOpacity onPress={() => push('/(auth)/forgot-password')}>
                 <AppText className="text-primary text-sm">Forgot password?</AppText>
               </TouchableOpacity>
             </View>

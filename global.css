@@ -23,11 +23,12 @@
 
       --color-text: #0f172a;
       --color-text-secondary: #334155;
-      --color-text-disabled: 
-#828d9e;
+      --color-text-disabled: #828d9e;
 
       --color-accent: #ff9500;
       --color-gold: #fbbf24;
+      --color-platinum: #e5e4e2;
+      --color-platinum-dark: #b8b8b8;
 
       --color-icon: #475569;
       --color-tab-default: #94a3b8;
@@ -64,6 +65,8 @@
 
       --color-accent: #fbbf24;
       --color-gold: #fbbf24;
+      --color-platinum: #b8b8b8;
+      --color-platinum-dark: #e5e4e2;
 
       --color-icon: #94a3b8;
       --color-tab-default: #64748b;

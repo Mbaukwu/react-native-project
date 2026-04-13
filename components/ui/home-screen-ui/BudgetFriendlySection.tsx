@@ -7,6 +7,7 @@ import { useRouter } from "expo-router";
 import { ScrollView, TouchableOpacity, View } from "react-native";
 import HotelCardSkeleton from "../skeletons-ui/HotelCardSkeleton";
 import SectionHeaderSkeleton from "../skeletons-ui/SectionHeaderSkeleton";
+import { IconSymbol } from "../icon-symbol";
 
 export default function BudgetFreindlySection() {
   const { push } = useRouter();
@@ -37,17 +38,19 @@ export default function BudgetFreindlySection() {
 
   return (
     <View className="mt-8">
-      <View className="flex-row items-center justify-between px-4 mb-4">
-        <AppText className="text-xl text-text" variant="bold">
-          Budget Friendly
-        </AppText>
-        <TouchableOpacity onPress={handleSeeAll}>
-          <AppText className="text-primary text-sm" variant="medium">
-            See all →
-          </AppText>
-        </TouchableOpacity>
-      </View>
-
+  <View className="flex-row items-center justify-between px-4 mb-4">
+    <View className="flex-row items-center gap-2">
+      <IconSymbol name="target" size={20} color={colors.success} />
+      <AppText className="text-xl text-text" variant="bold">
+        Budget Friendly
+      </AppText>
+    </View>
+    <TouchableOpacity onPress={handleSeeAll}>
+      <AppText className="text-primary text-sm" variant="medium">
+        See all →
+      </AppText>
+    </TouchableOpacity>
+  </View>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 16 }}>
         {data.map((hotel) => (
           <HotelCard key={hotel.id} hotel={hotel} />

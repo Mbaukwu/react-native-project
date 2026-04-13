@@ -4,34 +4,35 @@ import AppText from "@/components/ui/typography/AppText";
 import { Colors } from "@/constants/colorTheme/colors";
 import { HotelCardType } from "@/constants/types-interface/hotelTypes";
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import { SheetManager } from "react-native-actions-sheet";
 import { useWishlistStore } from "@/constants/stores/wishlistStore";
 
 type Props = {
   hotel: HotelCardType;
-   onRemoveFromWishlist?: (hotelId: string) => void;
+  onRemoveFromWishlist?: (hotelId: string) => void;
 };
 
-export default function SearchHotelCard({ hotel, onRemoveFromWishlist}: Props) {
+export default function SearchHotelCard({ hotel, onRemoveFromWishlist }: Props) {
   const { push } = useRouter();
   const colorScheme = useColorScheme() ?? "light";
   const colors = Colors[colorScheme];
   const { toggleWishlist, wishlistIds, userId } = useWishlistStore();
-  
+  const [imageError, setImageError] = useState(false);
+
   const isFav = wishlistIds.includes(hotel.id);
 
   const handleWishlistPress = () => {
     if (!userId && !isFav) {
-      SheetManager.show('auth-prompt', {
+      SheetManager.show("auth-prompt", {
         payload: {
           onLocalSave: () => toggleWishlist(hotel.id),
         },
       });
     } else {
       toggleWishlist(hotel.id);
-       // If this is in wishlist screen and we're removing, update UI instantly
+      // If this is in wishlist screen and we're removing, update UI instantly
       if (isFav && onRemoveFromWishlist) {
         onRemoveFromWishlist(hotel.id);
       }
@@ -47,11 +48,15 @@ export default function SearchHotelCard({ hotel, onRemoveFromWishlist}: Props) {
     >
       {/* Image - left side */}
       <View style={{ width: 120 }} className="h-full">
-        <Image 
-          source={{ uri: hotel.image_urls[0] || require("@/assets/images/hotel-placeholder.jpeg")}} 
-          className="w-full h-full" 
-          resizeMode="cover" 
+        <Image
+          source={!imageError && hotel.image_urls[0] ? { uri: hotel.image_urls[0] } : require("@/assets/images/hotel/hotel-placeholder.jpg")}
+          onError={() => setImageError(true)}
+          className="w-full h-full"
+          resizeMode="cover"
         />
+        {/* Simple dark overlay */}
+  <View className="absolute bottom-0 left-0 right-0 h-full bg-black/40" />
+
         {hotel.is_deal && (
           <View className="absolute top-2 left-2 bg-accent px-2 py-0.5 rounded-full">
             <AppText variant="bold" className="text-xs text-white">
@@ -88,24 +93,17 @@ export default function SearchHotelCard({ hotel, onRemoveFromWishlist}: Props) {
               </AppText>
             </View>
           )}
-          
+
           {/* Price and Favorite Button Row */}
           <View className="flex-row items-center justify-between">
             <AppText className="text-primary text-sm" variant="bold">
               ₦{hotel.price_per_stay.toLocaleString()}
               <AppText className="text-text-disabled text-xs"> / 24 hrs</AppText>
             </AppText>
-            
+
             {/* Favorite Button */}
-            <TouchableOpacity
-              onPress={handleWishlistPress}
-              className="p-1.5 rounded-full"
-            >
-              <IconSymbol
-                name={isFav ? "heart.fill" : "heart"}
-                size={20}
-                color={isFav ? colors.favorite : colors.textSecondary}
-              />
+            <TouchableOpacity onPress={handleWishlistPress} className="p-1.5 rounded-full">
+              <IconSymbol name={isFav ? "heart.fill" : "heart"} size={20} color={isFav ? colors.favorite : colors.textSecondary} />
             </TouchableOpacity>
           </View>
         </View>

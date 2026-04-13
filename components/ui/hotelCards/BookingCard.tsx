@@ -5,6 +5,7 @@ import { IconSymbol } from "@/components/ui/icon-symbol";
 import { Colors } from "@/constants/colorTheme/colors";
 import { useColorScheme } from "@/components/hooks/use-color-scheme";
 import { IBookingDetails } from "@/constants/types-interface/bookingInterface";
+import { useState } from "react";
 
 type BookingCardProps = {
   booking: IBookingDetails;
@@ -16,6 +17,8 @@ export default function BookingCard({ booking, onCancel, onDelete }: BookingCard
   const { push } = useRouter();
   const colorScheme = useColorScheme() ?? "light";
   const colors = Colors[colorScheme];
+  const [imageError, setImageError] = useState(false);
+
 
   const formatDisplay = (dateStr: string): string => {
     if (!dateStr) return "—";
@@ -41,13 +44,18 @@ export default function BookingCard({ booking, onCancel, onDelete }: BookingCard
     >
       <View className="flex-row">
         {/* Image - fixed height */}
-        <View style={{ width: 110 }}>
+       <View style={{ width: 110 }}>
           <Image
-            source={{ uri: booking.hotels?.image_urls?.[0] || "https://via.placeholder.com/110x140" }}
+            source={
+              !imageError && booking.hotels?.image_urls?.[0]
+                ? { uri: booking.hotels.image_urls[0] }
+                : require("@/assets/images/hotel/hotel-placeholder.jpg")
+            }
+            onError={() => setImageError(true)}
             style={{ width: 110, height: 140 }}
             resizeMode="cover"
           />
-            <View
+          <View
             style={{
               position: 'absolute',
               top: 0,

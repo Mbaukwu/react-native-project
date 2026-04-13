@@ -13,7 +13,8 @@ const cityImages: Record<string, string> = {
   "Calabar": "https://images.pexels.com/photos/258152/pexels-photo-258152.jpeg?auto=compress&cs=tinysrgb&w=800", // Resort style
   "Enugu": "https://images.pexels.com/photos/1617468/pexels-photo-1617468.jpeg?auto=compress&cs=tinysrgb&w=800", // Four Points style
   "Ibadan": "https://images.pexels.com/photos/338504/pexels-photo-338504.jpeg?auto=compress&cs=tinysrgb&w=800", // Premier Hotel style
-  "Owerri": "https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=800", // Rockview style
+  "Owerri": "https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=800",
+   "Awka": "https://images.pexels.com/photos/338504/pexels-photo-338504.jpeg?w=800",// Rockview style
 };
 export const usePopularDestinations = () => {
   return useQuery<PopularCity[], Error>({
@@ -38,7 +39,8 @@ export const usePopularDestinations = () => {
 
       // Convert to array and sort by count (most hotels first)
       return Object.entries(cityMap)
-        .map(([city, count]) => ({ city, count, image: cityImages[city] || cityImages.Lagos }))
+        .map(([city, count]) => ({ city, count, image: cityImages[city]  }))
+        .filter((item) => item.image)
         .sort((a, b) => b.count - a.count)
         .slice(0, 8); // Top 8 cities
     },
