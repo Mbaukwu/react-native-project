@@ -37,7 +37,7 @@ export default function TopRatedHotels() {
     <View className="mt-8">
      <View className="flex-row items-center justify-between px-4 mb-4">
         <View className="flex-row items-center gap-2">
-          <IconSymbol name="star.fill" size={20} color={colors.platinum } />
+          <IconSymbol name="star.fill" size={18} color={colors.platinumDark } />
           <AppText className="text-xl text-text" variant="bold">
             Top Rated Hotels
           </AppText>

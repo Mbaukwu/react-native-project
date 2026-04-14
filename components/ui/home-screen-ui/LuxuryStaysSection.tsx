@@ -38,7 +38,7 @@ export default function LuxuryStaysSection() {
      <View className="mt-8">
   <View className="flex-row items-center justify-between px-4 mb-4">
     <View className="flex-row items-center gap-2">
-      <IconSymbol name="diamond" size={20} color={colors.primary} />
+      <IconSymbol name="sparkles" size={15} color={colors.success} />
       <AppText className="text-xl text-text" variant="bold">
         Luxury Stays
       </AppText>

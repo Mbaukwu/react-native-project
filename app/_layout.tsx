@@ -11,6 +11,7 @@ import { MagicModalPortal } from "react-native-magic-modal";
 import { ToastMessage } from "@/components/ui/toasts-message/ToastMessage";
 import { Uniwind } from "uniwind";
 import { useEffect } from "react";
+import { useDeepLink } from "@/components/hooks/auth-hook/useDeepLink";
 import { useThemeStore } from "@/constants/stores/themeStore";
 
 export const unstable_settings = {
@@ -21,6 +22,9 @@ export default function RootLayout() {
   const queryClient = new QueryClient();
   // Hook to read current theme (for StatusBar sync)
   const { isDarkMode, loadTheme } = useThemeStore();
+  
+    // Initialize deep link handler
+  useDeepLink();
 
   useEffect(() => {
     loadTheme();

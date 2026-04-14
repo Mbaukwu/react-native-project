@@ -61,7 +61,7 @@ const MAPPING = {
   "document.fill": "description",
 
   // Misc
- " sparkles": "auto-awesome",
+ "sparkles": "auto-awesome",
   "star.fill": "star",
 
   // Section Icons

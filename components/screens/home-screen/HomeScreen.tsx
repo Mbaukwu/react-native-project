@@ -63,7 +63,7 @@ export default function HomeScreenComponent() {
         renderItem={({ section }) => renderSection(section.id)}
         renderSectionHeader={() => null}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 32 }}
+        contentContainerStyle={{ paddingBottom: 30, gap: 2 }}
         stickySectionHeadersEnabled={false}
         />
         </View>

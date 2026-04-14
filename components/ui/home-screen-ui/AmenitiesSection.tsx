@@ -39,7 +39,7 @@ export default function AmenitiesSection() {
     <View className="mt-8">
   <View className="flex-row items-center justify-between px-4 mb-4">
     <View className="flex-row items-center gap-2">
-      <IconSymbol name="spa.fill" size={20} color={colors.favorite} />
+      <IconSymbol name="spa.fill" size={15} color={colors.favorite} />
       <AppText variant="bold" className="text-xl text-text">
         Browse by Amenities
       </AppText>

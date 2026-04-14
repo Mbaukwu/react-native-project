@@ -30,7 +30,7 @@ export default function PopularDestinations() {
   return (
    <View className="mt-8">
   <View className="flex-row items-center px-4 mb-4">
-    <IconSymbol name="airplane" size={20} color={colors.success} />
+    <IconSymbol name="airplane" size={15} color={colors.success} />
     <AppText variant="bold" className="text-xl text-text ml-2">
       Popular Destinations
     </AppText>

@@ -40,7 +40,7 @@ export default function BudgetFreindlySection() {
     <View className="mt-8">
   <View className="flex-row items-center justify-between px-4 mb-4">
     <View className="flex-row items-center gap-2">
-      <IconSymbol name="target" size={20} color={colors.success} />
+      <IconSymbol name="target" size={15} color={colors.error} />
       <AppText className="text-xl text-text" variant="bold">
         Budget Friendly
       </AppText>

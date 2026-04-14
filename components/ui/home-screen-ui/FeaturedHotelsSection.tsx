@@ -36,7 +36,7 @@ export default function FeaturedHotelsSection() {
   return (
     <View className="mt-6">
   <View className="flex-row items-center px-4 mb-4">
-    <IconSymbol name="star.fill" size={20} color={colors.gold} />
+    <IconSymbol name="star.fill" size={15} color={colors.gold} />
     <AppText className="text-xl text-text ml-2" variant="bold">
       Featured Hotels
     </AppText>

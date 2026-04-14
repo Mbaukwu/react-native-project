@@ -17,8 +17,13 @@ export default function TabLayout() {
           borderTopWidth: 0,
           height: 70,
           paddingTop: 10,
+          
         },
         headerShown: false,
+         tabBarLabelStyle: {
+          fontFamily: 'DMSans-Regular',  // Add this
+          fontSize: 12,                   // Optional: adjust size
+        },
       }}
     >
       <Tabs.Screen
