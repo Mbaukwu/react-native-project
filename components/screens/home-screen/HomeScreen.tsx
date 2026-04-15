@@ -66,7 +66,8 @@ export default function HomeScreenComponent() {
         contentContainerStyle={{ paddingBottom: 30, gap: 2 }}
         stickySectionHeadersEnabled={false}
         />
-        </View>
+      </View>
+      
     </ScreenWrapper>
   );
 }

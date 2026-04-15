@@ -16,13 +16,13 @@ export default function SpecialRequestsSection({ control }: Props) {
   return (
     <View className="mb-6">
       <AppText className="text-text text-lg mb-3" variant="bold">Special Requests</AppText>
-      <View className="bg-card rounded-xl px-4 border border-border">
+      <View className="bg-card rounded-xl px-4 border border-border"style={{ minHeight: 50 }}>
         <Controller
           control={control}
           name="specialRequests"
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              className="flex-1 text-text py-4"
+              className="flex-1 text-text py-4 "
               placeholder="Any special requests? (optional)"
               placeholderTextColor={colors.textDisabled}
               multiline

@@ -59,10 +59,22 @@ export default function BookingScreenComponent() {
 
   if (!userId) {
     return (
-      <ScreenWrapper>
-        <View className="flex-1 items-center justify-center px-6">
-          <IconSymbol name="calendar" size={64} color={colors.textDisabled} />
-          <AppText className="text-text text-xl text-center mt-4" variant="bold">
+      <ScreenWrapper className="p-6">
+        <View className="flex-row items-center mt-4 ">
+          <TouchableOpacity onPress={() => back()} className="mr-1 p-1">
+            <IconSymbol name="chevron.left" size={24} color={colors.text} />
+          </TouchableOpacity>
+          <AppText className="text-text text-2xl capitalize" variant="bold">
+            my bookings
+          </AppText>
+        </View>
+
+        <View className="flex-1 items-center justify-center">
+          <View className="bg-primary/15 p-6 rounded-full mb-2">
+            <IconSymbol name="calendar" size={56} color={colors.primary} />
+          </View>
+
+          <AppText className="text-text text-xl text-center mt-2" variant="bold">
             Where to next?
           </AppText>
           <AppText className="text-text-secondary text-center mt-2">Sign in to manage your bookings</AppText>
@@ -78,17 +90,9 @@ export default function BookingScreenComponent() {
 
   if (isLoading) {
     return (
-       <ScreenWrapper>
-      <View className="flex-1 px-4 pt-4">
-        <View className="flex-row items-center justify-between mb-4">
-          <View className="h-8 w-32 rounded-md" style={{ backgroundColor: colors.border }} />
-          <View className="h-5 w-16 rounded-md" style={{ backgroundColor: colors.border }} />
-        </View>
-        {[1, 2, 3].map((i) => (
-          <BookingCardSkeleton key={i} />
-        ))}
-      </View>
-    </ScreenWrapper>
+      <ScreenWrapper>
+        <BookingCardSkeleton />
+      </ScreenWrapper>
     );
   }
 

@@ -13,6 +13,7 @@ import { Uniwind } from "uniwind";
 import { useEffect } from "react";
 import { useDeepLink } from "@/components/hooks/auth-hook/useDeepLink";
 import { useThemeStore } from "@/constants/stores/themeStore";
+import { usePushNotifications } from "@/components/hooks/notification-hook/usePushNotifications";
 
 export const unstable_settings = {
   anchor: "(tabs)",
@@ -22,8 +23,8 @@ export default function RootLayout() {
   const queryClient = new QueryClient();
   // Hook to read current theme (for StatusBar sync)
   const { isDarkMode, loadTheme } = useThemeStore();
-  
-    // Initialize deep link handler
+
+  // Initialize deep link handler
   useDeepLink();
 
   useEffect(() => {

@@ -67,9 +67,9 @@ export default function WishlistScreen() {
   if (!userId) {
     return (
       <ScreenWrapper>
-        <View className="flex-1 px-6 pt-10">
+        <View className="flex-1 px-6 mt-5">
           {/* Header with back button */}
-          <View className="flex-row items-center mb-8">
+          <View className="flex-row items-center mt-5 ">
             <TouchableOpacity onPress={() => back()} className="mr-1 p-1">
               <IconSymbol name="chevron.left" size={24} color={colors.text} />
             </TouchableOpacity>
@@ -79,7 +79,7 @@ export default function WishlistScreen() {
           </View>
 
           {/* Sign in prompt */}
-          <View className="flex-1 items-center justify-center -mt-20">
+          <View className="flex-1 items-center justify-center ">
             <View className="bg-primary/15 p-6 rounded-full mb-6">
               <IconSymbol name="heart.fill" size={56} color={colors.primary} />
             </View>
@@ -91,18 +91,13 @@ export default function WishlistScreen() {
             </AppText>
             <TouchableOpacity
               onPress={() => push("/(auth)/signIn")}
-              className="mt-6 bg-primary py-3.5 px-8 rounded-xl"
+              className="mt-6 bg-primary py-3 px-6 rounded-xl"
             >
               <AppText className="text-white text-base" variant="bold">
                 Sign In
               </AppText>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => push("/(auth)/signUp")}
-              className="mt-3 py-2"
-            >
-              <AppText className="text-primary">Create Account</AppText>
-            </TouchableOpacity>
+           
           </View>
         </View>
       </ScreenWrapper>

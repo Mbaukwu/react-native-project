@@ -1,4 +1,5 @@
-import { View, TouchableOpacity, ActivityIndicator, ScrollView } from "react-native";
+import { View, TouchableOpacity, ActivityIndicator } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useForm, Resolver } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -20,7 +21,7 @@ import SpecialRequestsSection from "@/components/ui/booking-form/SpecialRequestS
 import HotelSummaryCard from "@/components/ui/booking-form/HotelSummaryCard";
 import Toast from "react-native-toast-message";
 import { useQueryClient } from "@tanstack/react-query";
-
+import { sendBookingNotification } from "@/constants/services/notificationService";
 export default function BookingFormComponent() {
   const { hotelId, price, hotelName, roomType } = useLocalSearchParams<{
     hotelId: string;
@@ -28,6 +29,7 @@ export default function BookingFormComponent() {
     hotelName: string;
     roomType: string;
   }>();
+
   const { push, back } = useRouter();
   const colorScheme = useColorScheme() ?? "light";
   const colors = Colors[colorScheme];
@@ -72,7 +74,7 @@ export default function BookingFormComponent() {
 
       const user = data.session.user;
       const email = user.email ?? "";
-     
+
       const name = user.user_metadata?.full_name ?? user.user_metadata?.name ?? "";
 
       setValue("guestEmail", email, { shouldValidate: false });
@@ -100,6 +102,8 @@ export default function BookingFormComponent() {
         total_price: Number(price.replace(/,/g, "")),
         special_requests: data.specialRequests || undefined,
       });
+
+      sendBookingNotification(hotelName, data.checkIn).catch((err) => console.error("Notification failed:", err));
 
       queryClient.invalidateQueries({ queryKey: ["user-bookings", userId] });
 
@@ -129,7 +133,13 @@ export default function BookingFormComponent() {
 
   return (
     <ScreenWrapper>
-      <ScrollView className="flex-1 px-4 pt-8" showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+      <KeyboardAwareScrollView
+        className="flex-1 px-4 pt-8"
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+        extraScrollHeight={100}
+        enableOnAndroid={true}
+      >
         {/* Header */}
         <View className="flex-row items-center mb-6">
           <TouchableOpacity onPress={() => back()} className="mr-1 p-1">
@@ -162,7 +172,7 @@ export default function BookingFormComponent() {
             </AppText>
           )}
         </TouchableOpacity>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </ScreenWrapper>
   );
 }

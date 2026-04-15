@@ -12,6 +12,23 @@ import { LegendList, LegendListRef } from "@legendapp/list";
 
 const { width } = Dimensions.get("window");
 
+function HotelImage({ uri }: { uri: string }) {
+  const [imageError, setImageError] = useState(false);
+
+  return (
+    <Image
+      source={
+        !imageError && uri
+          ? { uri }
+          : require("@/assets/images/hotel/hotel-placeholder.jpg")
+      }
+      onError={() => setImageError(true)}
+      style={{ width, height: 320 }}
+      resizeMode="cover"
+    />
+  );
+}
+
 export default function HotelDetailsScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { back, push } = useRouter();
@@ -81,11 +98,7 @@ export default function HotelDetailsScreen() {
             snapToInterval={width}
             snapToAlignment="center"
             decelerationRate="fast"
-            renderItem={({ item }) => <Image source={{ uri: item }} style={{ width: width, height: 320 }} resizeMode="cover" />}
-            onMomentumScrollEnd={(event) => {
-              const newIndex = Math.round(event.nativeEvent.contentOffset.x / width);
-              setActiveImageIndex(newIndex);
-            }}
+            renderItem={({ item }) => <HotelImage uri={item} />}
           />
 
           {/* Back Button */}
