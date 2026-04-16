@@ -1,13 +1,13 @@
 import { useTopRatedHotels } from "@/components/hooks/hotel-hooks/useTopRatedHotels";
 import { useColorScheme } from "@/components/hooks/use-color-scheme";
-import HotelCard from "@/components/ui/hotelCards/HotelCard";
+import HotelCard from "@/components/ui/hotel/hotelCards/HotelCard";
 import AppText from "@/components/ui/typography/AppText";
 import { Colors } from "@/constants/colorTheme/colors";
 import { useRouter } from "expo-router";
 import { ScrollView, TouchableOpacity, View } from "react-native";
+import { IconSymbol } from "../icon-symbol";
 import HotelCardSkeleton from "../skeletons-ui/HotelCardSkeleton";
 import SectionHeaderSkeleton from "../skeletons-ui/SectionHeaderSkeleton";
-import { IconSymbol } from "../icon-symbol";
 
 export default function TopRatedHotels() {
   const { push } = useRouter();
@@ -35,9 +35,9 @@ export default function TopRatedHotels() {
   }
   return (
     <View className="mt-8">
-     <View className="flex-row items-center justify-between px-4 mb-4">
+      <View className="flex-row items-center justify-between px-4 mb-4">
         <View className="flex-row items-center gap-2">
-          <IconSymbol name="star.fill" size={18} color={colors.platinumDark } />
+          <IconSymbol name="star.fill" size={18} color={colors.platinumDark} />
           <AppText className="text-xl text-text" variant="bold">
             Top Rated Hotels
           </AppText>

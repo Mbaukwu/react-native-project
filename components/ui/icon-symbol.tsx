@@ -76,7 +76,8 @@ const MAPPING = {
 'globe': 'language',
 'airplane': 'flight',
 'beach': 'beach-access',
-'building': 'business',
+  'building': 'business',
+'clock.fill': 'access-time',
 } as const;
 
 /**

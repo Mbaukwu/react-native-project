@@ -1,14 +1,14 @@
 import { useSpecialDealsHotels } from "@/components/hooks/hotel-hooks/useSpecialDealsHotels";
 import { useColorScheme } from "@/components/hooks/use-color-scheme";
-import HotelCard from "@/components/ui/hotelCards/HotelCard";
+import HotelCard from "@/components/ui/hotel/hotelCards/HotelCard";
 import { Colors } from "@/constants/colorTheme/colors";
 import { ScrollView, TouchableOpacity, View } from "react-native";
 
 import AppText from "@/components/ui/typography/AppText";
 import { useRouter } from "expo-router";
+import { IconSymbol } from "../icon-symbol";
 import HotelCardSkeleton from "../skeletons-ui/HotelCardSkeleton";
 import SectionHeaderSkeleton from "../skeletons-ui/SectionHeaderSkeleton";
-import { IconSymbol } from "../icon-symbol";
 
 export default function SpecialDealsSection() {
   const colorScheme = useColorScheme() ?? "light";
@@ -43,19 +43,19 @@ export default function SpecialDealsSection() {
   }
   return (
     <View className="mt-8">
-     <View className="flex-row items-center justify-between px-4 mb-4">
-  <View className="flex-row items-center gap-2">
-    <IconSymbol name="flame.fill" size={15} color={colors.accent} />
-    <AppText className="text-xl text-text" variant="bold">
-      Special Deals
-    </AppText>
-  </View>
-  <TouchableOpacity onPress={handleSeeAll}>
-    <AppText className="text-primary text-sm" variant="medium">
-      See all →
-    </AppText>
-  </TouchableOpacity>
-</View>
+      <View className="flex-row items-center justify-between px-4 mb-4">
+        <View className="flex-row items-center gap-2">
+          <IconSymbol name="flame.fill" size={15} color={colors.accent} />
+          <AppText className="text-xl text-text" variant="bold">
+            Special Deals
+          </AppText>
+        </View>
+        <TouchableOpacity onPress={handleSeeAll}>
+          <AppText className="text-primary text-sm" variant="medium">
+            See all →
+          </AppText>
+        </TouchableOpacity>
+      </View>
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 16 }}>
         {data.map((hotel) => (

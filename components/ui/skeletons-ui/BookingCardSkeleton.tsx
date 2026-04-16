@@ -9,7 +9,7 @@ export default function BookingCardSkeleton() {
   const isDark = colorScheme === "dark";
 
   return (
-    <View style={{ backgroundColor: colors.background, paddingHorizontal: 16, marginTop: 22 }}>
+    <View style={{ backgroundColor: colors.background, paddingHorizontal: 16, marginTop: 20 }}>
       {[1, 2, 3].map((i) => (
         <View
           key={i}

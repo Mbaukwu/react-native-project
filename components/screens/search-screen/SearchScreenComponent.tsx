@@ -1,7 +1,7 @@
 import ScreenWrapper from "@/components/global/ScreenWrapper";
 import { useSearchHotels } from "@/components/hooks/hotel-hooks/useSearchHotels";
 import { useColorScheme } from "@/components/hooks/use-color-scheme";
-import SearchHotelCard from "@/components/ui/hotelCards/SearchHotelCard";
+import SearchHotelCard from "@/components/ui/hotel/hotelCards/SearchHotelCard";
 import { IconSymbol } from "@/components/ui/icon-symbol";
 import SearchHotelCardSkeleton from "@/components/ui/skeletons-ui/SearchCardSkeleton";
 import AppText from "@/components/ui/typography/AppText";

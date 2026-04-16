@@ -1,13 +1,13 @@
-import { View, Image, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native";
-import { useRouter } from "expo-router";
-import AppText from "@/components/ui/typography/AppText";
 import { useAmenities } from "@/components/hooks/hotel-hooks/useHotelAmenities";
-import { Colors } from "@/constants/colorTheme/colors";
 import { useColorScheme } from "@/components/hooks/use-color-scheme";
-import SectionHeaderSkeleton from "../skeletons-ui/SectionHeaderSkeleton";
-import FeatureCardSkeleton from "../skeletons-ui/DestinationSkeleton";
-import FeatureCard from "../hotelCards/FeatureCard";
+import AppText from "@/components/ui/typography/AppText";
+import { Colors } from "@/constants/colorTheme/colors";
+import { useRouter } from "expo-router";
+import { ScrollView, View } from "react-native";
+import FeatureCard from "../hotel/hotelCards/FeatureCard";
 import { IconSymbol } from "../icon-symbol";
+import FeatureCardSkeleton from "../skeletons-ui/DestinationSkeleton";
+import SectionHeaderSkeleton from "../skeletons-ui/SectionHeaderSkeleton";
 
 export default function AmenitiesSection() {
   const { push } = useRouter();
@@ -37,14 +37,14 @@ export default function AmenitiesSection() {
 
   return (
     <View className="mt-8">
-  <View className="flex-row items-center justify-between px-4 mb-4">
-    <View className="flex-row items-center gap-2">
-      <IconSymbol name="spa.fill" size={15} color={colors.favorite} />
-      <AppText variant="bold" className="text-xl text-text">
-        Browse by Amenities
-      </AppText>
-    </View>
-  </View>
+      <View className="flex-row items-center justify-between px-4 mb-4">
+        <View className="flex-row items-center gap-2">
+          <IconSymbol name="spa.fill" size={15} color={colors.favorite} />
+          <AppText variant="bold" className="text-xl text-text">
+            Browse by Amenities
+          </AppText>
+        </View>
+      </View>
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 16 }}>
         {amenities.map((item) => (

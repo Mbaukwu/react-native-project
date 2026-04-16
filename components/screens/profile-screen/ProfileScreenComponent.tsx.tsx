@@ -77,7 +77,7 @@ export default function ProfileScreen() {
   // Signed in
   return (
     <ScreenWrapper>
-      <View className="flex-1 px-4 pt-8">
+      <View className="flex-1 px-4 pt-8 mt-4">
         {/* Profile Header */}
         <View className="items-center mb-8">
           <View className="bg-primary/15 p-5 rounded-full mb-3">

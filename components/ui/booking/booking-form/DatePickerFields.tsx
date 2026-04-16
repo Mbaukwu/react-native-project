@@ -1,10 +1,10 @@
-import { View, TouchableOpacity, Platform } from 'react-native';
-import { useState } from 'react';
-import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import AppText from '@/components/ui/typography/AppText';
-import { IconSymbol } from '../icon-symbol';
-import { Colors } from '@/constants/colorTheme/colors';
-import { useColorScheme } from '@/components/hooks/use-color-scheme';
+import { useColorScheme } from "@/components/hooks/use-color-scheme";
+import AppText from "@/components/ui/typography/AppText";
+import { Colors } from "@/constants/colorTheme/colors";
+import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
+import { useState } from "react";
+import { Platform, TouchableOpacity, View } from "react-native";
+import { IconSymbol } from "../../icon-symbol";
 
 type DatePickerFieldProps = {
   value: string;
@@ -15,26 +15,26 @@ type DatePickerFieldProps = {
 };
 
 export default function DatePickerField({ value, placeholder, error, minimumDate, onDateChange }: DatePickerFieldProps) {
-  const colorScheme = useColorScheme() ?? 'light';
+  const colorScheme = useColorScheme() ?? "light";
   const colors = Colors[colorScheme];
   const [showPicker, setShowPicker] = useState(false);
 
   const formatDate = (date: Date): string => {
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
 
   const formatDisplay = (dateStr: string): string => {
-    const [year, month, day] = dateStr.split('-');
-    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const [year, month, day] = dateStr.split("-");
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     return `${months[parseInt(month) - 1]} ${parseInt(day)}, ${year}`;
   };
 
   const handleChange = (event: DateTimePickerEvent, date?: Date) => {
     setShowPicker(false);
-    if (event.type === 'set' && date) {
+    if (event.type === "set" && date) {
       onDateChange(date, formatDate(date));
     }
   };
@@ -44,8 +44,8 @@ export default function DatePickerField({ value, placeholder, error, minimumDate
       <TouchableOpacity
         onPress={() => setShowPicker(true)}
         style={{
-          flexDirection: 'row',
-          alignItems: 'center',
+          flexDirection: "row",
+          alignItems: "center",
           backgroundColor: colors.card,
           borderRadius: 12,
           paddingHorizontal: 16,
@@ -66,13 +66,13 @@ export default function DatePickerField({ value, placeholder, error, minimumDate
         <DateTimePicker
           value={value ? new Date(value) : new Date()}
           mode="date"
-          display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-           onChange={(event: DateTimePickerEvent, date?: Date) => {
-    setShowPicker(false);
-    if (event.type === 'set' && date) {
-      onDateChange(date, formatDate(date));
-    }
-  }}
+          display={Platform.OS === "ios" ? "spinner" : "default"}
+          onChange={(event: DateTimePickerEvent, date?: Date) => {
+            setShowPicker(false);
+            if (event.type === "set" && date) {
+              onDateChange(date, formatDate(date));
+            }
+          }}
           minimumDate={minimumDate || new Date()}
         />
       )}

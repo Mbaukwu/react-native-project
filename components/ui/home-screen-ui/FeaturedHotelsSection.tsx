@@ -1,19 +1,18 @@
 import { useFeaturedHotels } from "@/components/hooks/hotel-hooks/useFeaturedHotels";
 import { useColorScheme } from "@/components/hooks/use-color-scheme";
 
-import HotelCard from "@/components/ui/hotelCards/HotelCard";
+import HotelCard from "@/components/ui/hotel/hotelCards/HotelCard";
 import { Colors } from "@/constants/colorTheme/colors";
 import { ScrollView, View } from "react-native";
+import { IconSymbol } from "../icon-symbol";
 import HotelCardSkeleton from "../skeletons-ui/HotelCardSkeleton";
 import SectionHeaderSkeleton from "../skeletons-ui/SectionHeaderSkeleton";
 import AppText from "../typography/AppText";
-import { IconSymbol } from "../icon-symbol";
 
 export default function FeaturedHotelsSection() {
   const colorScheme = useColorScheme() ?? "light";
   const colors = Colors[colorScheme];
   const { data, isLoading, isError, error } = useFeaturedHotels();
- 
 
   if (isLoading) {
     return (
@@ -35,12 +34,12 @@ export default function FeaturedHotelsSection() {
   }
   return (
     <View className="mt-6">
-  <View className="flex-row items-center px-4 mb-4">
-    <IconSymbol name="star.fill" size={15} color={colors.gold} />
-    <AppText className="text-xl text-text ml-2" variant="bold">
-      Featured Hotels
-    </AppText>
-  </View>
+      <View className="flex-row items-center px-4 mb-4">
+        <IconSymbol name="star.fill" size={15} color={colors.gold} />
+        <AppText className="text-xl text-text ml-2" variant="bold">
+          Featured Hotels
+        </AppText>
+      </View>
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 16 }}>
         {data.map((hotel) => (

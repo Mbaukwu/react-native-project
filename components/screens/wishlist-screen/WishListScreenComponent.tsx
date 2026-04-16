@@ -1,6 +1,6 @@
 import ScreenWrapper from "@/components/global/ScreenWrapper";
 import { useColorScheme } from "@/components/hooks/use-color-scheme";
-import SearchHotelCard from "@/components/ui/hotelCards/SearchHotelCard";
+import SearchHotelCard from "@/components/ui/hotel/hotelCards/SearchHotelCard";
 import { IconSymbol } from "@/components/ui/icon-symbol";
 import AppText from "@/components/ui/typography/AppText";
 import { Colors } from "@/constants/colorTheme/colors";
@@ -86,18 +86,12 @@ export default function WishlistScreen() {
             <AppText className="text-text text-2xl text-center" variant="bold">
               Save your favourites
             </AppText>
-            <AppText className="text-text-secondary text-center mt-2 leading-6">
-              Sign in to save hotels and access them from any device
-            </AppText>
-            <TouchableOpacity
-              onPress={() => push("/(auth)/signIn")}
-              className="mt-6 bg-primary py-3 px-6 rounded-xl"
-            >
+            <AppText className="text-text-secondary text-center mt-2 leading-6">Sign in to save hotels and access them from any device</AppText>
+            <TouchableOpacity onPress={() => push("/(auth)/signIn")} className="mt-6 bg-primary py-3 px-6 rounded-xl">
               <AppText className="text-white text-base" variant="bold">
                 Sign In
               </AppText>
             </TouchableOpacity>
-           
           </View>
         </View>
       </ScreenWrapper>
@@ -127,9 +121,7 @@ export default function WishlistScreen() {
             <AppText className="text-text text-2xl text-center" variant="bold">
               No items in wishlist
             </AppText>
-            <AppText className="text-text-secondary text-center mt-2 leading-6">
-              Tap the heart on any hotel to add it here
-            </AppText>
+            <AppText className="text-text-secondary text-center mt-2 leading-6">Tap the heart on any hotel to add it here</AppText>
           </View>
         </View>
       </ScreenWrapper>

@@ -1,27 +1,34 @@
-import { View, TouchableOpacity, ActivityIndicator } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { useLocalSearchParams, useRouter } from "expo-router";
-import { useForm, Resolver } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect, useState } from "react";
-import { supabase } from "@/constants/supabase/supabase";
-import { magicModal } from "react-native-magic-modal";
+import { BookingFormData, bookingSchema } from "@/components/forms/form-validator/bookingFormValidator";
 import ScreenWrapper from "@/components/global/ScreenWrapper";
-import AppText from "@/components/ui/typography/AppText";
-import { IconSymbol } from "@/components/ui/icon-symbol";
-import { Colors } from "@/constants/colorTheme/colors";
 import { useColorScheme } from "@/components/hooks/use-color-scheme";
+import GuestDetailsSection from "@/components/ui/booking/booking-form/GuestDetailsSection";
+import HotelSummaryCard from "@/components/ui/booking/booking-form/HotelSummaryCard";
+import SpecialRequestsSection from "@/components/ui/booking/booking-form/SpecialRequestSection";
+import StayDetailsSection from "@/components/ui/booking/booking-form/StayDetailsSection";
+import { IconSymbol } from "@/components/ui/icon-symbol";
+import { BookingAuthModal } from "@/components/ui/modal/BookingAuthModal";
+import AppText from "@/components/ui/typography/AppText";
+import { Colors } from "@/constants/colorTheme/colors";
 import { useWishlistStore } from "@/constants/stores/wishlistStore";
 import { createBooking } from "@/constants/supabase/services/bookingService";
-import { bookingSchema, BookingFormData } from "@/components/forms/form-validator/bookingFormValidator";
-import { BookingAuthModal } from "@/components/ui/modal/BookingAuthModal";
-import GuestDetailsSection from "@/components/ui/booking-form/GuestDetailsSection";
-import StayDetailsSection from "@/components/ui/booking-form/StayDetailsSection";
-import SpecialRequestsSection from "@/components/ui/booking-form/SpecialRequestSection";
-import HotelSummaryCard from "@/components/ui/booking-form/HotelSummaryCard";
-import Toast from "react-native-toast-message";
+import { supabase } from "@/constants/supabase/supabase";
+import { sendBookingConfirmedNotification } from "@/constants/utilities/services/notificationService";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useQueryClient } from "@tanstack/react-query";
-import { sendBookingNotification } from "@/constants/services/notificationService";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { useEffect, useState } from "react";
+import { Resolver, useForm } from "react-hook-form";
+import { ActivityIndicator, TouchableOpacity, View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { magicModal } from "react-native-magic-modal";
+import Toast from "react-native-toast-message";
+
+
+
+
+
+
+// 
 export default function BookingFormComponent() {
   const { hotelId, price, hotelName, roomType } = useLocalSearchParams<{
     hotelId: string;
@@ -103,7 +110,8 @@ export default function BookingFormComponent() {
         special_requests: data.specialRequests || undefined,
       });
 
-      sendBookingNotification(hotelName, data.checkIn).catch((err) => console.error("Notification failed:", err));
+      // Send notification (fire and forget)
+      sendBookingConfirmedNotification(hotelName).catch(console.error);
 
       queryClient.invalidateQueries({ queryKey: ["user-bookings", userId] });
 
@@ -120,7 +128,6 @@ export default function BookingFormComponent() {
       setLoading(false);
     }
   };
-
   if (loadingUser) {
     return (
       <ScreenWrapper>
