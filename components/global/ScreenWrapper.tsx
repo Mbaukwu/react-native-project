@@ -1,32 +1,53 @@
-import { View, KeyboardAvoidingView, Platform } from "react-native";
+import { View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import React, { ReactNode } from "react";
 
 type ScreenWrapperProps = {
   children: ReactNode;
   className?: string;
   keyboardAvoiding?: boolean;
+  scrollable?: boolean;
 };
 
-export default function ScreenWrapper({ children, className = "", keyboardAvoiding = false }: ScreenWrapperProps) {
-  // Regular content
-  if (!keyboardAvoiding) {
-    return <View className={`flex-1 bg-background ${className}`}>{children}</View>;
-  }
+export default function ScreenWrapper({ 
+  children, 
+  className = "", 
+  keyboardAvoiding = false,
+  scrollable = false 
+}: ScreenWrapperProps) {
+  
+  const content = <View className={`flex-1 bg-background ${className}`}>{children}</View>;
 
-  // Keyboard avoiding
-  if (keyboardAvoiding) {
+  // Keyboard avoiding with scroll (for forms)
+  if (keyboardAvoiding && scrollable) {
     return (
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        className="flex-1"
-        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
+      <KeyboardAwareScrollView
+         style={{ flex: 1 }}
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 0 }}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+        extraScrollHeight={0}
+        enableOnAndroid={true}
       >
-        <View className={`flex-1 bg-background ${className}`}>{children}</View>
-      </KeyboardAvoidingView>
+        {content}
+      </KeyboardAwareScrollView>
     );
   }
 
-  // Fallback
-  return <View className={`flex-1 bg-background ${className}`}>{children}</View>;
-}
+  // Scrollable only (no keyboard avoiding)
+  if (scrollable && !keyboardAvoiding) {
+    return (
+      <KeyboardAwareScrollView
+        className="flex-1"
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+          extraScrollHeight={0} 
+      >
+        {content}
+      </KeyboardAwareScrollView>
+    );
+  }
 
+  // Regular content (no scroll, no keyboard avoiding)
+  return content;
+}

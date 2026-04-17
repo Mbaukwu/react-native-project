@@ -35,33 +35,32 @@ export default function AboutScreen() {
         {/* Mission */}
         <View className="bg-card rounded-2xl border border-border p-5 mb-4">
           <AppText className="text-text text-base mb-2" variant="bold">Our Mission</AppText>
-          <AppText className="text-text-secondary leading-6">
+          <AppText className="text-text-secondary leading-6" variant="medium">
             StayEasy was built to make hotel discovery and booking across Nigeria simple, fast and stress-free. We believe finding a great place to stay should never be a complicated process — browse freely, decide confidently, book instantly.
           </AppText>
         </View>
-
-        {/* What we offer */}
-        <View className="bg-card rounded-2xl border border-border p-5 mb-4">
-          <AppText className="text-text text-base mb-3" variant="bold">What We Offer</AppText>
-          {[
-            { icon: "magnifyingglass", text: "Browse hotels across 6 Nigerian states without signing up" },
-            { icon: "heart.fill", text: "Save your favourite hotels locally or to the cloud" },
-            { icon: "calendar", text: "Simple and fast booking with instant confirmation" },
-            { icon: "star.fill", text: "Honest ratings and reviews from real guests" },
-          ].map((item, index) => (
-            <View key={index} className="flex-row items-start gap-3 mb-3">
-              <View className="bg-primary/10 p-1.5 rounded-lg mt-0.5">
-                <IconSymbol name={item.icon as any} size={14} color={colors.primary} />
-              </View>
-              <AppText className="text-text-secondary flex-1 leading-5">{item.text}</AppText>
-            </View>
-          ))}
-        </View>
+{/* What we offer */}
+<View className="bg-card rounded-2xl border border-border p-5 mb-4">
+  <AppText className="text-text text-base mb-3" variant="bold">What We Offer</AppText>
+  {[
+    { icon: "magnifyingglass", text: "Browse hotels across Nigerian states without signing up" },
+    { icon: "heart.fill", text: "Save your favourite hotels locally or to the cloud" },
+    { icon: "calendar", text: "Simple and fast booking with instant confirmation" },
+    { icon: "star.fill", text: "Honest ratings and reviews from real guests" },
+  ].map((item, index) => (
+    <View key={index} className="flex-row items-center gap-3 mb-3">
+      <View className="bg-primary/10 p-1.5 rounded-lg">
+        <IconSymbol name={item.icon as any} size={14} color={colors.primary} />
+      </View>
+      <AppText className="text-text-secondary flex-1 leading-5" variant="medium">{item.text}</AppText>
+    </View>
+  ))}
+</View>
 
         {/* Built with */}
-        <View className="bg-card rounded-2xl border border-border p-5 mb-4">
+        <View className="bg-card rounded-2xl border border-border p-5 mb-4" >
           <AppText className="text-text text-base mb-2" variant="bold">Built With</AppText>
-          <AppText className="text-text-secondary leading-6">
+          <AppText className="text-text-secondary leading-6" variant="medium">
             StayEasy is built with React Native and Expo, powered by Supabase for authentication and data, and designed with a focus on speed, simplicity and a great Nigerian hotel experience.
           </AppText>
         </View>

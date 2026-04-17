@@ -77,7 +77,8 @@ const MAPPING = {
 'airplane': 'flight',
 'beach': 'beach-access',
   'building': 'business',
-'clock.fill': 'access-time',
+  'clock.fill': 'access-time',
+ 'camera.fill': 'camera-alt',
 } as const;
 
 /**
@@ -99,3 +100,4 @@ export function IconSymbol({
 }) {
   return <MaterialIcons color={color} size={size} name={MAPPING[name]} style={style} />;
 }
+export type IconName = keyof typeof MAPPING;

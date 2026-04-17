@@ -34,28 +34,42 @@ export default function SignUpFormComponent() {
     },
   });
 
-  const onSubmit = async (data: SignUpFormData) => {
-    setServerError(null);
+const onSubmit = async (data: SignUpFormData) => {
+  setServerError(null);
 
-    try {
-      const { error: signUpError } = await supabase.auth.signUp({
-        email: data.email.trim(),
-        password: data.password,
-        options: {
-          data: { name: data.name.trim() },
-        },
-      });
+  try {
+    const response = await supabase.auth.signUp({
+      email: data.email.trim(),
+      password: data.password,
+      options: {
+        data: { name: data.name.trim() },
+      },
+    });
 
-      if (signUpError) throw signUpError;
+    if (response.error) throw response.error;
+
+    // Check if email confirmation is required
+    if (!response.data?.session) {
+      // Email confirmation required
+      setServerError(
+        "✅ Verification email sent! Please check your inbox and confirm your email before signing in."
+      );
+      // Navigate to Sign In screen after a short delay
+      setTimeout(() => {
+        push("/(auth)/signIn");
+      }, 2000);
+    } else {
+    
       push("/(tabs)/home");
-    } catch (error: any) {
-      setServerError(error.message ?? "Sign up failed. Please try again.");
     }
-  };
+  } catch (error: any) {
+    setServerError(error.message ?? "Sign up failed. Please try again.");
+  }
+};
 
   return (
-    <ScreenWrapper keyboardAvoiding>
-      <View className="flex-1 px-6 pt-10 pb-10">
+    <ScreenWrapper keyboardAvoiding scrollable>
+      <View className="px-6 pt-10 pb-10 mb-0">
         {/* Back */}
         <TouchableOpacity onPress={() => back()} className="flex-row items-center mb-8">
           <IconSymbol name="chevron.left" size={24} color={colors.text} />

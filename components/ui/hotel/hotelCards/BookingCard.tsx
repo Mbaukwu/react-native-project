@@ -6,6 +6,7 @@ import { Colors } from "@/constants/colorTheme/colors";
 import { useColorScheme } from "@/components/hooks/use-color-scheme";
 import { IBookingDetails } from "@/constants/types-interface/bookingInterface";
 import { useState } from "react";
+import {formatDisplayDate} from "@/constants/utilities/booking/booking-confirmation/dateUtils"
 
 type BookingCardProps = {
   booking: IBookingDetails;
@@ -20,12 +21,6 @@ export default function BookingCard({ booking, onCancel, onDelete }: BookingCard
   const [imageError, setImageError] = useState(false);
 
 
-  const formatDisplay = (dateStr: string): string => {
-    if (!dateStr) return "—";
-    const [year, month, day] = dateStr.split("-");
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    return `${months[parseInt(month) - 1]} ${parseInt(day)}, ${year}`;
-  };
 
   const statusConfig = {
     confirmed: { color: colors.success, bg: `${colors.success}20`, label: "Confirmed" },
@@ -94,13 +89,13 @@ export default function BookingCard({ booking, onCancel, onDelete }: BookingCard
             <View className="flex-1 bg-background rounded-lg px-2 py-1.5">
               <AppText className="text-text-disabled text-[10px]">Check-in</AppText>
               <AppText className="text-text text-xs mt-0.5" variant="bold">
-                {formatDisplay(booking.check_in)}
+                {formatDisplayDate(booking.check_in)}
               </AppText>
             </View>
             <View className="flex-1 bg-background rounded-lg px-2 py-1.5">
               <AppText className="text-text-disabled text-[10px]">Check-out</AppText>
               <AppText className="text-text text-xs mt-0.5" variant="bold">
-                {formatDisplay(booking.check_out)}
+                {formatDisplayDate(booking.check_out)}
               </AppText>
             </View>
           </View>
