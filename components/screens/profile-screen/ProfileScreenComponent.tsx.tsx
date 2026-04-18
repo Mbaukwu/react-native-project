@@ -1,3 +1,10 @@
+// ─────────────────────────────────────────────────────────────
+// ProfileScreen
+// Screen: User profile page
+// Shows: user info, menu navigation, sign out action
+// Depends on: useAuth, wishlist store, navigation routes
+// ─────────────────────────────────────────────────────────────
+
 import { View, ActivityIndicator } from "react-native";
 import { useRouter } from "expo-router";
 import { useState } from "react";
@@ -10,13 +17,32 @@ import ProfileMenuItem from "@/components/ui/profile/ProfileMenuItem";
 import SignOutButton from "@/components/ui/profile/SignOutButton";
 import NotSignedInState from "@/components/ui/profile/NotSignedInState";
 
+// ── Component ────────────────────────────────────────────────
 export default function ProfileScreen() {
+
+  // ── Navigation ────────────────────────────────────────────
   const { push } = useRouter();
+
+  // ── Theme ────────────────────────────────────────────────
   const { colors } = useThemeColors();
+
+  // ── Store ────────────────────────────────────────────────
   const { loadWishlist } = useWishlistStore();
-    const { userEmail, userName, avatarUrl, isAuthenticated, isLoading, signOut } = useAuth();
+
+  // ── Auth ────────────────────────────────────────────────
+  const {
+    userEmail,
+    userName,
+    avatarUrl,
+    isAuthenticated,
+    isLoading,
+    signOut
+  } = useAuth();
+
+  // ── Local State ───────────────────────────────────────────
   const [signingOut, setSigningOut] = useState(false);
 
+  // ── Handlers ─────────────────────────────────────────────
   const handleSignOut = async () => {
     setSigningOut(true);
     await signOut();
@@ -25,6 +51,7 @@ export default function ProfileScreen() {
     setSigningOut(false);
   };
 
+  // ── Loading State ─────────────────────────────────────────
   if (isLoading) {
     return (
       <ScreenWrapper>
@@ -35,6 +62,7 @@ export default function ProfileScreen() {
     );
   }
 
+  // ── Not Authenticated ─────────────────────────────────────
   if (!isAuthenticated) {
     return (
       <ScreenWrapper>
@@ -43,18 +71,38 @@ export default function ProfileScreen() {
     );
   }
 
+  // ── Render ────────────────────────────────────────────────
   return (
     <ScreenWrapper>
       <View className="flex-1 px-4 pt-8 mt-4">
+
+        {/* ── Header ─────────────────────────────────────── */}
         <ProfileHeader userName={userName} userEmail={userEmail} />
-        
+
+        {/* ── Menu Items ────────────────────────────────── */}
         <View className="gap-2 mt-4">
-          <ProfileMenuItem icon="heart.fill" title="Wishlist" route="/(tabs)/wishlist" iconColor={colors.favorite} />
-          <ProfileMenuItem icon="calendar" title="My Bookings" route="/(tabs)/bookings" iconColor={colors.primary} />
-          <ProfileMenuItem icon="gearshape.fill" title="Settings" route="/(profile)/settings" />
+          <ProfileMenuItem
+            icon="heart.fill"
+            title="Wishlist"
+            route="/(tabs)/wishlist"
+            iconColor={colors.favorite}
+          />
+          <ProfileMenuItem
+            icon="calendar"
+            title="My Bookings"
+            route="/(tabs)/bookings"
+            iconColor={colors.primary}
+          />
+          <ProfileMenuItem
+            icon="gearshape.fill"
+            title="Settings"
+            route="/(profile)/settings"
+          />
         </View>
 
+        {/* ── Sign Out ──────────────────────────────────── */}
         <SignOutButton onPress={handleSignOut} loading={signingOut} />
+
       </View>
     </ScreenWrapper>
   );

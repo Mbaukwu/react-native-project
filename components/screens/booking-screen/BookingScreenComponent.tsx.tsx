@@ -1,3 +1,13 @@
+// ─────────────────────────────────────────────────────────────
+// BookingScreenComponent
+// Screen: My Bookings
+// Shows: User bookings (upcoming + history) with filtering, empty states, and actions
+// Depends on: useUserBookings, bookingFilters, bookingActions,
+//             BookingHeader, BookingTabs, BookingList,
+//             BookingEmptyState, BookingNotSignedIn
+// ─────────────────────────────────────────────────────────────
+
+// ── Imports ──────────────────────────────────────────────────
 import { useState } from "react";
 import { useRouter } from "expo-router";
 import { useQueryClient } from "@tanstack/react-query";
@@ -18,39 +28,61 @@ import { TouchableOpacity, View } from "react-native";
 import AppText from "@/components/ui/typography/AppText";
 import { IconSymbol } from "@/components/ui/icon-symbol";
 
-
-
+// ── Component ────────────────────────────────────────────────
 export default function BookingScreenComponent() {
+
+  // ── Navigation & Theme ─────────────────────────────────────
   const { push } = useRouter();
   const { colors } = useThemeColors();
+
+  // ── Global State ───────────────────────────────────────────
   const { userId } = useWishlistStore();
   const queryClient = useQueryClient();
-  const { data: bookings, isLoading, isError, refetch } = useUserBookings(userId);
+
+  // ── Data Fetching ──────────────────────────────────────────
+  const {
+    data: bookings,
+    isLoading,
+    isError,
+    refetch,
+  } = useUserBookings(userId);
+
+  // ── Local State ────────────────────────────────────────────
   const [activeTab, setActiveTab] = useState<"upcoming" | "history">("upcoming");
 
+  // ── Derived Data ───────────────────────────────────────────
   const upcoming = filterUpcomingBookings(bookings);
   const history = filterHistoryBookings(bookings);
+
+  const currentData = activeTab === "upcoming" ? upcoming : history;
+
+  // ── Guards ─────────────────────────────────────────────────
 
   // Not signed in
   if (!userId) return <NotSignedInState />;
 
-  // Loading
+  // Loading state
   if (isLoading) {
     return (
       <ScreenWrapper className="pt-5">
-        <SectionHeaderSkeleton />
         <BookingCardSkeleton />
       </ScreenWrapper>
     );
   }
 
-  // Error
+  // Error state
   if (isError) {
     return (
       <ScreenWrapper>
         <View className="flex-1 items-center justify-center px-6">
-          <AppText className="text-error text-center">Failed to load your bookings</AppText>
-          <TouchableOpacity onPress={() => refetch()} className="mt-4 bg-primary px-6 py-3 rounded-xl">
+          <AppText className="text-error text-center">
+            Failed to load your bookings
+          </AppText>
+
+          <TouchableOpacity
+            onPress={() => refetch()}
+            className="mt-4 bg-primary px-6 py-3 rounded-xl"
+          >
             <AppText className="text-white">Try Again</AppText>
           </TouchableOpacity>
         </View>
@@ -63,31 +95,62 @@ export default function BookingScreenComponent() {
     return (
       <ScreenWrapper>
         <View className="flex-1 items-center justify-center px-6">
-          <IconSymbol name="calendar" size={64} color={colors.textDisabled} />
-          <AppText className="text-text text-xl text-center mt-4">An empty calendar = endless possibilities</AppText>
-          <AppText className="text-text-secondary text-center mt-2">Find your perfect stay today!</AppText>
-          <TouchableOpacity onPress={() => push("/(tabs)/home")} className="mt-6 bg-primary py-3.5 px-8 rounded-xl">
+
+          <IconSymbol
+            name="calendar"
+            size={64}
+            color={colors.textDisabled}
+          />
+
+          <AppText className="text-text text-xl text-center mt-4">
+            An empty calendar = endless possibilities
+          </AppText>
+
+          <AppText className="text-text-secondary text-center mt-2">
+            Find your perfect stay today!
+          </AppText>
+
+          <TouchableOpacity
+            onPress={() => push("/(tabs)/home")}
+            className="mt-6 bg-primary py-3.5 px-8 rounded-xl"
+          >
             <AppText className="text-white text-base" variant="bold">
               Explore Hotels
             </AppText>
           </TouchableOpacity>
+
         </View>
       </ScreenWrapper>
     );
   }
 
-  const currentData = activeTab === "upcoming" ? upcoming : history;
-
+  // ── Render ─────────────────────────────────────────────────
   return (
     <ScreenWrapper>
       <View className="flex-1 px-4 pt-8">
+
+        {/* ── Header ───────────────────────────────────────── */}
         <BookingHeader count={currentData.length} />
-        <BookingTabs activeTab={activeTab} setActiveTab={setActiveTab} upcomingCount={upcoming.length} historyCount={history.length} />
+
+        {/* ── Tabs ─────────────────────────────────────────── */}
+        <BookingTabs
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          upcomingCount={upcoming.length}
+          historyCount={history.length}
+        />
+
+        {/* ── List / Empty State ───────────────────────────── */}
         {currentData.length === 0 ? (
           <BookingEmptyState type={activeTab} />
         ) : (
-          <BookingList data={currentData} onCancel={(id) => cancelBookingAction(id, refetch)} onDelete={(id) => deleteBookingAction(id, refetch)} />
+          <BookingList
+            data={currentData}
+            onCancel={(id) => cancelBookingAction(id, refetch)}
+            onDelete={(id) => deleteBookingAction(id, refetch)}
+          />
         )}
+
       </View>
     </ScreenWrapper>
   );

@@ -1,3 +1,10 @@
+// ─────────────────────────────────────────────────────────────
+// SearchScreenComponent
+// Screen: Hotel search page
+// Shows: search input, filters (via params), paginated hotel results
+// Depends on: useSearchHotels, route params, LegendList pagination
+// ─────────────────────────────────────────────────────────────
+
 import ScreenWrapper from "@/components/global/ScreenWrapper";
 import { useSearchHotels } from "@/components/hooks/hotel-hooks/useSearchHotels";
 import { useColorScheme } from "@/components/hooks/use-color-scheme";
@@ -11,6 +18,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, TextInput, TouchableOpacity, View } from "react-native";
 
+// ── Types ────────────────────────────────────────────────────
 type LocalSearchParamsType = {
   query?: string;
   city?: string;
@@ -18,13 +26,18 @@ type LocalSearchParamsType = {
   filter?: string;
 };
 
+// ── Component ────────────────────────────────────────────────
 export default function SearchScreenComponent() {
+
+  // ── Theme & Navigation ────────────────────────────────────
   const colorScheme = useColorScheme() ?? "light";
   const colors = Colors[colorScheme];
   const { back } = useRouter();
+
+  // ── Route Params ─────────────────────────────────────────
   const params = useLocalSearchParams<LocalSearchParamsType>();
 
-  // Determine initial state from params
+  // ── Initial State Derivation ──────────────────────────────
   let initialQuery = "";
   let initialFilter: "city" | "amenity" | "deals" | "top-rated" | "luxury" | "budget" | null = null;
   let initialFilterValue = "";
@@ -49,12 +62,13 @@ export default function SearchScreenComponent() {
     initialFilter = "budget";
   }
 
+  // ── Local State ───────────────────────────────────────────
   const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [debouncedQuery, setDebouncedQuery] = useState(initialQuery);
   const [activeFilter, setActiveFilter] = useState(initialFilter);
   const [filterValue, setFilterValue] = useState(initialFilterValue);
 
-  // Debounce search input
+  // ── Effects (Debounce Search) ─────────────────────────────
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedQuery(searchQuery);
@@ -63,10 +77,19 @@ export default function SearchScreenComponent() {
         setFilterValue("");
       }
     }, 500);
+
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  const { data, isLoading, isError, fetchNextPage, hasNextPage, isFetchingNextPage } = useSearchHotels({
+  // ── Data Fetch ────────────────────────────────────────────
+  const {
+    data,
+    isLoading,
+    isError,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage
+  } = useSearchHotels({
     query: debouncedQuery,
     filter: activeFilter,
     filterValue: filterValue,
@@ -74,6 +97,7 @@ export default function SearchScreenComponent() {
 
   const hotels = data?.pages.flatMap((page) => page.data) ?? [];
 
+  // ── Handlers ─────────────────────────────────────────────
   const handleClear = () => {
     setSearchQuery("");
     setDebouncedQuery("");
@@ -101,20 +125,23 @@ export default function SearchScreenComponent() {
   const shouldShowResults = debouncedQuery || activeFilter;
   const filterLabel = getFilterLabel();
 
+  // ── Render ────────────────────────────────────────────────
   return (
     <ScreenWrapper>
-      {/* Header - fixed at top */}
+
+      {/* ── Header ─────────────────────────────────────────── */}
       <View className="px-4 pt-12 pb-2 bg-background">
         <View className="flex-row items-center mb-4">
           <TouchableOpacity onPress={() => back()} className="mr-3 p-1">
             <IconSymbol name="chevron.left" size={28} color={colors.text} />
           </TouchableOpacity>
+
           <AppText variant="bold" className="text-xl text-text flex-1" numberOfLines={1}>
             Search
           </AppText>
         </View>
 
-        {/* Search Input */}
+        {/* ── Search Input ─────────────────────────────── */}
         <View className="flex-row items-center bg-input rounded-2xl px-5 h-13">
           <IconSymbol name="magnifyingglass" size={20} color={colors.icon} />
           <TextInput
@@ -134,25 +161,33 @@ export default function SearchScreenComponent() {
         </View>
       </View>
 
-      {/* Results - scrollable area */}
+      {/* ── Results ───────────────────────────────────── */}
       <View className="flex-1">
+
         {!shouldShowResults ? (
           <View className="flex-1 items-center justify-center px-4">
             <IconSymbol name="magnifyingglass" size={48} color={colors.textDisabled} />
-            <AppText className="text-text-secondary text-center mt-4">Search for hotels by name, city, or location</AppText>
+            <AppText className="text-text-secondary text-center mt-4">
+              Search for hotels by name, city, or location
+            </AppText>
           </View>
+
         ) : isLoading && hotels.length === 0 ? (
           <SearchHotelCardSkeleton />
+
         ) : isError ? (
           <View className="flex-1 items-center justify-center px-4">
             <AppText className="text-error text-center">Failed to load results</AppText>
           </View>
+
         ) : hotels.length === 0 ? (
           <View className="flex-1 items-center justify-center px-4">
             <AppText className="text-text-secondary text-center">No hotels found</AppText>
           </View>
+
         ) : (
           <>
+            {/* ── Results Count ───────────────────────── */}
             <View className="px-4 py-2">
               <View className="bg-primary/10 self-start px-3 py-1 rounded-full">
                 <AppText className="text-primary text-sm" variant="bold">
@@ -161,6 +196,7 @@ export default function SearchScreenComponent() {
               </View>
             </View>
 
+            {/* ── Results List ───────────────────────── */}
             <LegendList
               data={hotels}
               keyExtractor={(item) => item.id}
@@ -179,7 +215,9 @@ export default function SearchScreenComponent() {
                   </View>
                 ) : hotels.length > 0 && !hasNextPage ? (
                   <View className="py-4 items-center">
-                    <AppText className="text-text-disabled text-xs">All {hotels.length} results loaded</AppText>
+                    <AppText className="text-text-disabled text-xs">
+                      All {hotels.length} results loaded
+                    </AppText>
                   </View>
                 ) : null
               }
@@ -188,6 +226,7 @@ export default function SearchScreenComponent() {
           </>
         )}
       </View>
+
     </ScreenWrapper>
   );
 }

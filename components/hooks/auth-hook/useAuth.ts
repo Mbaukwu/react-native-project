@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { AppState } from 'react-native';
 import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/constants/supabase/supabase';
 
@@ -16,42 +17,62 @@ type UseAuth = {
 };
 
 export const useAuth = (): UseAuth => {
+
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Fetch profile from profiles table — this is the source of truth
   const loadProfile = async (userId: string, fallbackUser?: User | null) => {
-    const { data } = await supabase
-      .from('profiles')
-      .select('full_name, avatar_url')
-      .eq('id', userId)
-      .maybeSingle();
+    try {
+      const { data } = await supabase
+        .from('profiles')
+        .select('full_name, avatar_url')
+        .eq('id', userId)
+        .maybeSingle();
 
-    if (data?.full_name) {
-      setUserName(data.full_name);
-    } else {
-      // Fallback — check both metadata keys since different flows may use different keys
-      const metaName =
-        fallbackUser?.user_metadata?.full_name ??
-        fallbackUser?.user_metadata?.name ??
-        null;
-      setUserName(metaName);
+      const name = data?.full_name
+        ?? fallbackUser?.user_metadata?.full_name
+        ?? fallbackUser?.user_metadata?.name
+        ?? null;
+
+      setUserName(name);
+      setAvatarUrl(data?.avatar_url ?? null);
+    } catch (err) {
+      console.error('loadProfile error:', err);
     }
-    setAvatarUrl(data?.avatar_url ?? null);
   };
 
   const refreshUser = async () => {
+    console.log('🔄 refreshUser called');
     const { data } = await supabase.auth.getUser();
     const u = data.user ?? null;
     setUser(u);
-    if (u?.id) await loadProfile(u.id, u);
+    if (u?.id) {
+      await loadProfile(u.id, u);
+    }
+    console.log('✅ refreshUser complete, user:', u?.email);
   };
 
+  // Refresh when app comes to foreground
   useEffect(() => {
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (nextAppState === 'active') {
+        console.log('📱 App became active, refreshing user');
+        refreshUser();
+      }
+    });
+    return () => subscription.remove();
+  }, []);
+
+  // Auth Initialization
+  useEffect(() => {
+    let isMounted = true;
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
     supabase.auth.getSession().then(async ({ data }) => {
+      if (!isMounted) return;
       setSession(data.session);
       const u = data.session?.user ?? null;
       setUser(u);
@@ -60,26 +81,59 @@ export const useAuth = (): UseAuth => {
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
+      async (event, session) => {
+        console.log('🔐 Auth event:', event);
+        if (!isMounted) return;
+        
+        // Ignore SIGNED_OUT if it happens right before SIGNED_IN
+        if (event === 'SIGNED_OUT') {
+          // Wait a bit to see if SIGNED_IN follows
+          timeoutId = setTimeout(() => {
+            console.log('🔐 Confirming SIGNED_OUT, clearing user');
+            setSession(null);
+            setUser(null);
+            setUserName(null);
+            setAvatarUrl(null);
+            setIsLoading(false);
+          }, 500);
+          return;
+        }
+        
+        // Clear the timeout if SIGNED_IN arrives
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+          timeoutId = null;
+        }
+        
         setSession(session);
         const u = session?.user ?? null;
         setUser(u);
+
         if (u?.id) {
           await loadProfile(u.id, u);
         } else {
           setUserName(null);
           setAvatarUrl(null);
         }
+        
+        setIsLoading(false);
       }
     );
 
-    return () => subscription.unsubscribe();
+    return () => {
+      isMounted = false;
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      subscription.unsubscribe();
+    };
   }, []);
 
   const signOut = async () => {
     await supabase.auth.signOut();
     setUserName(null);
     setAvatarUrl(null);
+    setIsLoading(false);
   };
 
   return {

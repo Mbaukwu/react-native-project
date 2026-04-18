@@ -1,12 +1,28 @@
+// ─────────────────────────────────────────────────────────────
+// StayDetailsSection
+// UI Component: Booking form section for stay dates + guests
+// Uses: react-hook-form watch/setValue + DatePickerField
+// Fields: checkIn, checkOut, guests
+// ─────────────────────────────────────────────────────────────
+
 import { View, TextInput } from "react-native";
-import { Controller, Control, FieldErrors, UseFormGetValues, UseFormSetValue, UseFormWatch } from "react-hook-form";
+import {
+  Controller,
+  Control,
+  FieldErrors,
+  UseFormGetValues,
+  UseFormSetValue,
+  UseFormWatch,
+} from "react-hook-form";
 import AppText from "@/components/ui/typography/AppText";
 import { IconSymbol } from "@/components/ui/icon-symbol";
 import { Colors } from "@/constants/colorTheme/colors";
 import { useColorScheme } from "@/components/hooks/use-color-scheme";
 import { BookingFormData } from "@/components/forms/form-validator/bookingFormValidator";
 import DatePickerField from "./DatePickerFields";
+import { useThemeColors } from "@/components/hooks/theme/useThemeColors";
 
+// ── Props ────────────────────────────────────────────────────
 type Props = {
   control: Control<BookingFormData>;
   errors: FieldErrors<BookingFormData>;
@@ -14,15 +30,27 @@ type Props = {
   setValue: UseFormSetValue<BookingFormData>;
 };
 
-export default function StayDetailsSection({ control, errors, watch, setValue }: Props) {
-  const colorScheme = useColorScheme() ?? "light";
-  const colors = Colors[colorScheme];
+// ── Component ────────────────────────────────────────────────
+export default function StayDetailsSection({
+  control,
+  errors,
+  watch,
+  setValue,
+}: Props) {
 
-  const checkIn = watch("checkIn"); // reactive — re-renders when value changes
+  // ── Theme ────────────────────────────────────────────────
+  const { colors } = useThemeColors();
+
+
+  // ── Reactive Values ───────────────────────────────────────
+  const checkIn = watch("checkIn"); // re-renders on change
   const checkOut = watch("checkOut");
 
+  // ── Handlers ─────────────────────────────────────────────
   const handleCheckInChange = (_: Date, formattedDate: string) => {
     setValue("checkIn", formattedDate, { shouldValidate: true });
+
+    // reset invalid checkout if earlier than new check-in
     if (checkOut && formattedDate > checkOut) {
       setValue("checkOut", "", { shouldValidate: true });
     }
@@ -34,12 +62,16 @@ export default function StayDetailsSection({ control, errors, watch, setValue }:
     }
   };
 
+  // ── Render ───────────────────────────────────────────────
   return (
     <View>
+
+      {/* ── Section Title ─────────────────────────────────── */}
       <AppText className="text-text text-lg mb-3" variant="bold">
         Stay Details
       </AppText>
 
+      {/* ── Check-in ──────────────────────────────────────── */}
       <DatePickerField
         value={checkIn}
         placeholder="Check-in Date *"
@@ -48,6 +80,7 @@ export default function StayDetailsSection({ control, errors, watch, setValue }:
         onDateChange={handleCheckInChange}
       />
 
+      {/* ── Check-out ─────────────────────────────────────── */}
       <DatePickerField
         value={checkOut}
         placeholder="Check-out Date *"
@@ -56,10 +89,15 @@ export default function StayDetailsSection({ control, errors, watch, setValue }:
         onDateChange={handleCheckOutChange}
       />
 
-      {/* Guests */}
+      {/* ── Guests ────────────────────────────────────────── */}
       <View className="mb-6">
-        <View className={`flex-row items-center bg-card rounded-xl px-4 border ${errors.guests ? "border-error" : "border-border"}`}>
+        <View
+          className={`flex-row items-center bg-card rounded-xl px-4 border ${
+            errors.guests ? "border-error" : "border-border"
+          }`}
+        >
           <IconSymbol name="person.fill" size={18} color={colors.icon} />
+
           <Controller
             control={control}
             name="guests"
@@ -83,8 +121,14 @@ export default function StayDetailsSection({ control, errors, watch, setValue }:
             )}
           />
         </View>
-        {errors.guests && <AppText className="text-error text-xs mt-1">{errors.guests.message}</AppText>}
+
+        {errors.guests && (
+          <AppText className="text-error text-xs mt-1">
+            {errors.guests.message}
+          </AppText>
+        )}
       </View>
+
     </View>
   );
 }

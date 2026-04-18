@@ -1,3 +1,11 @@
+// ─────────────────────────────────────────────────────────────
+// SignInFormComponent
+// Screen: Authentication (Sign In)
+// Handles: User login, validation, error display
+// Depends on: supabase auth, react-hook-form, yup validation
+// ─────────────────────────────────────────────────────────────
+
+// ── Imports ──────────────────────────────────────────────────
 import { View, TextInput, TouchableOpacity, ActivityIndicator } from "react-native";
 import { useRouter } from "expo-router";
 import { useForm, Controller } from "react-hook-form";
@@ -11,14 +19,19 @@ import { useColorScheme } from "@/components/hooks/use-color-scheme";
 import { signInSchema, SignInFormData } from "@/components/forms/form-validator/authValidator";
 import { useState } from "react";
 
+// ── Component ────────────────────────────────────────────────
 export default function SignInFormComponent() {
+
+  // ── Navigation & Theme ─────────────────────────────────────
   const { push, back } = useRouter();
   const colorScheme = useColorScheme() ?? "light";
   const colors = Colors[colorScheme];
 
+  // ── Local State ────────────────────────────────────────────
   const [showPassword, setShowPassword] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
 
+  // ── Form Setup ─────────────────────────────────────────────
   const {
     control,
     handleSubmit,
@@ -31,6 +44,8 @@ export default function SignInFormComponent() {
     },
   });
 
+  // ── Submit Handler ─────────────────────────────────────────
+  // Calls Supabase auth and navigates on success
   const onSubmit = async (data: SignInFormData) => {
     setServerError(null);
 
@@ -41,20 +56,25 @@ export default function SignInFormComponent() {
       });
 
       if (signInError) throw signInError;
+
       push("/(tabs)/home");
     } catch (error: any) {
       setServerError(error.message ?? "Sign in failed. Please try again.");
     }
   };
 
+  // ── Render ─────────────────────────────────────────────────
   return (
     <ScreenWrapper keyboardAvoiding>
       <View className="flex-1 px-6 pt-10 pb-10">
+
         {/* Back */}
-       <TouchableOpacity onPress={() => back()} className="flex-row items-center mb-8">
-  <IconSymbol name="chevron.left" size={24} color={colors.text} />
-  <AppText className="text-text text-[16px] ml-1 capitalize px-1" variant="bold">go back</AppText>
-</TouchableOpacity>
+        <TouchableOpacity onPress={() => back()} className="flex-row items-center mb-8">
+          <IconSymbol name="chevron.left" size={24} color={colors.text} />
+          <AppText className="text-text text-[16px] ml-1 capitalize px-1" variant="bold">
+            go back
+          </AppText>
+        </TouchableOpacity>
 
         {/* Header */}
         <AppText className="text-text text-3xl" variant="bold">
@@ -73,13 +93,18 @@ export default function SignInFormComponent() {
 
         {/* Form Fields */}
         <View className="gap-4 mt-8">
+
           {/* Email */}
           <View>
             <AppText className="text-text-secondary text-sm mb-1.5" variant="bold">
               Email
             </AppText>
-            <View className={`flex-row items-center bg-input rounded-2xl px-4 h-14 border ${errors.email ? "border-error" : "border-border"}`}>
+
+            <View className={`flex-row items-center bg-input rounded-2xl px-4 h-14 border ${
+              errors.email ? "border-error" : "border-border"
+            }`}>
               <IconSymbol name="envelope.fill" size={18} color={colors.icon} />
+
               <Controller
                 control={control}
                 name="email"
@@ -98,7 +123,12 @@ export default function SignInFormComponent() {
                 )}
               />
             </View>
-            {errors.email && <AppText className="text-error text-xs mt-1">{errors.email.message}</AppText>}
+
+            {errors.email && (
+              <AppText className="text-error text-xs mt-1">
+                {errors.email.message}
+              </AppText>
+            )}
           </View>
 
           {/* Password */}
@@ -107,12 +137,19 @@ export default function SignInFormComponent() {
               <AppText className="text-text-secondary text-sm" variant="bold">
                 Password
               </AppText>
-             <TouchableOpacity onPress={() => push('/(auth)/forgot-password')}>
-                <AppText className="text-primary text-sm">Forgot password?</AppText>
+
+              <TouchableOpacity onPress={() => push('/(auth)/forgot-password')}>
+                <AppText className="text-primary text-sm">
+                  Forgot password?
+                </AppText>
               </TouchableOpacity>
             </View>
-            <View className={`flex-row items-center bg-input rounded-2xl px-4 h-14 border ${errors.password ? "border-error" : "border-border"}`}>
+
+            <View className={`flex-row items-center bg-input rounded-2xl px-4 h-14 border ${
+              errors.password ? "border-error" : "border-border"
+            }`}>
               <IconSymbol name="lock.fill" size={18} color={colors.icon} />
+
               <Controller
                 control={control}
                 name="password"
@@ -129,11 +166,21 @@ export default function SignInFormComponent() {
                   />
                 )}
               />
+
               <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                <IconSymbol name={showPassword ? "eye.slash.fill" : "eye.fill"} size={18} color={colors.icon} />
+                <IconSymbol
+                  name={showPassword ? "eye.slash.fill" : "eye.fill"}
+                  size={18}
+                  color={colors.icon}
+                />
               </TouchableOpacity>
             </View>
-            {errors.password && <AppText className="text-error text-xs mt-1">{errors.password.message}</AppText>}
+
+            {errors.password && (
+              <AppText className="text-error text-xs mt-1">
+                {errors.password.message}
+              </AppText>
+            )}
           </View>
         </View>
 
@@ -147,17 +194,25 @@ export default function SignInFormComponent() {
           {isSubmitting ? (
             <ActivityIndicator color="white" />
           ) : (
-            <AppText className="text-white text-base" variant="bold">Sign In</AppText>
+            <AppText className="text-white text-base" variant="bold">
+              Sign In
+            </AppText>
           )}
         </TouchableOpacity>
 
         {/* Sign Up Link */}
         <View className="flex-row justify-center mt-6">
-          <AppText className="text-text-secondary">Don't have an account? </AppText>
+          <AppText className="text-text-secondary">
+            Don't have an account?{" "}
+          </AppText>
+
           <TouchableOpacity onPress={() => push("/(auth)/signUp")}>
-            <AppText className="text-primary" variant="bold">Create Account</AppText>
+            <AppText className="text-primary" variant="bold">
+              Create Account
+            </AppText>
           </TouchableOpacity>
         </View>
+
       </View>
     </ScreenWrapper>
   );

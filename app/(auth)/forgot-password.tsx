@@ -24,7 +24,7 @@ export default function ForgotPasswordScreen() {
     }
     setLoading(true);
     const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-      redirectTo:  'myprojectapp:///(auth)/reset-password',
+      redirectTo:  'myprojectapp://(auth)/reset-password',
     });
     setLoading(false);
     if (error) {

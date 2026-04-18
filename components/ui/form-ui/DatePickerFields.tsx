@@ -1,11 +1,20 @@
+// ─────────────────────────────────────────────────────────────
+// DatePickerField Component
+// Screen: Shared form component (Date selection input)
+// Purpose: Reusable date picker with formatted display + validation
+// Dependencies: DateTimePicker, AppText, IconSymbol, useThemeColors, formatDate
+// ─────────────────────────────────────────────────────────────
+
 import { View, TouchableOpacity, Platform } from 'react-native';
 import { useState } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AppText from '@/components/ui/typography/AppText';
 import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/colorTheme/colors';
-import { useColorScheme } from '@/components/hooks/use-color-scheme';
 
+import { formatDate} from "@/constants/utilities/dateUtils";
+import { useThemeColors } from '@/components/hooks/theme/useThemeColors';
+
+// ── Props Definition ─────────────────────────────────────────
 type DatePickerFieldProps = {
   label?: string;
   value: string;
@@ -15,6 +24,7 @@ type DatePickerFieldProps = {
   onDateChange: (date: Date, formattedDate: string) => void;
 };
 
+// ── Component ────────────────────────────────────────────────
 export default function DatePickerField({
   label,
   value,
@@ -23,18 +33,16 @@ export default function DatePickerField({
   minimumDate,
   onDateChange,
 }: DatePickerFieldProps) {
-  const colorScheme = useColorScheme() ?? 'light';
-  const colors = Colors[colorScheme];
+
+  const { colors } = useThemeColors();
+
+  // ── Local State ──────────────────────────────────────────
   const [showPicker, setShowPicker] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(value ? new Date(value) : null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(
+    value ? new Date(value) : null
+  );
 
-  const formatDate = (date: Date): string => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  };
-
+  // ── Handlers ─────────────────────────────────────────────
   const handleChange = (e: any, date?: Date) => {
     setShowPicker(false);
     if (date) {
@@ -45,23 +53,37 @@ export default function DatePickerField({
 
   return (
     <View className="mb-3">
+
+      {/* ── Optional Label ─────────────────────────────────── */}
       {label && (
         <AppText className="text-text-secondary text-sm mb-1.5" variant="bold">
           {label}
         </AppText>
       )}
+
+      {/* ── Date Input Trigger ────────────────────────────── */}
       <TouchableOpacity
         onPress={() => setShowPicker(true)}
-        className={`flex-row items-center bg-card rounded-xl px-4 border ${error ? 'border-error' : 'border-border'}`}
+        className={`flex-row items-center bg-card rounded-xl px-4 border ${
+          error ? 'border-error' : 'border-border'
+        }`}
         style={{ height: 52 }}
       >
         <IconSymbol name="calendar" size={18} color={colors.icon} />
+
         <AppText className={`flex-1 ml-3 ${value ? 'text-text' : 'text-text-disabled'}`}>
           {value || placeholder}
         </AppText>
       </TouchableOpacity>
-      {error && <AppText className="text-error text-xs mt-1">{error}</AppText>}
 
+      {/* ── Error Message ─────────────────────────────────── */}
+      {error && (
+        <AppText className="text-error text-xs mt-1">
+          {error}
+        </AppText>
+      )}
+
+      {/* ── Native Date Picker ────────────────────────────── */}
       {showPicker && (
         <DateTimePicker
           value={selectedDate || new Date()}
@@ -71,6 +93,7 @@ export default function DatePickerField({
           minimumDate={minimumDate || new Date()}
         />
       )}
+
     </View>
   );
 }

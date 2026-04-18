@@ -1,3 +1,10 @@
+// ─────────────────────────────────────────────────────────────
+// HomeScreenComponent
+// Screen: Home dashboard
+// Shows: destinations, deals, featured hotels, categories
+// Depends on: SectionList sections (Popular, Deals, Featured, etc.)
+// ─────────────────────────────────────────────────────────────
+
 import { SectionList, View } from "react-native";
 import ScreenWrapper from "@/components/global/ScreenWrapper";
 import HomeHeader from "@/components/ui/home-screen-ui/HomeHeader";
@@ -9,15 +16,17 @@ import AmenitiesSection from "@/components/ui/home-screen-ui/AmenitiesSection";
 import LuxuryStays from "@/components/ui/home-screen-ui/LuxuryStaysSection";
 import BudgetFriendlySection from "@/components/ui/home-screen-ui/BudgetFriendlySection";
 
-
+// ── Types ────────────────────────────────────────────────────
 type SectionItem = {
-  key: string
-}
+  key: string;
+};
+
 type Section = {
   id: string;
   data: SectionItem[];
-}
+};
 
+// ── Sections Data ────────────────────────────────────────────
 const SECTIONS: Section[] = [
   { id: "destinations", data: [{ key: "destinations" }] },
   { id: "deals", data: [{ key: "deals" }] },
@@ -28,7 +37,8 @@ const SECTIONS: Section[] = [
   { id: "budget", data: [{ key: "budget" }] },
 ];
 
-const renderSection = (id:string) => {
+// ── Render Helpers ───────────────────────────────────────────
+const renderSection = (id: string) => {
   switch (id) {
     case "destinations":
       return <PopularDestinations />;
@@ -47,27 +57,34 @@ const renderSection = (id:string) => {
     default:
       return null;
   }
-}
+};
+
+// ── Component ────────────────────────────────────────────────
 export default function HomeScreenComponent() {
+
   return (
-    <ScreenWrapper >
-       <View className="flex-1">
-        {/* Sticky Header */}
+    <ScreenWrapper>
+
+      <View className="flex-1">
+
+        {/* ── Header ─────────────────────────────────────────── */}
         <View className="bg-background">
           <HomeHeader />
         </View>
 
-      <SectionList
-        sections={SECTIONS}
-        keyExtractor={(item) => item.key}
-        renderItem={({ section }) => renderSection(section.id)}
-        renderSectionHeader={() => null}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 30, gap: 2 }}
-        stickySectionHeadersEnabled={false}
+        {/* ── Section List ───────────────────────────────────── */}
+        <SectionList
+          sections={SECTIONS}
+          keyExtractor={(item) => item.key}
+          renderItem={({ section }) => renderSection(section.id)}
+          renderSectionHeader={() => null}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 30, gap: 2 }}
+          stickySectionHeadersEnabled={false}
         />
+
       </View>
-      
+
     </ScreenWrapper>
   );
 }

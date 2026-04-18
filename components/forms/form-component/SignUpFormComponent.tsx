@@ -1,3 +1,13 @@
+
+
+// ─────────────────────────────────────────────────────────────
+// SignUpFormComponent
+// Screen: User registration (Sign Up)
+// Purpose: Create new user account via Supabase auth
+// Features: form validation, password toggle, profile creation, email verification flow
+// Depends on: react-hook-form, yup, supabase auth, profiles table
+// ─────────────────────────────────────────────────────────────
+
 import { View, TextInput, TouchableOpacity, ActivityIndicator } from "react-native";
 import { useRouter } from "expo-router";
 import { useForm, Controller } from "react-hook-form";
@@ -11,15 +21,21 @@ import { useColorScheme } from "@/components/hooks/use-color-scheme";
 import { signUpSchema, SignUpFormData } from "@/components/forms/form-validator/authValidator";
 import { useState } from "react";
 
+// ── Component ────────────────────────────────────────────────
 export default function SignUpFormComponent() {
+
+  // ── Navigation & Theme ─────────────────────────────────────
   const { push, back } = useRouter();
   const colorScheme = useColorScheme() ?? "light";
   const colors = Colors[colorScheme];
 
+  // ── Local UI State ─────────────────────────────────────────
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [serverError, setServerError] = useState<string | null>(null);
+  const [serverMessage, setServerMessage] = useState<string | null>(null);
+  const [messageType, setMessageType] = useState<"success" | "error" | null>(null);
 
+  // ── Form Setup ─────────────────────────────────────────────
   const {
     control,
     handleSubmit,
@@ -34,43 +50,44 @@ export default function SignUpFormComponent() {
     },
   });
 
-const onSubmit = async (data: SignUpFormData) => {
-  setServerError(null);
+  // ── Submit Handler ─────────────────────────────────────────
+  const onSubmit = async (data: SignUpFormData) => {
+  setServerMessage(null);
 
   try {
-    const response = await supabase.auth.signUp({
+    const { error: signUpError, data: authData } = await supabase.auth.signUp({
       email: data.email.trim(),
       password: data.password,
       options: {
-        data: { name: data.name.trim() },
+        data: { full_name: data.name.trim() },
       },
     });
 
-    if (response.error) throw response.error;
+    if (signUpError) throw signUpError;
 
-    // Check if email confirmation is required
-    if (!response.data?.session) {
-      // Email confirmation required
-      setServerError(
-        "✅ Verification email sent! Please check your inbox and confirm your email before signing in."
-      );
-      // Navigate to Sign In screen after a short delay
-      setTimeout(() => {
-        push("/(auth)/signIn");
-      }, 2000);
-    } else {
-    
-      push("/(tabs)/home");
+    // Create profile row
+    if (authData.user) {
+      await supabase.from('profiles').upsert({
+        id: authData.user.id,
+        full_name: data.name.trim(),
+        avatar_url: null,
+        updated_at: new Date().toISOString(),
+      });
     }
+
+    // User is automatically logged in (since email confirmation is OFF)
+    push("/(tabs)/home");
   } catch (error: any) {
-    setServerError(error.message ?? "Sign up failed. Please try again.");
+    setServerMessage(error.message ?? "Sign up failed. Please try again.");
   }
 };
 
+  // ── Render ─────────────────────────────────────────────────
   return (
     <ScreenWrapper keyboardAvoiding scrollable>
       <View className="px-6 pt-10 pb-10 mb-0">
-        {/* Back */}
+
+        {/* Header / Back */}
         <TouchableOpacity onPress={() => back()} className="flex-row items-center mb-8">
           <IconSymbol name="chevron.left" size={24} color={colors.text} />
           <AppText className="text-text text-[16px] ml-1 capitalize px-1" variant="bold">
@@ -78,21 +95,36 @@ const onSubmit = async (data: SignUpFormData) => {
           </AppText>
         </TouchableOpacity>
 
-        {/* Header */}
+        {/* Title */}
         <AppText className="text-text text-3xl" variant="bold">
           Create Account
         </AppText>
-        <AppText className="text-text-secondary mt-2">Join StayEasy to save favourites and book hotels</AppText>
+        <AppText className="text-text-secondary mt-2">
+          Join StayEasy to save favourites and book hotels
+        </AppText>
 
-        {/* Server Error */}
-        {serverError && (
-          <View className="bg-error/10 border border-error/30 rounded-xl px-4 py-3 mt-4">
-            <AppText className="text-error text-sm">{serverError}</AppText>
+        {/* Server Message */}
+        {serverMessage && (
+          <View
+            className={`rounded-xl px-4 py-3 mt-4 border ${
+              messageType === "success"
+                ? "bg-success/10 border-success/30"
+                : "bg-error/10 border-error/30"
+            }`}
+          >
+            <AppText
+              className={`text-sm ${
+                messageType === "success" ? "text-success" : "text-error"
+              }`}
+            >
+              {serverMessage}
+            </AppText>
           </View>
         )}
 
-        {/* Form Fields */}
+        {/* ── Form ───────────────────────────────────────────── */}
         <View className="gap-4 mt-8">
+
           {/* Name */}
           <View>
             <AppText className="text-text-secondary text-sm mb-1.5" variant="bold">
@@ -182,9 +214,7 @@ const onSubmit = async (data: SignUpFormData) => {
             <AppText className="text-text-secondary text-sm mb-1.5" variant="bold">
               Confirm Password
             </AppText>
-            <View
-              className={`flex-row items-center bg-input rounded-2xl px-4 h-14 border ${errors.confirmPassword ? "border-error" : "border-border"}`}
-            >
+            <View className={`flex-row items-center bg-input rounded-2xl px-4 h-14 border ${errors.confirmPassword ? "border-error" : "border-border"}`}>
               <IconSymbol name="lock.fill" size={18} color={colors.icon} />
               <Controller
                 control={control}
@@ -206,11 +236,14 @@ const onSubmit = async (data: SignUpFormData) => {
                 <IconSymbol name={showConfirmPassword ? "eye.slash.fill" : "eye.fill"} size={18} color={colors.icon} />
               </TouchableOpacity>
             </View>
-            {errors.confirmPassword && <AppText className="text-error text-xs mt-1">{errors.confirmPassword.message}</AppText>}
+            {errors.confirmPassword && (
+              <AppText className="text-error text-xs mt-1">{errors.confirmPassword.message}</AppText>
+            )}
           </View>
+
         </View>
 
-        {/* Sign Up Button */}
+        {/* Submit */}
         <TouchableOpacity
           onPress={handleSubmit(onSubmit)}
           disabled={isSubmitting}
@@ -226,7 +259,7 @@ const onSubmit = async (data: SignUpFormData) => {
           )}
         </TouchableOpacity>
 
-        {/* Sign In Link */}
+        {/* Footer */}
         <View className="flex-row justify-center mt-6">
           <AppText className="text-text-secondary">Already have an account? </AppText>
           <TouchableOpacity onPress={() => push("/(auth)/signIn")}>
@@ -235,6 +268,7 @@ const onSubmit = async (data: SignUpFormData) => {
             </AppText>
           </TouchableOpacity>
         </View>
+
       </View>
     </ScreenWrapper>
   );

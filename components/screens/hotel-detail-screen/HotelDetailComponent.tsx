@@ -1,3 +1,10 @@
+// ─────────────────────────────────────────────────────────────
+// HotelDetailsComponent
+// Screen: Hotel details page
+// Shows: images, description, amenities, rooms, contact, booking CTA
+// Depends on: useHotelById, RoomType selection, wishlist state
+// ─────────────────────────────────────────────────────────────
+
 import { ScrollView } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
@@ -16,21 +23,32 @@ import BookNowButton from '@/components/ui/hotel/hotel-details/BookNowCTA';
 import { ActivityIndicator, View, TouchableOpacity } from 'react-native';
 import AppText from '@/components/ui/typography/AppText';
 
+// ── Component ────────────────────────────────────────────────
 export default function HotelDetailsComponent() {
+
+  // ── Route Params ───────────────────────────────────────────
   const { id } = useLocalSearchParams<{ id: string }>();
+
+  // ── Navigation & Theme ─────────────────────────────────────
   const { back } = useRouter();
   const { colors } = useThemeColors();
+
+  // ── Local State ────────────────────────────────────────────
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState<RoomType | null>(null);
   const [selectedPrice, setSelectedPrice] = useState<number>(0);
+
+  // ── Data Fetch ─────────────────────────────────────────────
   const { data: hotel, isLoading, isError } = useHotelById(id);
 
+  // ── Effects ────────────────────────────────────────────────
   useEffect(() => {
     if (hotel) {
       setSelectedPrice(hotel.price_per_stay);
     }
   }, [hotel]);
 
+  // ── Handlers ───────────────────────────────────────────────
   const handleSelectRoom = (room: RoomType) => {
     setSelectedRoom(room);
     setSelectedPrice(room.price_per_stay);
@@ -40,6 +58,7 @@ export default function HotelDetailsComponent() {
     setIsWishlisted(!isWishlisted);
   };
 
+  // ── Loading State ──────────────────────────────────────────
   if (isLoading) {
     return (
       <ScreenWrapper>
@@ -50,6 +69,7 @@ export default function HotelDetailsComponent() {
     );
   }
 
+  // ── Error State ────────────────────────────────────────────
   if (isError || !hotel) {
     return (
       <ScreenWrapper>
@@ -63,33 +83,46 @@ export default function HotelDetailsComponent() {
     );
   }
 
+  // ── Render ─────────────────────────────────────────────────
   return (
     <ScreenWrapper className="bg-background">
+
       <ScrollView showsVerticalScrollIndicator={false}>
-     <HotelImageCarousel
-  images={hotel.image_urls}
-  onBack={() => back()}
-  onWishlist={handleWishlist}
-  isWishlisted={isWishlisted}
-  isDeal={hotel.is_deal}
- isTopRated={!!(hotel.rating && hotel.rating >= 8.0)}
-  colors={colors}
-/>
+
+        {/* ── Image Carousel ─────────────────────────────────── */}
+        <HotelImageCarousel
+          images={hotel.image_urls}
+          onBack={() => back()}
+          onWishlist={handleWishlist}
+          isWishlisted={isWishlisted}
+          isDeal={hotel.is_deal}
+          isTopRated={!!(hotel.rating && hotel.rating >= 8.0)}
+          colors={colors}
+        />
+
         <View className="p-4">
-         <HotelHeader
-  name={hotel.name}
-  location={hotel.location}
-  city={hotel.city}
-  state={hotel.state}
-  rating={hotel.rating}
-  reviewCount={hotel.review_count}
-  reviewScoreWord={hotel.review_score_word}
-  colors={colors}
-/>
+
+          {/* ── Header ─────────────────────────────────────── */}
+          <HotelHeader
+            name={hotel.name}
+            location={hotel.location}
+            city={hotel.city}
+            state={hotel.state}
+            rating={hotel.rating}
+            reviewCount={hotel.review_count}
+            reviewScoreWord={hotel.review_score_word}
+            colors={colors}
+          />
+
+          {/* ── Description ───────────────────────────────── */}
           <DescriptionSection description={hotel.description} />
 
-          {hotel.amenities?.length > 0 && <AmenitiesSection amenities={hotel.amenities} />}
+          {/* ── Amenities ─────────────────────────────────── */}
+          {hotel.amenities?.length > 0 && (
+            <AmenitiesSection amenities={hotel.amenities} />
+          )}
 
+          {/* ── Room Types ────────────────────────────────── */}
           {hotel.room_types && hotel.room_types.length > 0 && (
             <RoomTypesSection
               roomTypes={hotel.room_types}
@@ -99,17 +132,24 @@ export default function HotelDetailsComponent() {
             />
           )}
 
+          {/* ── Contact ───────────────────────────────────── */}
           <ContactSection phone={hotel.contact_phone} email={hotel.email} />
+
+          {/* ── Address ───────────────────────────────────── */}
           <AddressSection address={hotel.address} />
 
+          {/* ── Booking CTA ───────────────────────────────── */}
           <BookNowButton
             hotelId={hotel.id}
             price={selectedPrice}
             hotelName={hotel.name}
             selectedRoom={selectedRoom?.name || "Standard"}
           />
+
         </View>
+
       </ScrollView>
+
     </ScreenWrapper>
   );
 }

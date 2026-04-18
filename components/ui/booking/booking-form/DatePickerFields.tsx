@@ -1,11 +1,20 @@
-import { useColorScheme } from "@/components/hooks/use-color-scheme";
+// ─────────────────────────────────────────────────────────────
+// DatePickerField
+// UI Component: Custom date picker input field
+// Uses: @react-native-community/datetimepicker
+// Features: formatted display, error state, min date support
+// ─────────────────────────────────────────────────────────────
+
+import { formatDate, formatDisplayDate} from "@/constants/utilities/dateUtils";
 import AppText from "@/components/ui/typography/AppText";
-import { Colors } from "@/constants/colorTheme/colors";
+import { useThemeColors } from '@/components/hooks/theme/useThemeColors';
+
 import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import { useState } from "react";
 import { Platform, TouchableOpacity, View } from "react-native";
 import { IconSymbol } from "../../icon-symbol";
 
+// ── Props ────────────────────────────────────────────────────
 type DatePickerFieldProps = {
   value: string;
   placeholder: string;
@@ -14,33 +23,26 @@ type DatePickerFieldProps = {
   onDateChange: (date: Date, formattedDate: string) => void;
 };
 
-export default function DatePickerField({ value, placeholder, error, minimumDate, onDateChange }: DatePickerFieldProps) {
-  const colorScheme = useColorScheme() ?? "light";
-  const colors = Colors[colorScheme];
+// ── Component ────────────────────────────────────────────────
+export default function DatePickerField({
+  value,
+  placeholder,
+  error,
+  minimumDate,
+  onDateChange,
+}: DatePickerFieldProps) {
+  
+  // ── Theme ────────────────────────────────────────────────
+  const { colors } = useThemeColors();
+
+  // ── Local State ─────────────────────────────────────────
   const [showPicker, setShowPicker] = useState(false);
 
-  const formatDate = (date: Date): string => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
-
-  const formatDisplay = (dateStr: string): string => {
-    const [year, month, day] = dateStr.split("-");
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    return `${months[parseInt(month) - 1]} ${parseInt(day)}, ${year}`;
-  };
-
-  const handleChange = (event: DateTimePickerEvent, date?: Date) => {
-    setShowPicker(false);
-    if (event.type === "set" && date) {
-      onDateChange(date, formatDate(date));
-    }
-  };
-
+  // ── Render ───────────────────────────────────────────────
   return (
     <View style={{ marginBottom: 12 }}>
+
+      {/* ── Input Field ───────────────────────────────────── */}
       <TouchableOpacity
         onPress={() => setShowPicker(true)}
         style={{
@@ -56,12 +58,26 @@ export default function DatePickerField({ value, placeholder, error, minimumDate
         activeOpacity={0.7}
       >
         <IconSymbol name="calendar" size={18} color={colors.icon} />
-        <AppText style={{ flex: 1, marginLeft: 12, color: value ? colors.text : colors.textDisabled }}>
-          {value ? formatDisplay(value) : placeholder}
+
+        <AppText
+          style={{
+            flex: 1,
+            marginLeft: 12,
+            color: value ? colors.text : colors.textDisabled,
+          }}
+        >
+          {value ? formatDisplayDate(value) : placeholder}
         </AppText>
       </TouchableOpacity>
-      {error && <AppText style={{ color: colors.error, fontSize: 12, marginTop: 4 }}>{error}</AppText>}
 
+      {/* ── Error Text ─────────────────────────────────────── */}
+      {error && (
+        <AppText style={{ color: colors.error, fontSize: 12, marginTop: 4 }}>
+          {error}
+        </AppText>
+      )}
+
+      {/* ── Native Date Picker ─────────────────────────────── */}
       {showPicker && (
         <DateTimePicker
           value={value ? new Date(value) : new Date()}
@@ -76,6 +92,7 @@ export default function DatePickerField({ value, placeholder, error, minimumDate
           minimumDate={minimumDate || new Date()}
         />
       )}
+
     </View>
   );
 }

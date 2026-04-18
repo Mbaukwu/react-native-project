@@ -1,28 +1,47 @@
+// ─────────────────────────────────────────────────────────────
+// GuestDetailsSection
+// UI Component: Guest form inputs for booking flow
+// Uses: react-hook-form Controller for controlled inputs
+// Fields: guestName, guestEmail, guestPhone
+// ─────────────────────────────────────────────────────────────
+
 import { View, TextInput } from 'react-native';
 import { Controller, Control, FieldErrors } from 'react-hook-form';
 import AppText from '@/components/ui/typography/AppText';
 import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/colorTheme/colors';
-import { useColorScheme } from '@/components/hooks/use-color-scheme';
+import { useThemeColors } from '@/components/hooks/theme/useThemeColors';
 import { BookingFormData } from '@/components/forms/form-validator/bookingFormValidator';
 
+// ── Props ────────────────────────────────────────────────────
 type Props = {
   control: Control<BookingFormData>;
   errors: FieldErrors<BookingFormData>;
 };
 
+// ── Component ────────────────────────────────────────────────
 export default function GuestDetailsSection({ control, errors }: Props) {
-  const colorScheme = useColorScheme() ?? 'light';
-  const colors = Colors[colorScheme];
 
+  // ── Theme ────────────────────────────────────────────────
+  const { colors } = useThemeColors();
+
+  // ── Render ───────────────────────────────────────────────
   return (
     <View>
-      <AppText className="text-text text-lg mb-3" variant="bold">Guest Details</AppText>
 
-      {/* Full Name */}
+      {/* ── Section Title ─────────────────────────────────── */}
+      <AppText className="text-text text-lg mb-3" variant="bold">
+        Guest Details
+      </AppText>
+
+      {/* ── Full Name ─────────────────────────────────────── */}
       <View className="mb-3">
-        <View className={`flex-row items-center bg-card rounded-xl px-4 border ${errors.guestName ? 'border-error' : 'border-border'}`}>
+        <View
+          className={`flex-row items-center bg-card rounded-xl px-4 border ${
+            errors.guestName ? 'border-error' : 'border-border'
+          }`}
+        >
           <IconSymbol name="person.fill" size={18} color={colors.icon} />
+
           <Controller
             control={control}
             name="guestName"
@@ -38,13 +57,23 @@ export default function GuestDetailsSection({ control, errors }: Props) {
             )}
           />
         </View>
-        {errors.guestName && <AppText className="text-error text-xs mt-1">{errors.guestName.message}</AppText>}
+
+        {errors.guestName && (
+          <AppText className="text-error text-xs mt-1">
+            {errors.guestName.message}
+          </AppText>
+        )}
       </View>
 
-      {/* Email */}
+      {/* ── Email ─────────────────────────────────────────── */}
       <View className="mb-3">
-        <View className={`flex-row items-center bg-card rounded-xl px-4 border ${errors.guestEmail ? 'border-error' : 'border-border'}`}>
+        <View
+          className={`flex-row items-center bg-card rounded-xl px-4 border ${
+            errors.guestEmail ? 'border-error' : 'border-border'
+          }`}
+        >
           <IconSymbol name="envelope.fill" size={18} color={colors.icon} />
+
           <Controller
             control={control}
             name="guestEmail"
@@ -62,13 +91,19 @@ export default function GuestDetailsSection({ control, errors }: Props) {
             )}
           />
         </View>
-        {errors.guestEmail && <AppText className="text-error text-xs mt-1">{errors.guestEmail.message}</AppText>}
+
+        {errors.guestEmail && (
+          <AppText className="text-error text-xs mt-1">
+            {errors.guestEmail.message}
+          </AppText>
+        )}
       </View>
 
-      {/* Phone */}
+      {/* ── Phone ─────────────────────────────────────────── */}
       <View className="mb-6">
         <View className="flex-row items-center bg-card rounded-xl px-4 border border-border">
           <IconSymbol name="phone.fill" size={18} color={colors.icon} />
+
           <Controller
             control={control}
             name="guestPhone"
@@ -86,6 +121,7 @@ export default function GuestDetailsSection({ control, errors }: Props) {
           />
         </View>
       </View>
+
     </View>
   );
 }

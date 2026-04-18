@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-
 export default function useGreeting(userName: string | null) {
     const [greeting, setGreeting] = useState<string>("")
     useEffect(() => {
@@ -10,10 +9,10 @@ export default function useGreeting(userName: string | null) {
                 case hour >= 5 && hour < 12:
                     timeGreeting = "Good Morning";
                     break;
-                case hour >= 12 && hour < 18:
+                case hour >= 12 && hour < 16:  
                     timeGreeting = "Good Afternoon";
                     break;
-                case hour >= 18 && hour < 21:
+                case hour >= 16 && hour < 21: 
                     timeGreeting = "Good Evening";
                     break;
                 default:

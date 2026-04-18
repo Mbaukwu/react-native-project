@@ -1,3 +1,13 @@
+// ─────────────────────────────────────────────────────────────
+// BookingDetailsComponent
+// Screen: Booking Details
+// Shows: Full details of a selected booking (hotel, dates, status, etc.)
+// Depends on: useBookingDetails, BookingDetailHeader,
+//             HotelInfoCard, BookingSummarySection,
+//             SpecialRequestsCard, BookedOnCard, ViewHotelButton
+// ─────────────────────────────────────────────────────────────
+
+// ── Imports ──────────────────────────────────────────────────
 import { View, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import ScreenWrapper from '@/components/global/ScreenWrapper';
@@ -11,18 +21,29 @@ import SpecialRequestsCard from '@/components/ui/booking/booking-detail/SpecialR
 import BookedOnCard from '@/components/ui/booking/booking-detail/BookedOnCard';
 import ViewHotelButton from '@/components/ui/booking/booking-detail/ViewHotelCTA';
 
+// ── Component ────────────────────────────────────────────────
 export default function BookingDetailsComponent() {
+
+  // ── Route Params ───────────────────────────────────────────
   const { bookingId } = useLocalSearchParams<{ bookingId: string }>();
+
+  // ── Navigation & Theme ─────────────────────────────────────
   const { back } = useRouter();
   const { colors } = useThemeColors();
+
+  // ── Data Fetching ──────────────────────────────────────────
   const { data: booking, isLoading, isError } = useBookingDetails(bookingId);
 
-  const statusColor = booking ? ({
-    confirmed: colors.success,
-    cancelled: colors.error,
-    completed: colors.textSecondary,
-  }[booking.status] ?? colors.textSecondary) : colors.textSecondary;
+  // ── Derived Values ─────────────────────────────────────────
+  const statusColor = booking
+    ? ({
+        confirmed: colors.success,
+        cancelled: colors.error,
+        completed: colors.textSecondary,
+      }[booking.status] ?? colors.textSecondary)
+    : colors.textSecondary;
 
+  // ── Guards ─────────────────────────────────────────────────
   if (isLoading) {
     return (
       <ScreenWrapper>
@@ -37,8 +58,15 @@ export default function BookingDetailsComponent() {
     return (
       <ScreenWrapper>
         <View className="flex-1 items-center justify-center px-6">
-          <AppText className="text-error text-center">Failed to load booking details</AppText>
-          <TouchableOpacity onPress={() => back()} className="mt-4 bg-primary px-6 py-3 rounded-xl">
+          <AppText className="text-error text-center">
+            Failed to load booking details
+          </AppText>
+
+          {/* Retry / Back Action */}
+          <TouchableOpacity
+            onPress={() => back()}
+            className="mt-4 bg-primary px-6 py-3 rounded-xl"
+          >
             <AppText className="text-white">Go Back</AppText>
           </TouchableOpacity>
         </View>
@@ -46,20 +74,33 @@ export default function BookingDetailsComponent() {
     );
   }
 
+  // ── Render ─────────────────────────────────────────────────
   return (
     <ScreenWrapper>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 24, paddingTop: 16, paddingBottom: 40 }}
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingHorizontal: 24,
+          paddingTop: 16,
+          paddingBottom: 40,
+        }}
       >
-        <BookingDetailHeader status={booking.status} statusColor={statusColor} />
-        
+
+        {/* ── Header (Status) ─────────────────────────────── */}
+        <BookingDetailHeader
+          status={booking.status}
+          statusColor={statusColor}
+        />
+
+        {/* ── Hotel Info ─────────────────────────────────── */}
         <HotelInfoCard
           hotelName={booking.hotels?.name ?? '—'}
           hotelCity={booking.hotels?.city ?? ''}
           imageUrl={booking.hotels?.image_urls?.[0]}
         />
-        
+
+        {/* ── Booking Summary ────────────────────────────── */}
         <BookingSummarySection
           hotelName={booking.hotels?.name ?? '—'}
           roomType={booking.room_type}
@@ -68,13 +109,20 @@ export default function BookingDetailsComponent() {
           guests={booking.guests}
           totalPrice={booking.total_price}
         />
-        
+
+        {/* ── Special Requests (Optional) ────────────────── */}
         {booking.special_requests && (
-          <SpecialRequestsCard specialRequests={booking.special_requests} />
+          <SpecialRequestsCard
+            specialRequests={booking.special_requests}
+          />
         )}
-        
+
+        {/* ── Metadata ───────────────────────────────────── */}
         <BookedOnCard createdAt={booking.created_at} />
+
+        {/* ── CTA ────────────────────────────────────────── */}
         <ViewHotelButton hotelId={booking.hotel_id} />
+
       </ScrollView>
     </ScreenWrapper>
   );

@@ -1,6 +1,17 @@
+// ─────────────────────────────────────────────────────────────
+// BookingFormComponent
+// Screen: Complete Booking form
+// Handles: Auth check, form pre-fill, booking submission
+// Depends on: bookingService, wishlistStore, notificationService
+// Sub-components: HotelSummaryCard, GuestDetailsSection,
+//                 StayDetailsSection, SpecialRequestsSection
+// ─────────────────────────────────────────────────────────────
+
+// ── Imports ──────────────────────────────────────────────────
 import { BookingFormData, bookingSchema } from "@/components/forms/form-validator/bookingFormValidator";
 import ScreenWrapper from "@/components/global/ScreenWrapper";
-import { useColorScheme } from "@/components/hooks/use-color-scheme";
+import { useThemeColors } from "@/components/hooks/theme/useThemeColors";
+
 import GuestDetailsSection from "@/components/ui/booking/booking-form/GuestDetailsSection";
 import HotelSummaryCard from "@/components/ui/booking/booking-form/HotelSummaryCard";
 import SpecialRequestsSection from "@/components/ui/booking/booking-form/SpecialRequestSection";
@@ -8,7 +19,7 @@ import StayDetailsSection from "@/components/ui/booking/booking-form/StayDetails
 import { IconSymbol } from "@/components/ui/icon-symbol";
 import { BookingAuthModal } from "@/components/ui/modal/BookingAuthModal";
 import AppText from "@/components/ui/typography/AppText";
-import { Colors } from "@/constants/colorTheme/colors";
+
 import { useWishlistStore } from "@/constants/stores/wishlistStore";
 import { createBooking } from "@/constants/supabase/services/bookingService";
 import { supabase } from "@/constants/supabase/supabase";
@@ -23,13 +34,9 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { magicModal } from "react-native-magic-modal";
 import Toast from "react-native-toast-message";
 
-
-
-
-
-
-// 
+// ── Component ────────────────────────────────────────────────
 export default function BookingFormComponent() {
+  // ── Route Params ───────────────────────────────────────────
   const { hotelId, price, hotelName, roomType } = useLocalSearchParams<{
     hotelId: string;
     price: string;
@@ -37,14 +44,19 @@ export default function BookingFormComponent() {
     roomType: string;
   }>();
 
+  // ── Navigation & Theme ─────────────────────────────────────
   const { push, back } = useRouter();
-  const colorScheme = useColorScheme() ?? "light";
-  const colors = Colors[colorScheme];
+  const { colors } = useThemeColors();
+
+  // ── Global State ───────────────────────────────────────────
   const { userId } = useWishlistStore();
-  const [loading, setLoading] = useState(false);
-  const [loadingUser, setLoadingUser] = useState(true);
   const queryClient = useQueryClient();
 
+  // ── Local State ────────────────────────────────────────────
+  const [loading, setLoading] = useState(false);
+  const [loadingUser, setLoadingUser] = useState(true);
+
+  // ── Form Setup ─────────────────────────────────────────────
   const {
     control,
     handleSubmit,
@@ -64,15 +76,21 @@ export default function BookingFormComponent() {
     },
   });
 
+  // ── Auth Modal Helper ──────────────────────────────────────
   const showAuthModal = () => {
     magicModal.show(() => (
       <BookingAuthModal onSignIn={() => push("/(auth)/signIn")} onSignUp={() => push("/(auth)/signUp")} onCancel={() => back()} />
     ));
   };
 
+  // ── Auth Check + Form Pre-fill ─────────────────────────────
+  // Checks if user is signed in on mount.
+  // If not — shows auth modal.
+  // If yes — pre-fills name and email from session metadata.
   useEffect(() => {
     const checkAuth = async () => {
       const { data } = await supabase.auth.getSession();
+
       if (!data.session) {
         showAuthModal();
         setLoadingUser(false);
@@ -80,17 +98,17 @@ export default function BookingFormComponent() {
       }
 
       const user = data.session.user;
-      const email = user.email ?? "";
-
-      const name = user.user_metadata?.full_name ?? user.user_metadata?.name ?? "";
-
-      setValue("guestEmail", email, { shouldValidate: false });
-      setValue("guestName", name, { shouldValidate: false });
+      setValue("guestEmail", user.email ?? "", { shouldValidate: false });
+      setValue("guestName", user.user_metadata?.full_name ?? user.user_metadata?.name ?? "", { shouldValidate: false });
       setLoadingUser(false);
     };
+
     checkAuth();
   }, []);
 
+  // ── Submit Handler ─────────────────────────────────────────
+  // Creates booking in Supabase, fires notification,
+  // invalidates bookings cache, then navigates to confirmation.
   const onSubmit = async (data: BookingFormData) => {
     if (!userId) {
       showAuthModal();
@@ -110,9 +128,10 @@ export default function BookingFormComponent() {
         special_requests: data.specialRequests || undefined,
       });
 
-      // Send notification (fire and forget)
+      // Fire and forget — notification failure shouldn't block UX
       sendBookingConfirmedNotification(hotelName).catch(console.error);
 
+      // Refresh bookings list in background
       queryClient.invalidateQueries({ queryKey: ["user-bookings", userId] });
 
       push(
@@ -128,6 +147,8 @@ export default function BookingFormComponent() {
       setLoading(false);
     }
   };
+
+  // ── Loading Guard ──────────────────────────────────────────
   if (loadingUser) {
     return (
       <ScreenWrapper>
@@ -138,6 +159,7 @@ export default function BookingFormComponent() {
     );
   }
 
+  // ── Render ─────────────────────────────────────────────────
   return (
     <ScreenWrapper>
       <KeyboardAwareScrollView
@@ -157,14 +179,19 @@ export default function BookingFormComponent() {
           </AppText>
         </View>
 
+        {/* Hotel Summary */}
         <HotelSummaryCard hotelName={hotelName ?? ""} roomType={roomType ?? ""} price={price ?? "0"} />
 
+        {/* Guest Details — name, email, phone */}
         <GuestDetailsSection control={control} errors={errors} />
 
+        {/* Stay Details — check-in, check-out, guests */}
         <StayDetailsSection control={control} errors={errors} watch={watch} setValue={setValue} />
 
+        {/* Special Requests — optional */}
         <SpecialRequestsSection control={control} />
 
+        {/* Submit */}
         <TouchableOpacity
           onPress={handleSubmit(onSubmit)}
           disabled={loading}
