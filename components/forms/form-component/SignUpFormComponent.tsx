@@ -51,15 +51,17 @@ export default function SignUpFormComponent() {
   });
 
   // ── Submit Handler ─────────────────────────────────────────
-  const onSubmit = async (data: SignUpFormData) => {
+
+
+ const onSubmit = async (data: SignUpFormData) => {
   setServerMessage(null);
 
   try {
-    const { error: signUpError, data: authData } = await supabase.auth.signUp({
+    const { data: authData, error: signUpError } = await supabase.auth.signUp({
       email: data.email.trim(),
       password: data.password,
       options: {
-        data: { full_name: data.name.trim() },
+        data: { full_name: data.name.trim() },  // ← Change "name" to "full_name"
       },
     });
 
@@ -75,13 +77,11 @@ export default function SignUpFormComponent() {
       });
     }
 
-    // User is automatically logged in (since email confirmation is OFF)
     push("/(tabs)/home");
   } catch (error: any) {
     setServerMessage(error.message ?? "Sign up failed. Please try again.");
   }
 };
-
   // ── Render ─────────────────────────────────────────────────
   return (
     <ScreenWrapper keyboardAvoiding scrollable>

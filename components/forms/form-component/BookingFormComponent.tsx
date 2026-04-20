@@ -31,6 +31,7 @@ import { useEffect, useState } from "react";
 import { Resolver, useForm } from "react-hook-form";
 import { ActivityIndicator, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { BackHandler } from 'react-native';
 import { magicModal } from "react-native-magic-modal";
 import Toast from "react-native-toast-message";
 
@@ -51,6 +52,8 @@ export default function BookingFormComponent() {
   // ── Global State ───────────────────────────────────────────
   const { userId } = useWishlistStore();
   const queryClient = useQueryClient();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
 
   // ── Local State ────────────────────────────────────────────
   const [loading, setLoading] = useState(false);
@@ -195,7 +198,7 @@ export default function BookingFormComponent() {
         <TouchableOpacity
           onPress={handleSubmit(onSubmit)}
           disabled={loading}
-          className="bg-primary py-4 rounded-2xl mb-10 items-center"
+          className="bg-primary py-4 rounded-2xl mb-10 items-center mx-3"
           style={{ opacity: loading ? 0.7 : 1 }}
         >
           {loading ? (

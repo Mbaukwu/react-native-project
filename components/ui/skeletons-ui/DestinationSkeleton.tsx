@@ -1,13 +1,20 @@
+// ─────────────────────────────────────────────────────────────
+// DestinationSkeleton Component
+// Screen: Home (Loading State)
+// Handles: Skeleton UI for popular destinations section
+// Depends on: react-native-reanimated-skeleton, theme colors
+// ─────────────────────────────────────────────────────────────
+
+// ── Imports ──────────────────────────────────────────────────
 import Skeleton from "react-native-reanimated-skeleton";
 import { View } from "react-native";
-import { useColorScheme } from "@/components/hooks/use-color-scheme";
-import { Colors } from "@/constants/colorTheme/colors";
-
+import { useThemeColors } from "@/components/hooks/theme/useThemeColors";
+// ── Component ────────────────────────────────────────────────
 export default function DestinationSkeleton() {
-  const colorScheme = useColorScheme() ?? "light";
-  const colors = Colors[colorScheme];
-  const isDark = colorScheme === "dark";
 
+  // ── Theme Setup ────────────────────────────────────────────
+ const { colors, isDark } = useThemeColors();
+  // ── Render ─────────────────────────────────────────────────
   return (
     <View style={{ backgroundColor: colors.background }}>
       <View className="flex-row px-4 gap-3">
@@ -15,7 +22,12 @@ export default function DestinationSkeleton() {
           <Skeleton
             key={i}
             isLoading={true}
-            containerStyle={{ width: 176, height: 224, borderRadius: 16, backgroundColor: colors.card }}
+            containerStyle={{
+              width: 176,
+              height: 224,
+              borderRadius: 16,
+              backgroundColor: colors.card,
+            }}
             highlightColor={isDark ? "#334155" : "#F8FAFC"}
           />
         ))}

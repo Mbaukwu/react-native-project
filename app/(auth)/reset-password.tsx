@@ -1,3 +1,9 @@
+// ─────────────────────────────────────────────────────────────
+// ResetPasswordScreen
+// Screen: Set new password after clicking reset email link
+// Flow: user enters new password → submit → sign out → sign in
+// ─────────────────────────────────────────────────────────────
+
 import { View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
@@ -10,14 +16,19 @@ import { useColorScheme } from '@/components/hooks/use-color-scheme';
 import Toast from 'react-native-toast-message';
 
 export default function ResetPasswordScreen() {
+
+  // ── Navigation & Theme ─────────────────────────────────────
   const { replace } = useRouter();
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
+
+  // ── State ──────────────────────────────────────────────────
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // ── Submit Handler ─────────────────────────────────────────
   const handleReset = async () => {
     if (password.length < 6) {
       Toast.show({ type: 'error', text1: 'Password must be at least 6 characters' });
@@ -29,28 +40,39 @@ export default function ResetPasswordScreen() {
     }
 
     setLoading(true);
+
     const { error } = await supabase.auth.updateUser({ password });
-    setLoading(false);
 
     if (error) {
       Toast.show({ type: 'error', text1: 'Reset failed', text2: error.message });
-    } else {
-      Toast.show({ type: 'success', text1: 'Password updated!', text2: 'Sign in with your new password' });
-      // Sign out so user signs in fresh with new password
-      await supabase.auth.signOut();
-      replace('/(auth)/signIn');
+      setLoading(false);
+      return;
     }
+
+    Toast.show({
+      type: 'success',
+      text1: 'Password updated!',
+      text2: 'Sign in with your new password',
+    });
+
+    await supabase.auth.signOut();
+    replace('/(auth)/signIn');
   };
 
+  // ── Render ─────────────────────────────────────────────────
   return (
     <ScreenWrapper keyboardAvoiding>
       <View className="flex-1 px-6 pt-14 pb-8">
-        <AppText className="text-text text-3xl" variant="bold">Reset Password</AppText>
+
+        {/* Header */}
+        <AppText className="text-text text-3xl" variant="bold">New Password</AppText>
         <AppText className="text-text-secondary mt-2">
           Choose a strong password for your account
         </AppText>
 
+        {/* Form */}
         <View className="mt-8 gap-4">
+
           {/* New Password */}
           <View>
             <AppText className="text-text-secondary text-sm mb-1.5" variant="bold">
@@ -95,8 +117,10 @@ export default function ResetPasswordScreen() {
               />
             </View>
           </View>
+
         </View>
 
+        {/* Submit */}
         <TouchableOpacity
           onPress={handleReset}
           disabled={loading}
@@ -108,6 +132,7 @@ export default function ResetPasswordScreen() {
             : <AppText className="text-white text-base" variant="bold">Update Password</AppText>
           }
         </TouchableOpacity>
+
       </View>
     </ScreenWrapper>
   );

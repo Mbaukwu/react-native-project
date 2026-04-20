@@ -1,21 +1,33 @@
+// ─────────────────────────────────────────────────────────────
+// ToastMessageItem Component
+// Screen: Global Toast UI
+// Handles: Custom toast layout (success / error)
+// Depends on: React Native, Tailwind classes (NativeWind)
+// ─────────────────────────────────────────────────────────────
+
+// ── Imports ──────────────────────────────────────────────────
 import React from "react";
 import { Text, View } from "react-native";
 
+// ── Types ────────────────────────────────────────────────────
 interface ToastMessageItemProps {
-    type: "success" | "error";
+  type: "success" | "error";
   text1: string;
   text2: string;
 }
 
+// ── Component ────────────────────────────────────────────────
 export const ToastMessageItem = ({
   type,
   text1,
   text2,
 }: ToastMessageItemProps) => {
+
+  // ── Background Style Resolver ─────────────────────────────
   const getBackgroundColor = () => {
     switch (type) {
       case "success":
-        return "bg-green-50"; 
+        return "bg-green-50";
       case "error":
         return "bg-red-50";
       default:
@@ -23,30 +35,31 @@ export const ToastMessageItem = ({
     }
   };
 
+  // ── Border Style Resolver ──────────────────────────────────
   const getBorderColor = () => {
     switch (type) {
       case "success":
-        return "border-green-600"; 
+        return "border-green-600";
       case "error":
         return "border-red-500";
-    
       default:
-        return "border-pink-600";
+        return "border-border";
     }
   };
 
+  // ── Icon Resolver ──────────────────────────────────────────
   const getIcon = () => {
     switch (type) {
       case "success":
-        return "❤️";  
+        return "❤️";
       case "error":
-        return "💔";  
-    
+        return "💔";
       default:
         return "✓";
     }
   };
 
+  // ── Render ─────────────────────────────────────────────────
   return (
     <View
       style={{
@@ -64,10 +77,11 @@ export const ToastMessageItem = ({
       }}
       className={`${getBackgroundColor()} ${getBorderColor()}`}
     >
-      {/* Icon */}
+
+      {/* ICON SECTION */}
       <Text className="text-2xl mr-3">{getIcon()}</Text>
 
-      {/* Text Content */}
+      {/* TEXT SECTION */}
       <View className="flex-1">
         <Text className="text-base font-bold text-black mb-1">
           {text1}
@@ -76,6 +90,7 @@ export const ToastMessageItem = ({
           {text2}
         </Text>
       </View>
+
     </View>
   );
 };

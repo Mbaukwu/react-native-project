@@ -33,7 +33,7 @@ export default function ProfileScreen() {
   const {
     userEmail,
     userName,
-    avatarUrl,
+   
     isAuthenticated,
     isLoading,
     signOut

@@ -1,12 +1,25 @@
+// ─────────────────────────────────────────────────────────────
+// ToastMessage Component
+// Purpose: Global toast configuration (success, error, info)
+// Handles: Themed toast UI using react-native-toast-message
+// Depends on: react-native-toast-message, theme colors, custom fonts
+// ─────────────────────────────────────────────────────────────
+
+// ── Imports ──────────────────────────────────────────────────
 import Toast, { BaseToast, ErrorToast, ToastConfig } from "react-native-toast-message";
-import { Colors } from "@/constants/colorTheme/colors";
-import { useColorScheme } from "@/components/hooks/use-color-scheme";
 
+import { useThemeColors } from "@/components/hooks/theme/useThemeColors";
+
+// ── Component ────────────────────────────────────────────────
 export function ToastMessage() {
-  const colorScheme = useColorScheme() ?? "light";
-  const colors = Colors[colorScheme];
 
+  // ── Theme Setup ────────────────────────────────────────────
+  const { colors } = useThemeColors();
+
+  // ── Toast Configuration ────────────────────────────────────
   const toastConfig: ToastConfig = {
+
+    // ── SUCCESS TOAST ────────────────────────────────────────
     success: (props) => (
       <BaseToast
         {...props}
@@ -38,6 +51,8 @@ export function ToastMessage() {
         }}
       />
     ),
+
+    // ── ERROR TOAST ─────────────────────────────────────────
     error: (props) => (
       <ErrorToast
         {...props}
@@ -69,6 +84,8 @@ export function ToastMessage() {
         }}
       />
     ),
+
+    // ── INFO TOAST ──────────────────────────────────────────
     info: (props) => (
       <BaseToast
         {...props}
@@ -102,5 +119,6 @@ export function ToastMessage() {
     ),
   };
 
+  // ── Render ─────────────────────────────────────────────────
   return <Toast config={toastConfig} />;
 }

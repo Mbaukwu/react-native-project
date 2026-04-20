@@ -1,12 +1,21 @@
+// ─────────────────────────────────────────────────────────────
+// AuthPromptSheet
+// UI Component: Action sheet prompting user to sign in or save locally
+// Purpose: Handles auth prompt before saving favourites
+// Depends on: react-native-actions-sheet, expo-router, theme system
+// ─────────────────────────────────────────────────────────────
+
+// ── Imports ──────────────────────────────────────────────────
 import React from "react";
 import { View, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import ActionSheet, { SheetManager } from "react-native-actions-sheet";
 import AppText from "@/components/ui/typography/AppText";
 import { IconSymbol } from "@/components/ui/icon-symbol";
-import { Colors } from "@/constants/colorTheme/colors";
-import { useColorScheme } from "@/components/hooks/use-color-scheme";
+import { useThemeColors } from "@/components/hooks/theme/useThemeColors";
 
+
+// ── Props ───────────────────────────────────────────────────
 type AuthPromptSheetProps = {
   payload: {
     onLocalSave: () => void;
@@ -14,11 +23,14 @@ type AuthPromptSheetProps = {
   sheetId?: string;
 };
 
+// ── Component ────────────────────────────────────────────────
 export default function AuthPromptSheet({ payload, sheetId }: AuthPromptSheetProps) {
-  const { push } = useRouter();
-  const colorScheme = useColorScheme() ?? "light";
-  const colors = Colors[colorScheme];
 
+  // ── Navigation & Theme ─────────────────────────────────────
+  const { push } = useRouter();
+   const {colors}= useThemeColors()
+
+  // ── Handlers ───────────────────────────────────────────────
   const handleSignIn = () => {
     SheetManager.hide(sheetId || "auth-prompt");
     push("/(auth)/signIn");
@@ -33,6 +45,7 @@ export default function AuthPromptSheet({ payload, sheetId }: AuthPromptSheetPro
     SheetManager.hide(sheetId || "auth-prompt");
   };
 
+  // ── Render ─────────────────────────────────────────────────
   return (
     <ActionSheet
       id={sheetId || "auth-prompt"}
@@ -43,7 +56,6 @@ export default function AuthPromptSheet({ payload, sheetId }: AuthPromptSheetPro
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
         padding: 0,
-      
       }}
       indicatorStyle={{
         width: 40,
@@ -54,21 +66,27 @@ export default function AuthPromptSheet({ payload, sheetId }: AuthPromptSheetPro
         marginBottom: 15,
       }}
     >
-      {/* Content */}
+      {/* ── Content ───────────────────────────────────────── */}
       <View className="px-5 pb-4">
+
+        {/* ── Header ───────────────────────────────────────── */}
         <View className="items-center">
           <View className="bg-primary/15 p-4 rounded-full">
             <IconSymbol name="heart.fill" size={32} color={colors.favorite} />
           </View>
+
           <AppText className="text-text text-xl mt-4 text-center" variant="bold">
             Save to Favourites
           </AppText>
+
           <AppText className="text-text-secondary text-sm text-center mt-2 leading-5">
             Sign in to save hotels and access them from any device, anytime.
           </AppText>
         </View>
 
+        {/* ── Actions ──────────────────────────────────────── */}
         <View className="gap-3 mt-6">
+
           <TouchableOpacity
             onPress={handleSignIn}
             className="bg-primary py-3 rounded-2xl items-center"
@@ -87,14 +105,21 @@ export default function AuthPromptSheet({ payload, sheetId }: AuthPromptSheetPro
             <AppText className="text-text text-base" variant="bold">
               Save Locally
             </AppText>
+
             <AppText className="text-text-secondary text-xs mt-0.5">
               Save now, sign in later
             </AppText>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={handleClose} className="py-2 items-center">
-            <AppText className="text-text-disabled text-sm">Not now</AppText>
+          <TouchableOpacity
+            onPress={handleClose}
+            className="py-2 items-center"
+          >
+            <AppText className="text-text-disabled text-sm">
+              Not now
+            </AppText>
           </TouchableOpacity>
+
         </View>
       </View>
     </ActionSheet>

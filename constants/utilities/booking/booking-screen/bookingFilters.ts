@@ -15,4 +15,4 @@ export const filterHistoryBookings = (bookings: IBookingDetails[] | undefined) =
       b.status === "completed" ||
       (b.status === "confirmed" && b.check_out < today)
   ) ?? [];
-};
+}
