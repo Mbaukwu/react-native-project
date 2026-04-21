@@ -25,10 +25,9 @@ type Props = {
 
 // ── Component ────────────────────────────────────────────────
 export default function SearchHotelCard({ hotel, onRemoveFromWishlist }: Props) {
-
   // ── Navigation & Theme ─────────────────────────────────────
   const { push } = useRouter();
-  const {colors}= useThemeColors()
+  const { colors } = useThemeColors();
 
   // ── State / Store ──────────────────────────────────────────
   const { toggleWishlist, wishlistIds, userId } = useWishlistStore();
@@ -67,14 +66,10 @@ export default function SearchHotelCard({ hotel, onRemoveFromWishlist }: Props) 
       activeOpacity={0.85}
       style={{ height: 120 }}
     >
-     {/* Image Section */}
+      {/* Image Section */}
       <View style={{ width: 120 }} className="h-full relative">
         <Image
-          source={
-            !imageError && hotel.image_urls[0]
-              ? { uri: hotel.image_urls[0] }
-              : require("@/assets/images/hotel/hotel-placeholder.jpg")
-          }
+          source={!imageError && hotel.image_urls[0] ? { uri: hotel.image_urls[0] } : require("@/assets/images/hotel/hotel-placeholder.jpg")}
           onError={() => setImageError(true)}
           className="w-full h-full"
           resizeMode="cover"
@@ -93,7 +88,7 @@ export default function SearchHotelCard({ hotel, onRemoveFromWishlist }: Props) 
             </View>
           )}
           {isTopRated && !hotel.is_deal && (
-            <View className="bg-platinum px-1.5 py-0.5 rounded-full flex-row items-center" style={{ backgroundColor: '#E5E4E2' }}>
+            <View className="bg-platinum px-1.5 py-0.5 rounded-full flex-row items-center" style={{ backgroundColor: "#E5E4E2" }}>
               <IconSymbol name="star.fill" size={8} color="#D4AF37" />
               <AppText variant="bold" className="text-[10px] text-gray-800 ml-0.5">
                 TOP RATED
@@ -103,10 +98,8 @@ export default function SearchHotelCard({ hotel, onRemoveFromWishlist }: Props) 
         </View>
       </View>
 
-
       {/* Details Section */}
       <View className="flex-1 p-3 justify-between">
-
         <View>
           <AppText className="text-text text-sm" variant="bold" numberOfLines={1}>
             {hotel.name}
@@ -121,7 +114,6 @@ export default function SearchHotelCard({ hotel, onRemoveFromWishlist }: Props) 
         </View>
 
         <View>
-
           {hotel.rating && (
             <View className="flex-row items-center gap-1 mb-1">
               <View className="bg-primary px-1.5 py-0.5 rounded">
@@ -138,22 +130,28 @@ export default function SearchHotelCard({ hotel, onRemoveFromWishlist }: Props) 
 
           {/* Price + Wishlist */}
           <View className="flex-row items-center justify-between">
-            <AppText className="text-primary text-sm" variant="bold">
-              ₦{hotel.price_per_stay.toLocaleString()}
-              <AppText className="text-text-disabled text-xs"> / 24 hrs</AppText>
-            </AppText>
+            <View>
+              {hotel.is_deal ? (
+                <View className="flex-row items-baseline gap-1">
+                  <AppText className="text-text-disabled text-xs line-through">₦{Math.round(hotel.price_per_stay * 1.3).toLocaleString()}</AppText>
+                  <AppText className="text-primary text-sm" variant="bold">
+                    ₦{hotel.price_per_stay.toLocaleString()}
+                  </AppText>
+                  <AppText className="text-text-disabled text-xs"> / 24 hrs</AppText>
+                </View>
+              ) : (
+                <AppText className="text-primary text-sm" variant="bold">
+                  ₦{hotel.price_per_stay.toLocaleString()}
+                  <AppText className="text-text-disabled text-xs"> / 24 hrs</AppText>
+                </AppText>
+              )}
+            </View>
 
             <TouchableOpacity onPress={handleWishlistPress} className="p-1.5 rounded-full">
-              <IconSymbol
-                name={isFav ? "heart.fill" : "heart"}
-                size={20}
-                color={isFav ? colors.favorite : colors.textSecondary}
-              />
+              <IconSymbol name={isFav ? "heart.fill" : "heart"} size={20} color={isFav ? colors.favorite : colors.textSecondary} />
             </TouchableOpacity>
           </View>
-
         </View>
-
       </View>
     </TouchableOpacity>
   );

@@ -1,6 +1,10 @@
 import * as yup from 'yup';
 
-// Custom email validation for proper TLD (no .comm, .cmm, etc.)
+
+// ──All Auth Validation Schema ────────────────────────────────────────
+ 
+// ── Sign Out─────────────────
+
 const validEmailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/i;
 
 export const signUpSchema = yup.object({
@@ -25,14 +29,35 @@ export const signUpSchema = yup.object({
     .required('Please confirm your password')
     .oneOf([yup.ref('password')], 'Passwords do not match'),
 });
+export type SignUpFormData = yup.InferType<typeof signUpSchema>;
 
-
-
+ // ── Sign In ────────────────────────────────────────
 export const signInSchema = yup.object({
   email: yup.string().required('Email is required').email('Please enter a valid email'),
   password: yup.string().required('Password is required'),
 });
 
-export type SignUpFormData = yup.InferType<typeof signUpSchema>;
 export type SignInFormData = yup.InferType<typeof signInSchema>; 
  
+ // ── Reset Password ────────────────────────────────────────
+export const resetPasswordSchema = yup.object({
+  password: yup
+    .string()
+    .required('Password is required')
+    .min(6, 'Password must be at least 6 characters'),
+  confirmPassword: yup
+    .string()
+    .required('Please confirm your password')
+    .oneOf([yup.ref('password')], 'Passwords do not match'),
+});
+export type ResetPasswordFormData = yup.InferType<typeof resetPasswordSchema>;
+
+ // ── Forgot Password ────────────────────────────────────────
+export const forgotPasswordSchema = yup.object({
+   email: yup
+     .string()
+     .required('Email is required')
+     .email('Please enter a valid email'),
+ });
+ 
+ export type ForgotPasswordFormData = yup.InferType<typeof forgotPasswordSchema>;
